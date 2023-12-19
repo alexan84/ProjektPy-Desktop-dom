@@ -1,11 +1,18 @@
+# DZ 11
+
+
+
+
+
+
 # DZ 10 выведите статистику частности символов в кортеже - 253523651
 
 
 
-b = input('= ')
-a = tuple(b)
-for x in set(a):
-    print(f'{x} - {a.count(x)}')
+# b = input('= ')
+# a = tuple(b)
+# for x in set(a):
+#     print(f'{x} - {a.count(x)}')
 
 
 

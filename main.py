@@ -1753,6 +1753,243 @@ import time
 #         print('\tГород',country_name,'Население =', country_population )
 
 
+# Урок 11 Множество (set) не упорядочный коллектионный тип данных который хронит только уникальные значение
+# то есть одинаковые значения он просто напросто удаляет
+
+# s = {'banana','apple','orange','banana','apple'}
+# print(s)
+# print(type(s))
+# print(len(s))
+
+
+# Создать пустое множество, со списками и кортежами работает одинаково - лишнее удаляет
+
+
+# a = set('hello')
+# print(a,type(a))
+
+# c = ['red','blue','green',"red"]
+# a = set(c)
+# print(a,type(a))
+
+
+# c = ('red','blue','green',"red")
+# a = set(c)
+# print(a,type(a))
+
+
+# можем создать множество с помощью цикла в одну строку
+
+# тут пример выводит только четные числа из множества
+# mas = [1,2,3,4,4,5,5,2]
+# s = {x for x in mas if x % 2 == 0}
+# print(s)
+
+
+# Задача на уроке - на вход функция получает строку или список чисел,преобразуйте их в множество,
+# на выходе должно получится множество и количество элементов в нем
+
+# def to_set (element):
+#     st = set(element)
+#     return st,len(st)
+#
+# print(to_set('y stroka'))
+# print(to_set([4,5,4,8,7,7,77]))
+
+
+# t = {'red','green','blue'}
+# print('green' not in t)
+# for i in t:
+#     print(i)
+#
+
+# for in - особенности работы конструкции
+
+# # проверим букву а в нашем множестве и если нет то выводим все без нее
+# r = ['ab_1','ac_2','bc_1','bc_2']
+# a = [i for i in r if 'a' not in i]
+# print(a)
+
+
+# найдем и запишем в верхнем регистре  a и  b
+# r = ['ab_1','ac_2','bc_1','bc_2']
+# a = ['A' + i[1:] if i[0] == 'a' else 'B' + i[1:] for i in r]
+# print(a)
+
+
+# тут изменения будут только там где есть с
+# r = ['ab_1','ac_2','bc_1','bc_2']
+# a = ['A' + i[1:] if i[0] == 'a' else 'B' + i[1:] for i in r if i[1] == 'c']
+# print(a)
+
+
+# Добавление в множество элемента  и удаление
+
+# a = {'tom','bob','alice'}
+# print(a)
+# a.add('ann')
+# print(a)
+# a.remove('ann')  # если обращении к несуществующему элементу ошибка KeyError
+# print(a)
+# user = 'tom'
+# if user in a:
+#     a.remove(user)
+# print(a)
+
+# есть м6етод для удаления без исключений
+
+# a = {'tom','bob','alice'}
+# print(a)
+# a.add('ann')
+# print(a)
+# a.discard('ann1')
+# print(a)
+
+#  удаляем первый элемент ,но если указать название то удалится указанный элемент
+# a = {'tom','bob','alice'}
+# print(a)
+# a.add('ann')
+# print(a)
+# n = a.pop()
+# print(n)
+# print(a)
+# a.clear()  # удалить в множестве все элементы
+# print(a)
+
+
+# Операции с множествами
+
+# объеденение
+# a = {0,1,2,3}
+# b = {4,3,2,1}
+# c = a.union(b)
+# # или аналог метода знак |
+# v = a | b
+# a |= b
+# print(c)
+# print(v)
+
+# возвращает одинаковые пересечения множеств
+# a = {0,1,2,3}
+# b = {4,3,2,1}
+# c = a & b
+# # или через знак
+# a &= b
+# print(a)
+# print(c)
+
+#  возвращает то что есть в одном множестве но нет в другом
+# a = {0,1,2,3}
+# b = {4,3,2,1}
+# c = a - b
+# a -= b
+# print(c)
+# print(a)
+
+
+# выводит из первого множ-а. то чего нет во втором и наоборот
+# a = {0,1,2,3}
+# b = {4,3,2,1}
+# c = a ^ b  # a ^= b
+# print(c)
+
+
+# Задача на уроке дан набор множеств,
+# нужно найти кол-во уникальных элементов и найти мин и макс элементы среди них
+
+
+# s1 = {1, 2}
+# s2 = {3}
+# s3 = {4, 5}
+# s4 = {3, 2, 6}
+# s5 = {6}
+# s6 = {7, 8}
+# s7 = {9, 8}
+#
+# # s = s1.union(s2,s3,s4,s5,s6,s7)
+# s = s1 | s2 | s3 | s4 | s5 | s6 | s7
+# print(s)
+# count = len(s)
+# print('count',count)
+# print('min',min(s))
+# print('max',max(s))
+# print('sum',sum(s))
+
+
+# Задача на уроке - найти общие буквы
+
+# s1 = set('Hello')
+# s2 = set('How are you')
+# a = s1 & s2
+# print(a)
+# # что бы избавится от скобок и запятых пройдемся в цикле
+# for i in a:
+#     print(i,end=' ')
+
+
+# Задача на уроке - определить кто чем занимается
+
+
+# drawing = {'marina','geny','sveta'}
+# music = {'kosty','geny','ily'}
+#
+# one_hobby = drawing ^ music
+# print('один кружок',* one_hobby)
+#
+# both_hobbies = drawing & music
+# print('оба кружка', * both_hobbies)
+#
+# drawing = drawing - both_hobbies
+# # drawing -= both_hobbies
+# print('рисование', drawing)
+
+
+# подмножества пример
+#
+# a = {0,1,2,3,4}
+# b = {3,2,1}
+# print(a <= b)  # False
+# print(a >= b)  # True
+
+
+# Тип frozenset - замораживание
+
+# s = frozenset([1,2,3,4,5])
+# print(s)
+# print(type(s))
+# a = frozenset({'hello','world'})
+# print(a)
+
+
+# из списка преобразуем множество
+
+# a = [8,9,7,4,5,8,7,9,4,6,5,1,3,2,5]
+# print(a)
+# b = set(a)
+# print(b)
+# a = tuple(b)
+#
+# print(a)
+
+
+# -----------------------------------Урок 12 Словарь
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

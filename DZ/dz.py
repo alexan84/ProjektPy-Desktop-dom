@@ -1,16 +1,25 @@
+# DZ 13 Найти общую прибыль
+
+
+
+
+
+
 # DZ 12 Создать новый словарь с именем и зарплатой
 # и удалить их из исходного словаря
 
-a = {'name': 'Kelly', 'age': 25, 'salary': 8000, 'city': 'New York'}
-b = a.pop('name')
-c = a.pop('salary')
-print(a)
-a = {'name': 'Kelly', 'age': 25, 'salary': 8000, 'city': 'New York'}
-
-del a['age']
-del a['city']
-
-print(a)
+# a = {'name': 'Kelly', 'age': 25, 'salary': 8000, 'city': 'New York'}
+# d = list(a.items())[1]
+# print(d)
+# b = a.pop('name')
+# c = a.pop('salary')
+# print(a)
+# a = {'name': 'Kelly', 'age': 25, 'salary': 8000, 'city': 'New York'}
+#
+# del a['age']
+# del a['city']
+#
+# print(a)
 
 
 

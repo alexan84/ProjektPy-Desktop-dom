@@ -2151,10 +2151,10 @@ import time
 
 
 # Берем пару ключ - значение и удаляем
-# d = {'a': 1, 'c': 3, 'b': 2, }
-# item = d.popitem()  # удаляет последний элемент
-# print(item)
-# print(d)
+d = {'a': 1, 'c': 3, 'b': 2, }
+item = d.popitem()  # удаляет последний элемент
+print(item)
+print(d)
 
 
 

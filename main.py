@@ -2108,9 +2108,9 @@ import time
 # print(d.keys())  # ключи
 # print(d.values())  # значения
 # print(d.items())  # ключи и значения
-#
-# # for i, j in d.items():
-# #     print(i, '->', j)
+
+# for i, j in d.items():
+#     print(i, '->', j)
 #
 # print(list(d.items()))
 
@@ -2157,13 +2157,115 @@ import time
 # print(d)
 
 
+# ---------------------------- Урок 13   ------------------------------
+
+# Соеденим словари
+
+# d = {'a': 1, 'c': 3, 'b': 2, }
+# d1 = {'r':7,'q':40}
+# d.update(d1)
+# # Добавим список
+# d2 = [('a', 20), ('b', 9)]
+# d.update(d2)
+# print(d)
 
 
+# Задача на уроке соеденить два словаря в третий
+
+# Методом
+# x = {'a': 1, 'b': 2}
+# y = {'b': 3, 'c': 4}
+# # new_dict = x.copy()
+# # new_dict.update(y)
+# # С помощью оператора
+# new_dict = x | y
+# print(new_dict)
 
 
+# Вложенные словари
+
+# a = {
+#     'first': {
+#         1: 'one',
+#         2: 'two',
+#         3: 'three'
+#     },
+#     'second': {
+#         4: 'four',
+#         5: 'five'
+#     }
+# }
+# print(a)
+# print()
+# for x in a:
+#     print(x)
+#     for y in a[x]:
+#         print('\t', y, ': ', a[x][y], sep='')
 
 
+# Работа с вложенными структурами данных
 
+# Задача на уроке юзер вводит имя и регион из предложенного в словаре
+# а мы выводим его продажи и меняем на новое вводимое значение
+
+# sales = {
+#     'john': {'n': 3056, 's': 8463, 'e': 8441, 'w': 2694},
+#     'tom': {'n': 4832, 's': 6786, 'e': 4737, 'w': 3613},
+#     'anne': {'n': 5239, 's': 4802, 'e': 5820, 'w': 1859},
+#     'fiona': {'n': 3904, 's': 3645, 'e': 8821, 'w': 2451}}
+#
+# for x in sales:
+#     print(x)
+#     for y in sales[x]:
+#         print('\t', y, ': ', sales[x][y], sep='')
+# person = input('Имя: ')
+# region = input('Регион: ')
+# print(sales[person][region])
+# new_data = int(input('Новое значение: '))
+# sales[person][region] = new_data
+# print(sales[person])
+
+
+# Генереаторы словарей
+
+# d = {'n': 3056, 's': 8463, 'e': 8441, 'w': 2694}
+# d = {value: key for key, value in d.items()}
+# print(d)
+
+
+# Задача на уроке из словаря вывести только два первых значения
+#
+# d = {'n': 1, 's': 2, 'e': 3, 'w':4}
+# for key,value in list(d.items())[:2]:
+#     print(f'{key}: {value}')
+
+
+# Задача на уроке -преобразовать список в словарь
+# (строки ключи и числа значения) - работает только если первое значение является строкой
+
+# a = ['one', 1, 2, 3, 'two', 10, 20, 'three', 15, 36, 60, 'four', -20]
+
+# Создаем словарь или функцией или просто фигурные скобки
+# d = dict()  # {}
+# current_key = ''
+# for item in a:
+#     if type(item) == str:
+#         d[item] = []
+#         current_key = item
+#     else:
+#         d[current_key].append(item)
+# print(d)
+
+
+# создаем словарь из списков ключей и значений функцией zip
+# двумя способами
+d = dict(zip([1,2,3],['one','two','three']))
+print(d)
+# или наоборот значения - ключа и значения
+a = [4,5,6]
+b = ['one','two','three']
+f = {k: v for k, v in zip(b, a)}
+print(f)
 
 
 

@@ -2259,21 +2259,85 @@ import time
 
 # создаем словарь из списков ключей и значений функцией zip
 # двумя способами
-d = dict(zip([1,2,3],['one','two','three']))
-print(d)
-# или наоборот значения - ключа и значения
-a = [4,5,6]
-b = ['one','two','three']
-f = {k: v for k, v in zip(b, a)}
-print(f)
+# d = dict(zip([1, 2, 3], ['one', 'two', 'three']))
+# print(d)
+# # или наоборот значения - ключа и значения
+# a = [4, 5, 6]
+# b = ['one', 'two', 'three']
+# f = {k: v for k, v in zip(b, a)}
+# print(f)
 
 
+# тут zip  работает со всеми типами одинаково
+# a = [1, 2, 3]
+# b = ['one', 'two', 'three']
+# d = [4.5,7.4,9.6]
+# c = tuple(zip(a,b))
+# c = list(zip(a,b))
+# c = set(zip(a,b))
+# c = dict(zip(a,b))
+# c = list(zip(a,b,d))
+# print(c)
 
 
+# Обработка словарей у которых могут быть одинаковые ключи,
+# соеденим два словаря взяв у них одинаковые ключи
+# по очереди выведем элементы из этих словарей
+
+# d_one = {'name': 'Igor', 'last_name': 'Petrov', 'job': 'Consultant'}
+# d_two = {'name': 'Irina', 'last_name': 'Irisova', 'job': 'Manager'}
+#
+# for (k1,v1), (k2,v2) in zip(d_one.items(), d_two.items()):
+#     print(k1,'->',v1)
+#     print(k2,'->',v2)
+
+#
+# d = [(1, 'one'), (2, 'two'), (3, 'three')]
+# a, b = zip(*d)
+# print(a)
+# print(b)
 
 
+#
+# a = [1, 2, 3]
+# b = ['one', 'two', 'three']
+# d = list(zip(a,b))
+# print(d)
+# d.sort()
+# print(d)
+# print(dict(d))
 
 
+# a = [1, 2, 3]
+# b = ['one', 'two', 'three']
+# d = dict(zip(a, b))
+# print(d)
+# s = sorted(d.items())
+# print(s)
+# print(dict(s))
 
 
+# Распакуем два словаря и поместим их в другой словарь двумя способами
 
+
+# one = {'apple': 0.45, 'orange': 0.35, 'pepper': 0.7}
+# two = {'pepper': 0.2, 'onion': 0.55}
+# print({**one, **two})
+# print({**two, **one})
+#
+# for k, v in {**two, **one}.items():
+#     print(k, '->', v)
+
+
+# Пронумируем элементы с помощью цикла в двух вариантах
+
+data = ['red', 'green', 'blue']
+num = 1
+for val in data:
+    print(num, ') ', val, sep='')
+    num += 1
+
+print()
+
+for num, val in enumerate(data, 1):
+    print(num, ') ', val, sep='')

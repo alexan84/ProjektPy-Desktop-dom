@@ -2387,3 +2387,70 @@ import time
 #
 # print(to_dict(1, 2, 3, 4))
 # print(to_dict('grey', (2, 17), 3.11, -4))
+
+
+# def func(a,*args):
+#     return a,args
+#
+# print(func(1))
+# print(func(1,2,3,4,56,))
+
+
+# Пример - выводим имя студента и его оценки в цикле ,если они у него есть
+
+
+# def p_s(student, *scores):
+#     print('Student Name:', student)
+#     for score in scores:
+#         print(score)
+#
+#
+# p_s('irina', 5, 4, 4, 5, 3, 2)
+# p_s('igor', 1, 2, 3, 4, 5)
+# p_s('lew')
+
+
+# Пример функциии которая принимает словарь и
+# что то становится ключем а что то значением
+
+# def func(**kwargs):
+#     return kwargs
+#
+# print(func(a=1,b=2,c=3))
+# print(func())
+# print(func(d=9))
+
+
+# primer
+
+# def intro(**data):
+#     for k, v in data.items():
+#         print(k, '->', v)
+#     print()
+#
+#
+# intro(name='irina', surname='reznikova', age=22)
+
+
+# Задача на уроке - создать функцию принимающую неограниченное количество параметров
+# и обновляет существующий словарь,словарь обновляется при каждом вызове функции
+# словарь напишем внизу функции
+
+# def db(**kwargs):
+#     my_dict.update(kwargs)
+#
+#
+# my_dict = {'one': 'first'}
+# db(k1=22, k2=32, k3=45, k4=91)
+# print(my_dict)
+
+
+# Пример функции принимающей списки,кортежи,именованный и
+# позиционные параметры и выводящия все это в словарь
+
+
+def func(a, b, c, *args, d, e, **kwargs):
+    return a, b, c, args, e, kwargs, d
+
+
+print(func(5, 9, 7, 8, 4, 3, 2, 1, k1=31, e=100, d=55, k3=11, k4=91))

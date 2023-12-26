@@ -3,7 +3,6 @@
 import random
 import time
 
-
 #  Урок 2
 
 # 1 вариант
@@ -2449,8 +2448,80 @@ import time
 # позиционные параметры и выводящия все это в словарь
 
 
-def func(a, b, c, *args, d, e, **kwargs):
-    return a, b, c, args, e, kwargs, d
+# Области видимости
+
+# name = 'Tom'
+# def hi():
+#     global name
+#     surname = 'semenov'
+#     print('hello',name,surname)
+#
+#
+# def bye():
+#     print('good bye',name)
+#
+# hi()
+# bye()
+# print(name)
+# print(id)
 
 
-print(func(5, 9, 7, 8, 4, 3, 2, 1, k1=31, e=100, d=55, k3=11, k4=91))
+# *
+# i = 5
+#
+# def func(arg=i):
+#     print(arg)
+#
+# i=6
+# func()
+
+
+# *
+# x = 4
+
+
+# def add_file(a):
+#     # x = 2
+#
+#     def add_some():
+#         # x = 3
+#         print('x=', x)
+#         return a + x
+#
+#     return add_some()
+#
+#
+# print(add_file(5))
+
+
+
+# * Ошибка
+# sum = 5
+#
+# lst = [1,2,4,63]
+# print(sum(lst))
+
+
+# * так вводить нельзя
+# import builtins
+#
+# name = dir(builtins)
+#
+# for t in name:
+#     print(t)
+
+
+
+# Задача на уроке - юзур вводит данные студентов
+# а прога выводит средний балл и имена студентов
+
+
+
+
+
+
+
+
+
+
+

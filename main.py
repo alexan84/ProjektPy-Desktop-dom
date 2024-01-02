@@ -3,7 +3,6 @@
 import random
 import time
 
-
 #  Урок 2
 
 # 1 вариант
@@ -2700,29 +2699,106 @@ import time
 # Различные записи функций
 
 # 1
-def outer(n):
-    def inner(x):
-        return x + n
+# def outer(n):
+#     def inner(x):
+#         return x + n
+#
+#     return inner
+#
+#
+# f = outer(5)
+# print(f(10))
+#
+# # Второй вариант
+# def outer1(n):
+#     return lambda x: x + n
+#
+#
+# f1 = outer1(5)
+# print(f1(10))
+#
+# # 3
+#
+# outer2 = lambda n:lambda x:x+n
+# f2 = outer2(5)
+# print(f2(10))
+#
+# # 4
+# print((lambda n:lambda x:x+n)(5)(10))
 
-    return inner
+
+# print((lambda n: lambda x: lambda c: c + x + n)(5)(10)(3))
 
 
-f = outer(5)
-print(f(10))
+# Отсоритируем кортеж сначала переделав его в список в двух вариантах
 
-# Второй вариант
-def outer1(n):
-    return lambda x: x + n
+# # 1
+#
+# # def func(item):
+# #     return item[1]
+#
+# # 2
+#
+# d = {'b':3,'c':1,'a':2}
+# print(d)
+# lst = list(d.items())
+# print(lst)
+# lst.sort(key=lambda i:i[1])
+# # lst.sort((key=func))
+# print(lst)
+# d1=dict(lst)
+# print(d1)
 
 
-f1 = outer1(5)
-print(f1(10))
+# Задача на урове отсортировать команду по фамилиям ибаллам
 
-# 3
+# plaers = [
+#     {'name':'Антон','last name':'Бирюков','reating':'2'},
+#     {'name':'Алексей','last name':'Родня','reating':'1'},
+#     {'name':'Федор','last name':'Сидоров','reating':'4'},
+#     {'name':'Михаил','last name':'Югов','reating':'3'}
+# ]
+#
+# res = sorted(plaers,key=lambda item:item['last name'])
+# print(res)
+#
+# res1 = sorted(plaers,key=lambda item:item['reating'])
+# print(res1)
+#
+# res2 = sorted(plaers,key=lambda item:item['reating'],reverse=True)
+# print(res2)
 
-outer2 = lambda n:lambda x:x+n
-f2 = outer2(5)
-print(f2(10))
 
-# 4
-print((lambda n:lambda x:x+n)(5)(10))
+#### Обратимся через индекс к нужному
+
+# a = [
+#     lambda x, y: x + y,
+#     lambda x, y: x - y,
+#     lambda x, y: x * y,
+#     lambda x, y: x / y,
+# ]
+#
+# print(a[0](5,2))
+# print(a[1](5,2))
+# print(a[2](5,2))
+
+
+###### По ключу выберем нужный день недели
+
+# d = {
+#     1: lambda: print('Понеде'),
+#     2: lambda: print('Вторник'),
+#     3: lambda: print('Среда')
+# }
+#
+# d[1]()
+# d[3]()
+
+
+#### Найдем максимальное значение
+
+# print((lambda a,b:a if a > b else b)(10,20))
+
+##### Мин знач между трем числами
+
+# print((lambda a, b, c: a if (a < b and a < c) else (b if b < c else c))(10, 200, 3))

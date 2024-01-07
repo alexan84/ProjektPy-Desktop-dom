@@ -1,19 +1,19 @@
 # DZ 14 - Пользователь вводит данные студентов нужно определить средний балл и вывести данные студентов
 
 
-studs = {}
+stu = {}
 n = int(input("Количество студентов: "))
 s = 0
 for i in range(n):
     sname = input(str(i+1) + "-й студент: ")
-    point = int(input("Балл: "))
-    studs[sname] = point
-    s += point
+    poin = int(input("Балл: "))
+    stu[sname] = poin
+    s += poin
 
 avrg = s / n
 print("\nСредний балл: %.0f. Студенты с баллом выше среднего:" % avrg)
-for i in studs:
-    if studs[i] > avrg:
+for i in stu:
+    if stu[i] > avrg:
         print(i)
 
 
@@ -21,13 +21,13 @@ for i in studs:
 
 
 
-# DZ 13 Найти общую приб
-# a = ['January', 'February', 'March']
-# b = [52000.00, 51000.00, 48000.00]
-# c = [46800.00, 45900.00, 43200.00]
-# for s, k, m in zip(b, c, a):
-#     p = s - k
-#     print('прибыль в', m, '=', p)
+# DZ 13 Найти общую прибыль
+a = ['January', 'February', 'March']
+b = [52000.00, 51000.00, 48000.00]
+c = [46800.00, 45900.00, 43200.00]
+for s, k, m in zip(b, c, a):
+    p = s - k
+    print('прибыль в', m, '=', p)
 
 
 

@@ -1,38 +1,63 @@
+# DZ 15 - Создать лямбда-выражения для нахождения площадей фигур
+#
+# a = [
+#     lambda x, y: x * y,
+#     lambda x, y, c: (x + y) * c / 2,
+#     lambda x,: 3.14 * x ** 2
+#
+# ]
+#
+# print('Прямоугольник', a[0](2, 5))
+# print('Трапеция', a[1](7, 5, 3))
+# print('Круг', a[2](2))
+
 # DZ 14 - Пользователь вводит данные студентов нужно определить средний балл и вывести данные студентов
 
 
-stu = {}
-n = int(input("Количество студентов: "))
-s = 0
-for i in range(n):
-    sname = input(str(i+1) + "-й студент: ")
-    poin = int(input("Балл: "))
-    stu[sname] = poin
-    s += poin
-
-avrg = s / n
-print("\nСредний балл: %.0f. Студенты с баллом выше среднего:" % avrg)
-for i in stu:
-    if stu[i] > avrg:
-        print(i)
-
-
-
-
-
-
-# DZ 13 Найти общую прибыль
-a = ['January', 'February', 'March']
-b = [52000.00, 51000.00, 48000.00]
-c = [46800.00, 45900.00, 43200.00]
-for s, k, m in zip(b, c, a):
-    p = s - k
-    print('прибыль в', m, '=', p)
-
-
-
-
-
+# <<<<<<< HEAD
+# stu = {}
+# n = int(input("Количество студентов: "))
+# s = 0
+# for i in range(n):
+#     sname = input(str(i+1) + "-й студент: ")
+#     poin = int(input("Балл: "))
+#     stu[sname] = poin
+#     s += poin
+#
+# avrg = s / n
+# print("\nСредний балл: %.0f. Студенты с баллом выше среднего:" % avrg)
+# for i in stu:
+#     if stu[i] > avrg:
+#         print(i)
+#
+#
+#
+#
+# =======
+# studs = {}
+# n = int(input("Количество студентов: "))
+# s = 0
+# for i in range(n):
+#     sname = input(str(i+1) + "-й студент: ")
+#     point = int(input("Балл: "))
+#     studs[sname] = point
+#     s += point
+#
+# avrg = s / n
+# print("\nСредний балл: %.0f. Студенты с баллом выше среднего:" % avrg)
+# for i in studs:
+#     if studs[i] > avrg:
+#         print(i)
+# >>>>>>> 14285a936aef2e2d90ffe640d0ef4f65bc662efe
+#
+#
+# # DZ 13 Найти общую прибыль
+# a = ['January', 'February', 'March']
+# b = [52000.00, 51000.00, 48000.00]
+# c = [46800.00, 45900.00, 43200.00]
+# for s, k, m in zip(b, c, a):
+#     p = s - k
+#     print('прибыль в', m, '=', p)
 
 
 # DZ 12 Создать новый словарь с именем и зарплатой

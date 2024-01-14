@@ -2494,7 +2494,6 @@ import time
 # print(add_file(5))
 
 
-
 # * Ошибка
 # sum = 5
 #
@@ -2511,17 +2510,295 @@ import time
 #     print(t)
 
 
+# ----------------------------    Урок 15
 
-# Задача на уроке - юзур вводит данные студентов
-# а прога выводит средний балл и имена студентов
+# Принцип работы вложенных функций
 
-
-
-
-
-
-
-
-
+# def outer(who):
+#     def ineer():
+#         print('hello,', who)
+#
+#     ineer()
+# outer('world')
 
 
+# Еще пример области видимости
+
+# def func():
+#     a = 6  # 2
+#
+#     def func1(b):  # b = 4
+#         a = 4  # 6
+#         print(a + b)  # 6  # 4 + 4 = 8
+#
+#     print('a', a)  # 3  # a = 6
+#     func1(4)
+#
+#
+# func()
+
+
+# Создадим глобальную переменную за пределами функции
+
+
+# x = 25
+# t = 0
+#
+#
+# def fn():
+#     global t
+#     a = 30  # 35
+#
+#     def inner():
+#         nonlocal a
+#         a = 35
+#         print('a',a)
+#
+#     inner()
+#     t = a
+#
+#
+# fn()
+# c = x + t  # 25 + 30 = 55  # 25 + 35 = 60
+# print(c)
+
+
+# Еще пример nonlocal нужна что бы вывести переменную на уровень выше
+
+# x = 5
+#
+# def fn1():
+#     x = 25  # 2
+#
+#     def fn2():
+#         # x = 35  # 4
+#
+#         def fn3():
+#             nonlocal x
+#             x = 55  # 6
+#
+#         fn3()  # 5
+#         print('fn2.x =', x)  # 7
+#     fn2()  # 3
+#     print('fn1.x =', x)  # 8
+#
+#
+# fn1()  # 1
+
+
+# Далее еще пример если закоментировать нонлокал то результат будет по нулям
+
+
+# def out(a1,b1,a2,b2):
+#     a = 0
+#     b = 0
+#
+#     def inner():
+#         nonlocal a,b
+#         a = a1 + a2
+#         b = b1 + b2
+#
+#     inner()
+#     return [a,b]
+#
+#
+# res = out(2,3,-1,4)
+# print(res)
+
+
+#  Замыкние -возвращениевложенной функции без её вызова то есть без скобак
+
+# def out(n):
+#     def inner(x):
+#         return n + x
+#
+#     return inner
+#
+# it1 = out(5)
+# print(it1(10))
+#
+# it2 = out(5)
+# print(it2(2))
+
+
+# Пример замены данных в переменных
+
+# def fu1():
+#     a = 1  # неизменяемый тип данных
+#     b = 'line' # изменяемый
+#     c = [1, 2, 3]
+#
+#     def fu2():
+#         nonlocal a,b
+#         c.append(4)
+#         a+=1
+#         b += '_new'
+#         return a, b, c
+#
+#     return fu2()
+#
+#
+# func = fu1()
+# print(func)
+
+
+# Задача на уроке - написать функцию подсчета посещаемых городов
+
+
+# def func(city):
+#     s=0
+#
+#     def inner():
+#         nonlocal s
+#         s+=1
+#         print(city,s)
+#
+#     return inner
+#
+#
+# res1=func('Москва')
+# res1()
+# res1()
+# res2 = func('Сочи')
+# res2()
+# res2()
+# res2()
+# res1()
+
+
+# lambda (анонимная функци)
+
+# print((lambda x, y: x + y)(1, 2))
+# fun = lambda x, y: x + y
+# print(fun(1, 2))
+# print(fun('a', 'b'))
+
+
+# Задача на уроке - создать лямбда-выражение которое считает сумму двухт квадратов чисел
+#
+# print((lambda x, y: x ** 2 + y ** 2)(2, 5))
+# print((lambda x, y=5: x ** 2 + y ** 2)(2))
+# print((lambda x=2, y=5: x ** 2 + y ** 2)())
+# print((lambda x=2, y=5: x ** 2 + y ** 2)(y=10))
+
+
+#
+# print((lambda *args:args)(1,2,3,4,5))
+
+
+# y = (
+#     lambda x: x * 2,
+#     lambda x: x * 3,
+#     lambda x: x * 4,
+# )
+#
+# for i in y:
+#     print(i('a1'))
+
+
+# Различные записи функций
+
+# 1
+# def outer(n):
+#     def inner(x):
+#         return x + n
+#
+#     return inner
+#
+#
+# f = outer(5)
+# print(f(10))
+#
+# # Второй вариант
+# def outer1(n):
+#     return lambda x: x + n
+#
+#
+# f1 = outer1(5)
+# print(f1(10))
+#
+# # 3
+#
+# outer2 = lambda n:lambda x:x+n
+# f2 = outer2(5)
+# print(f2(10))
+#
+# # 4
+# print((lambda n:lambda x:x+n)(5)(10))
+
+
+# print((lambda n: lambda x: lambda c: c + x + n)(5)(10)(3))
+
+
+# Отсоритируем кортеж сначала переделав его в список в двух вариантах
+
+# # 1
+#
+# # def func(item):
+# #     return item[1]
+#
+# # 2
+#
+# d = {'b':3,'c':1,'a':2}
+# print(d)
+# lst = list(d.items())
+# print(lst)
+# lst.sort(key=lambda i:i[1])
+# # lst.sort((key=func))
+# print(lst)
+# d1=dict(lst)
+# print(d1)
+
+
+# Задача на урове отсортировать команду по фамилиям ибаллам
+
+# plaers = [
+#     {'name':'Антон','last name':'Бирюков','reating':'2'},
+#     {'name':'Алексей','last name':'Родня','reating':'1'},
+#     {'name':'Федор','last name':'Сидоров','reating':'4'},
+#     {'name':'Михаил','last name':'Югов','reating':'3'}
+# ]
+#
+# res = sorted(plaers,key=lambda item:item['last name'])
+# print(res)
+#
+# res1 = sorted(plaers,key=lambda item:item['reating'])
+# print(res1)
+#
+# res2 = sorted(plaers,key=lambda item:item['reating'],reverse=True)
+# print(res2)
+
+
+#### Обратимся через индекс к нужному
+
+# a = [
+#     lambda x, y: x + y,
+#     lambda x, y: x - y,
+#     lambda x, y: x * y,
+#     lambda x, y: x / y,
+# ]
+#
+# print(a[0](5,2))
+# print(a[1](5,2))
+# print(a[2](5,2))
+
+
+###### По ключу выберем нужный день недели
+
+# d = {
+#     1: lambda: print('Понеде'),
+#     2: lambda: print('Вторник'),
+#     3: lambda: print('Среда')
+# }
+#
+# d[1]()
+# d[3]()
+
+
+#### Найдем максимальное значение
+
+# print((lambda a,b:a if a > b else b)(10,20))
+
+##### Мин знач между трем числами
+
+# print((lambda a, b, c: a if (a < b and a < c) else (b if b < c else c))(10, 200, 3))

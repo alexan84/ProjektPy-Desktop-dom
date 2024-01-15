@@ -2802,3 +2802,465 @@ import time
 ##### Мин знач между трем числами
 
 # print((lambda a, b, c: a if (a < b and a < c) else (b if b < c else c))(10, 200, 3))
+
+
+### ----------------------------  Урок 16
+#### map(func, *iterables)
+
+
+### 1
+# def mult(t):
+#     return t * 2
+#
+#
+# lst1 = [2, 8, 12, -5, -10]
+#
+# lst2 = list(map(mult, lst1))
+# print(lst2)  # [4, 16, 24, -10, -20]
+
+
+####  2
+
+# lst1 = [2, 8, 12, -5, -10]
+#
+# lst2 = list(map(lambda t: t * 2, lst1))
+# print(lst2)  # [4, 16, 24, -10, -20]
+
+
+### из вещественных чисел сделаем целые
+
+###    1
+
+# t = (2.88, -1.75, 100.55)
+# t2 = tuple(map(lambda x: int(x), t))
+# print(t2)
+
+####  2
+
+# t = (2.88, -1.75, 100.55)
+# t2 = tuple(map(int,t))
+# print(t2)
+
+
+##### primer
+#
+# st = ['a','b','c','d','e',]
+# num = [1,2,3,4,5]
+#
+# res = list(map(lambda x,y: (x,y),st,num))
+# print(res)
+
+
+#### Задача на уроке - найти сумму двух чисел
+
+# l1 = [1, 2, 3]
+# l2 = [4, 5, 6]
+#
+# res = list(map(lambda x, y: x + y, l1, l2))
+# print(res)
+
+
+#### Пример выведем значения с длинной 3
+#
+# t = ('ajdk', 'fgh', 'rub', 'ggg', 'jjjjj')
+# t2 = tuple(filter(lambda s: len(s) == 3, t))
+# print(t2)
+
+
+#### отличие функций  map  и  filter ,одна только фильтрует другая еще и складывает
+
+# b = [66, 90, 68, 59, 76, 40, 88, 74, 81, 65]
+# res = list(filter(lambda s: s > 75, b))
+# res2 = list(map(lambda s: s + 5, b))
+# print(res)
+# print(res2)
+
+
+### Пример возведем в степень 2 все числа из 10 которые с остатком от деления
+
+# m = list(map(lambda x: x ** 2, filter(lambda x: x % 2, range(10))))
+# m1 = list(map(lambda x: x ** 2, [1, 3, 5, 7, 9]))
+# print(m)
+# print(m1)
+# m2 = [x ** 2 for x in range(10) if x % 2]
+# print(m2)
+
+
+### Задача на уроке - вывести чисда в диапазоне от 10 до 20 включительно
+#
+# import random
+#
+# my_list = [random.randint(1,40) for i in range(20)]
+#
+# print(my_list)
+# print(list(filter(lambda num: 10 <= num <= 20,my_list)))
+
+
+### функция передается в качестве аргумента в другую функцию
+
+# def hello():
+#     return 'Hello,I am func "hello"'
+#
+#
+# def s_func(func):
+#     print('Hello,I am func "s_func"')
+#     print(func())
+#
+#
+# s_func(hello)
+
+
+### Primer создаем функцию и записываем ее в переменную и вызываем со скобочками
+
+# def hello():
+#     return 'Hello,I am func "hello"'
+#
+#
+# test = hello
+# print(test())
+
+
+### Декоратор
+
+
+###  1
+# def my_decorator(func):
+#     def wrap():
+#         print('Код до функции')
+#         func()
+#         print('Код после функции')
+#     return wrap
+#
+#
+# def func_test():
+#     print('Hello, I am func "func_test"')
+#
+#
+# test = my_decorator(func_test)
+# test()
+
+
+###  2 две функции в декораторе
+# def my_decorator(func):  # декорирующая функция
+#     def wrap():
+#         print('*' * 30)
+#         func()
+#         print('=' * 30)
+#
+#     return wrap
+#
+#
+# @my_decorator  # декоратор
+# def func_test():  # декорируемая функция
+#     print('Hello, I am func "func_test"')
+#
+# @my_decorator
+# def hello():
+#     print('Hello,I am func "hello"')
+#
+#
+# func_test()
+# hello()
+
+#### декорация в одну строку там где ретурн
+
+# def bold(fn):
+#     def wrap():
+#         return '<br>' + fn() + '</br>'
+#
+#     return wrap
+#
+#
+# def bold1(fn):
+#     def wrap():
+#         return '<i>' + fn() + '</i>'
+#
+#     return wrap
+#
+#
+# @bold
+# @bold1
+# def hello():
+#     return 'text'
+#
+#
+# print(hello())
+
+
+### Задача на уроке - создать декоратор который выводит количество вызовов декорирующих функций
+
+###   1
+
+# def cnt(fn):
+#     count = 0
+#
+#     def wrap():
+#         nonlocal count
+#         count = count + 1
+#         fn()
+#         print('Вызов функции:', count)
+#
+#     return wrap
+#
+#
+# @cnt
+# def hello():
+#     print('Hello')
+#
+#
+# hello()
+# hello()
+# hello()
+
+####     2
+# def cnt(fn):
+#     count = 0
+#
+#     def wrap(arg1,arg2):
+#         nonlocal count
+#         count = count + 1
+#         fn(arg1,arg2)
+#         print('Вызов функции:', count,'\n','-' * 20,sep='')
+#
+#     return wrap
+#
+#
+# @cnt
+# def hello(a,b):
+#     print('Hello,',a,'\nHello,',b)
+#
+#
+# hello('Py','JS')
+# hello('PHP','C++')
+
+
+#### Primer
+
+# def args_decorator(fn):
+#     def wrap(*args, **kwargs):
+#         print('args', args)
+#         print('kwargs', kwargs)
+#         fn(*args, **kwargs)
+#
+#     return wrap
+#
+#
+# @args_decorator
+# def print_data(a, b, c, study='Ry'):
+#     print(a, b, c, 'изучают', study, '\n')
+#
+#
+# print_data('dfg', 'asd', 'cvb', study='C++')
+# print_data('bnn', 'gbn', 'tre')
+
+
+### Задача на уроке складываем два числа
+# def decor(args1,args2):
+#     def args_dec(fn):
+#         def wrap(x, y):
+#             print(args1, x, args2, y, '=', end=' ')
+#             fn(x, y)
+#
+#         return wrap
+#     return args_dec
+#
+#
+# @decor('Сумма:','+')
+# def summa(a, b):
+#     print(a + b)
+#
+#
+# @decor("Разность:",'-')
+# def sub(a, b):
+#     print(a - b)
+#
+#
+# summa(2, 2)
+# sub(7, 3)
+
+
+## Задача на уроке - создать декораторкоторый принимает число,которое умножается на число принимаемой функцией
+
+# def multiply(arg):
+#     def test(fn):
+#         def wrap(x):
+#             return fn(x) * arg
+#         return wrap
+#     return test
+#
+#
+# @multiply(3)
+# def return_num(num):
+#     return num
+#
+#
+# print(return_num(5))
+
+
+### ----------------------------- Урок 17 --------- Строки
+
+# print(int('100',2))  # 4
+# print(int('100',8))  # 64
+# print(int('100',10))  # 100
+# print(int('100',16))  # 256
+#
+# print(bin(18))  # 0b10010
+# print(oct(18))  # 0o22
+# print(hex(18))  # 0x12
+#
+# print(0b10010)
+# print(0o22)
+# print(0x12)
+# print(0b10010 + 0o22 + 0x12 + 18)
+
+
+#### Пример работы со строками
+
+# q = 'Pyt'
+# w = "hon"
+# e = q + w
+# print(e)
+#
+# # print(e * 3)
+# # print('y' in e)
+# # print('y1' in e)
+#
+# print(e[-6])
+# print(e[:4])
+# print(e[2:])
+# print(e[::-1])
+
+
+#### Пример замены букв с помощью срезов
+
+# q = 'Pyt'
+# w = "hon"
+# e = q + w
+# print(e)  # Python => Pytton
+# e = e[:3] + 't' + e[4:]
+# print(e)
+
+
+### Задача на уроке - заменить символ в строке
+
+# def changeCharToStr(s, c_old, c_new):
+#     s2 = ''
+#     i = 0
+#
+#     while i < len(s):
+#         if s[i] == c_old:
+#             s2 += c_new
+#         else:
+#             s2 += s[i]
+#         i += 1
+#     return s2
+#
+#
+# str1 = 'Я изучаю Nython. Мне нравится Nython. Nython очень интересный язык программирования.'
+# str2 = changeCharToStr(str1, 'N', 'P')
+# print('str1=', str1)
+# print('str2=', str2)
+
+
+### Зарезервированные символы
+
+# 1 указывает что юникод
+#
+# print('Привет')
+# print(u'Привет')
+#
+# # 2 добавляет экранирование
+#
+# print('C:\\folder\\file.txt')
+# print(r'C:\folder\file.txt')
+# # Убирает слэш
+#
+# print(r'C:\\folder\\file.txt\\'[:-1])
+# print(R'C:\\folder\\file.txt' + '\\')
+
+# 3 f строка
+
+# name = 'Саша'
+# age = 39
+# print(f'Меня зовут {name}. Мне {age} лет')
+#
+# # Уберем лишние цифры после точки
+#
+# m = 2.682869
+# print(f'Число: {round(m, 2)}')
+# print(f'Число: {m:.3f}')
+
+# 4 Присваиваем сразу значение переменной
+# x = 10
+# y = 5
+# print('x = ', x, ', y = ', y, sep='')  # ставим пробелы что бы их убрать
+# print(f'{x = }, {y = }')
+
+# 5 Арифметические действия
+# x = 10
+# y = 5
+# print(f'{x} x {y} / 2 = {x * y / 2}')
+
+# 6 Убираем фигурные скобки  или добавляем
+
+# num = 74
+# print(f'{num}')
+# print(f'{{num}}')
+# print(f'{{{num}}}')
+# print(f'{{{{num}}}}')
+# print(f'{{{{{num}}}}}')
+
+# 7 Собираем путь к каталогу через переменные
+# dir_name = 'my_doc'
+# file_name = 'data.txt'
+# print(fr'home\{dir_name}\{file_name}')
+# print('home\\' + dir_name + '\\' + file_name)
+
+
+#### Типы кавычек используются для документирования функций
+#
+# s ="""
+# Многостро'чный' "новый"
+# текст
+# """
+#
+# print(s)
+#
+# s1 = '''
+# Многострочный
+# '''
+# print(s1)
+
+
+# Документация на функции
+
+# def square(n):
+#     """Принимает число n, возвращает квадрат числа n"""
+#     return n ** 2
+#
+#
+# print(square(5))
+# print(square.__doc__)
+# print(sum.__doc__)
+
+
+
+#### Пример документации
+
+# from math import pi
+#
+#
+# def cylinder(r,h):
+#     """
+#     Вычисляет площадь цилиндра.
+#
+#     Вычисляет площадь цилиндра на основании заданной высоты и радиуса основания
+#
+#     :param r: положительное число, радиус основания цилиндра
+#     :param h: положительное число, высота цилиндра
+#     :return: положительное число, площадь цилиндра
+#     """
+#     return 2 * pi * r * (r + h)
+#
+#
+# print(cylinder(2,4))

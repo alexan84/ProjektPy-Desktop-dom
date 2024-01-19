@@ -1,22 +1,30 @@
+# DZ 17 - даны два числа a = 122, b = 97, где a и b - коды символов.Нужно вывести все символы,
+# ASCII- коды которых лежат между
+# a и b включительно, в порядке возрастания их кодов
+
+a = 122
+b = 97
+print(*(chr(x) for x in range(a, b + 1)) if a < b else (chr(x) for x in range(b, a + 1)))
+
 # DZ 16 - Создать функцию,которая находит сумму чисел и декоратор,
 # который находит среднее арифметическое этих чисел
 
-def an(num):
-    def wrap(*args):
-        c = num(*args) / len(args)
-        print('Среднее арифметическое', c)
-
-    return wrap
-
-
-@an
-def ms(*args):
-    a = sum(args)
-    print('Сумма чисел:', a)
-    return a
-
-
-ms(2, 3, 3, 4)
+# def an(num):
+#     def wrap(*args):
+#         c = num(*args) / len(args)
+#         print('Среднее арифметическое', c)
+#
+#     return wrap
+#
+#
+# @an
+# def ms(*args):
+#     a = sum(args)
+#     print('Сумма чисел:', a)
+#     return a
+#
+#
+# ms(2, 3, 3, 4)
 
 # DZ 15 - Создать лямбда-выражения для нахождения площадей фигур
 #

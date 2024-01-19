@@ -3264,3 +3264,49 @@ import time
 #
 #
 # print(cylinder(2,4))
+
+
+
+# Коды символов
+# print(ord('a'))  # 97
+# print(ord('й'))  # 1081
+
+###  Пример в цикле находим любой код любого введеного символа
+
+# while True:
+#     n = input("->")
+#     if n != '-1':
+#         print(ord(n))
+#     else:
+#         break
+
+
+####### Задача на уроке - дана строка ,нужно вывести ее аски коды
+# и отсортировать в будующем введение символы юзер
+
+# s = 'Test string for me'
+# arr = [ord(x) for x in s]
+# print('ASCII коды:',arr)
+# arr = [int(sum(arr) / len(arr))] + arr
+# print('Среднее арифметическое:',arr)
+# arr += [ord(x) for x in input('->')[:3] if ord(x) not in arr]
+# print(arr)
+# print(arr.count(arr[-1]) - 1)
+# arr.sort(reverse=True)
+# print(arr)
+
+
+#  По коду получаем символ
+#
+# print(chr(97))
+# print(chr(1048))
+# print(chr(8364))
+
+
+### Пример сравнения строк по кодам символов
+#
+# print('apple' == 'Apple')  # 97 == 65
+# print('apple' > 'Apple')  # 97 > 65
+#
+# print(ord('a'))
+# print(ord('A'))

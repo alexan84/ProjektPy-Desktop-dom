@@ -3244,7 +3244,6 @@ import time
 # print(sum.__doc__)
 
 
-
 #### Пример документации
 
 # from math import pi
@@ -3264,7 +3263,6 @@ import time
 #
 #
 # print(cylinder(2,4))
-
 
 
 # Коды символов
@@ -3310,3 +3308,194 @@ import time
 #
 # print(ord('a'))
 # print(ord('A'))
+
+
+### ----------------------------  Урок 18
+
+# Создадим программу которая генерирует случайный пароль
+
+# from random import randint
+#
+# SHORTEST = 7
+# LONGTEST = 10
+# MIN_ASCII = 33
+# MAX_ASCII = 126
+#
+#
+# def random_password():
+#     random_length = randint(SHORTEST,LONGTEST)
+#     result = ''
+#     for i in range(random_length):
+#         result += chr(randint(MIN_ASCII,MAX_ASCII))
+#     return result
+#
+#
+# print('Ваш случайный пароль:', random_password())
+
+
+######### Методы строк
+
+###  Изменение регистров разных букв в строках
+
+# s = 'hello, WORLD! I am learning Rython'
+# print(s.capitalize())
+# print(s.lower())
+# print(s.upper())
+# print(s.swapcase())
+# print(s.title())
+
+# ### подсчет вхождений точных подстроки в строку
+# s = 'hello, WORLD! I am learning Rython'
+# print(s)
+# print(s.count('h'))
+# print(s.count('h', 1, -4))  # с заданным диапазоном от какого и до какого символа проверять
+
+# индекс вхождения
+# s = 'hello, WORLD! I am learning Rython'
+# print(s.find('Rython',10, -20))  # с диапазоном поиска если не находит то -1 выводится
+# print(s.find('l'))
+# print(s.rfind('l'))  # с конца ищет
+#
+# print(s.index('l'))  # возвращает индекс или ошибку
+# print(s.rindex('l'))
+
+
+### Задача на уроке - переставить два слова в строке местами
+# _s = input('Введите два слова через пробел: ')
+# first = _s[:_s.find(' ')]
+# second = _s[_s.find(' ') + 1:]
+# print(second + ' ' + first)
+
+
+## Ищем начинается ли строка с заданного символа
+# s = 'hello, WORLD! I am learning Rython'
+# print(s.startswith('hello'))
+# print(s.find('I am'))
+# print(s.startswith('I am', 14))
+#
+# print(s.endswith('on'))
+# print(s.endswith('lo',3,5))
+
+
+## Проверяем состоит ли стока только из букв или только из цифр(пробелы ,тире и прочее не считаются)
+# s = 'hello, WORLD! I am learning Rython'
+# print('abc123'.isalpha())
+# print('abcABC'.isalpha())
+# print(''.isalpha())
+# print('123'.isdigit())
+# print('123.234'.isdigit())
+#
+# print('abc123'.isalnum())
+# print('abcA123'.isalnum())
+
+
+## Проверяем находятся ли буквы в верхнеи или нижнем регистре
+# s = 'hello, WORLD! I am learning Rython'
+# print('abc'.islower())
+# print('!abc456A'.islower())
+#
+# print('!456A'.isupper())
+# print('!456Aa'.isupper())
+#
+# # Выровним строку по центру
+# print('py'.center(10,'-'))
+# print('py'.center(11,'-'))
+#
+# # Уберем пробельные символы
+# print(' py'.lstrip())
+# print('py    '.rstrip())
+# print('    py   '.strip())
+#
+# # Удалим заданные символы и как только удалим при первом нахождении то остальные не удаем
+# print('https://www.python.org'.lstrip())
+# print('https://www.python.org'.lstrip('/:pths').rstrip('.org'))
+# print('https://www.python.org'.strip('/:pths.org'))
+
+# ##  Задача на уроке - заменим нужное слово и нужное количество раз
+# str1 = "Я изучаю Nython. Мне нравится Nython. Nython очень интересный язык программирования."
+# print(str1)
+# print(str1.replace('Nython', 'Python', 2))
+
+
+# Разделяем заданные символы заданным символом
+# s1 = '-'
+# seq = ('a','b','c')
+# print(s1.join(seq))
+# print('..'.join(['1','2']))  # объединяет итерируемый последовательность (состоит из строк) в строку
+# print(':'.join('Hello'))
+
+## Разделим строку на список из элементов этой строке разделенных пробелом
+# s = 'hello, WORLD! I am learning Rython'
+# print(s.split())
+# print('www.python.org.ru'.split('.',2))  # посл два не разделяет а ниже первые не разделяет
+# print('www.python.org.ru'.rsplit('.',2))
+
+
+# Юзер вводит фамили имя отчество а прога выводит инициалы
+# a = input('Введите ФИО: ').split()
+# print(a)
+# print(a[0], a[1][0] + '.', a[2][0] + '.')
+
+
+
+####### Primer  получим либо строку либо числа
+# a = input('Введите коды символов через пробел: ').split()
+# print(a)
+#
+# b = list(map(int,a))
+# print(b)
+
+
+
+
+
+#### ________ Работа с регулярными выражениями
+
+import re
+# s = 'Я ищу совпадения в 2024 году. И я их найду в 2 счёта.'
+# reg = 'совпадения'
+# print(re.findall(reg,s))  # список содержащий все совпадения с шаблоном
+#
+# print(re.search(reg,s))  # месторасположение  первого совпадения с шаблоном
+# print(re.search(reg,s).span())  # (6, 16)
+#
+# print(re.search(reg,s).start())  # 6
+# print(re.search(reg,s).end())  # 16
+#
+# print(re.search(reg,s).group())  # совпадения
+
+
+#######
+# s = 'Я ищу совпадения в 2024 году. И я их найду в 2 счёта.'
+# reg = 'совпадения'
+# print(re.match(reg,s))  # Возвращаетместорасположение совпадения с шаблоном,в начале строки
+
+
+#########
+# s = 'Я ищу совпадения в 2024 году. И я их найду в 2 счёта.'
+# reg = '[.я2]'
+# print(re.split(reg,s))  # возвращает список,в котором строка разбита по шаблону
+
+
+#############
+# s = 'Я ищу совпадения в 2024 году. И я их найду в 2 счёта.'
+# reg = r'\.'
+# print(re.sub(reg,'!',s,1))  # поиск и замена (можно по количеству)
+
+
+###########
+# s = 'Я ищу совпадения в 2024 году. И я их найду в 2 счёта.'
+# reg1 = r'[12][0-9][0-9][0-9]'
+# reg = r'[А-яЁё]'
+# print(re.findall(reg1,s))
+# print(re.findall(reg,s))
+#
+# print(ord('а'))
+# print(ord('я'))
+# print(ord('ё'))
+
+
+#############
+s = 'Я ищу совпадения в 2024 году. И я их найду в 2 счёта.'
+reg = r'[^0-9]'
+print(re.findall(reg,s))

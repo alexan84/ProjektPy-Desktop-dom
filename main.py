@@ -3437,7 +3437,6 @@ import time
 # print(a[0], a[1][0] + '.', a[2][0] + '.')
 
 
-
 ####### Primer  получим либо строку либо числа
 # a = input('Введите коды символов через пробел: ').split()
 # print(a)
@@ -3446,12 +3445,10 @@ import time
 # print(b)
 
 
-
-
-
 #### ________ Работа с регулярными выражениями
 
 import re
+
 # s = 'Я ищу совпадения в 2024 году. И я их найду в 2 счёта.'
 # reg = 'совпадения'
 # print(re.findall(reg,s))  # список содержащий все совпадения с шаблоном
@@ -3507,3 +3504,97 @@ import re
 # st = "Час в 24-часовом формате от 00 до 23. 2021-06-15Е21:45. Минуты, в диапазоне от 00 до 59. 2021-06-15T01:09."
 # reg = r'[0-2][0-9]:[0-5][0-9]'
 # print(re.findall(reg,st))
+
+
+# Ищем нужные цифры в строке
+# d = 'Цифры: 7, +17, --42, 0.3'
+# print(re.findall(r'[+-]?\d+[.\d]*',d))
+
+
+######## Удалим все после решетки и заменим тире на точку
+# st = '05-03-1987 # Дата рождения'
+# print('Дата рождения:', re.sub('-', '.',re.sub(r'#.*','',st)))
+
+
+### Задача на уроке - Написать регулярное выражение для нахождения всех ключей
+# и значей(ищем элементы от одного до любого количества повторений пока
+# не встречается точка с запятой)
+
+# st = 'author=Пушкин А.С.; title = Евгений Онегин; prise =200; year= 1831'
+# reg = r'\w+\s*=\s*[^;]+'
+# print(re.findall(reg,st))
+
+
+### Найдем числа который состоят из двух трех или четырех символов
+
+# st = '12 сентябра 2021 года 79456713687122'
+# reg = r'\d{2,4}'
+# print(re.findall(reg,st))
+
+
+# Задача найти номер телефона
+# 1
+# st = '+7 499 456-45-76, +74994564576, 74994564576'
+# reg = r'\+?7\d*'
+# print(re.findall(reg,st))
+# # 2
+# st = '+7 499 456-45-76, +74994564576, 74994564576'
+# reg = r'\+?7\d{10}'
+# print(re.findall(reg,st))
+
+
+# Проверим валидность пароля на определенные символы
+
+# def valid_login(name):
+#     return re.findall(r'^[A-Za-z0-9_-]{6,16}$',name)
+#
+#
+# print(valid_login('Python_master'))
+# print(valid_login('Python@master'))
+
+## Флаги
+
+# print(re.findall(r'\w+','12 + й'))
+# print(re.findall(r'\w+','12 + й',flags=re.ASCII))
+# print(re.findall(r'\w+','12 + й',flags=re.A))
+# print(re.findall(r'\w+','12 + й',re.A))
+
+
+###
+
+# text = 'hello world'
+# # print(re.findall(r'\w+',text))
+# print(re.findall(r'\w+',text,re.DEBUG))
+
+##Найдем букву я в разных регистрах
+
+# s = 'Я ищу совпадения в 2024 году. И я их найду в 2 счёта'  #. 198765 Hel_lo[-World] 2000010 002000'
+# reg = r'я'
+# print(re.findall(reg,s,re.IGNORECASE))
+
+
+####
+# text = '''
+# one
+# two
+# '''
+# # print(re.findall(r'one.\w+', text))
+# # print(re.findall(r'one.\w+', text,re.DOTALL))
+# print(re.findall(r'one$',text))
+# print(re.findall(r'one$',text,re.MULTILINE))
+
+### Игнорируем пробелы и переносы в написанном коде для поиска нужных символов
+
+# print(re.findall(r'''
+# [a-z.-]+    # 1
+# @           # @
+# [a-z.-]+    # 2
+# ''','test@mail.ru',re.VERBOSE))
+
+
+##
+# text = '''Python,
+# python,
+# PyTHON'''
+# reg = '(?mi)^python'
+# print(re.findall(reg, text))

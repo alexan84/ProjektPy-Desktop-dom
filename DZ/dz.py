@@ -1,7 +1,15 @@
-# DZ 19 - Найти адрес электронной почты
+# DZ 20 - валидация номера телефона
 import re
-st = '123456@i.ru, 123_456@ru.name.ru, login@i.ru, логин-1@i.ru, login.3@i.ru, login.3-67@i.ru, 1login@ru.name.ru'
-print(re.findall( r"[\w._-]+@[\w._-]+\.[\w.]+", st))
+st = '+7 499 456-45-78, +74994564578, 7 (499) 456 45 78, 7 (499) 456-45-78'
+print(re.findall( r"(?:(?:8|\+7)[\- ]?)?(?:\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}", st))
+
+
+
+
+# DZ 19 - Найти адрес электронной почты
+# import re
+# st = '123456@i.ru, 123_456@ru.name.ru, login@i.ru, логин-1@i.ru, login.3@i.ru, login.3-67@i.ru, 1login@ru.name.ru'
+# print(re.findall( r"[\w._-]+@[\w._-]+\.[\w.]+", st))
 
 
 

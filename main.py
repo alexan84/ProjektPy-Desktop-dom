@@ -3722,5 +3722,182 @@ import re
 # print(re.sub(reg, r'http://\1', s, re.IGNORECASE))
 
 
+### ---------------- Урок 21 ----- Рекурсия - это функция которая вызывает саму себя
 
-### ---------------- Урок 21
+#### Пример пишем функцию для спуска по этажам подъезда
+
+# def elevator(n):
+#     if n == 0:
+#         print('Вы в подвале')
+#         return
+#     print('=>',n)
+#     elevator(n -1)
+#     print(n,end=' ')
+#
+#
+# n1 = int(input('На каком вы этаже: '))
+# elevator(n1)
+
+
+### Задача на уроке -  найти сумму элементов списка
+
+## 1 С помощью обычного цикла фор
+
+# def sum_list(lst):
+#     res = 0
+#     for i in lst:
+#         res += i
+#     return res
+
+
+## 2  С помощью рекурсии
+# def sum_list(lst):
+#     if len(lst) == 1:
+#         print(lst,'=> lst[0]',lst[0])
+#         return lst[0]  # 9
+#     else:
+#         print(lst, '=> lst[0]', lst[0])
+#         return lst[0] + sum_list(lst[1:])  # 1 + 3 + 5 + 7
+#
+#
+# print(sum_list([1,3,5,7,9]))
+
+
+### Задача пишем число и систему исчесления в которую это число переведется
+# def to_str(n, base):  # n = 3
+#     convert = '0123456789ABCDEF'
+#     if n < base:  # 3 < 10
+#         return convert[n]  # '3'
+#     else:
+#         return to_str(n // base, base) + convert[n % base]  # convert[6] => '5' '6'
+#
+#
+# print(to_str(365, 10))
+
+### Первод в шестнадцатиричную систему
+
+# def to_str(n, base):  # n = 254
+#     convert = '0123456789ABCDEF'
+#     if n < base:  # 254 < 16
+#         return convert[n]  # convert[15] => 'F'
+#     else:
+#         return to_str(n // base, base) + convert[n % base]  # convert[14] => 'E'
+#
+#
+# print(to_str(254, 16))
+
+
+#### Пример Составим вложенные списки и посчитаем сколько всего элементов в списке
+
+# names = ['Adam', ['Bob', ['Chet', 'Cat'], 'Bard', 'Bert'], 'Alex', ['Bea', 'Bill'], 'Ann']
+# print(names)
+# print(names[0])
+# print(isinstance(names[0], list))
+# print(names[1])
+# print(isinstance(names[1], list))
+# print(names[1][1])
+# print(isinstance(names[1][1], list))
+# print(names[1][1][0])
+# print(isinstance(names[1][1][0], list))
+#
+#
+# def count_item(lst):
+#     count = 0
+#     for item in lst:
+#         if isinstance(item,list):
+#             count += count_item(item)
+#         else:
+#             count += 1
+#     return count
+#
+#
+# print(count_item(names))
+
+
+#### Пример удалим пробелы и табуляцию из строки
+
+# def remove(text):
+#     if not text:
+#         return ""
+#     if text[0] == "\t" or text[0] == " ":
+#         return remove(text[1:])
+#     else:
+#         return text[0] + remove(text[1:])
+#
+#
+# print('   Hello\tWorld                      a')
+# print(remove('   Hello\tWorld                      a'))
+
+
+####------------------------------ Файлы
+
+
+# Текстовые
+# Бинарные
+
+# # f = open(r'C:\Users\blend\Desktop\PYTHON\test.txt', 'r')  # mode='r'
+# f = open('test.txt', 'r')  # mode='r'
+# print(*f)
+# print(f)
+# f.close()
+# print(f.closed)
+# print(f.mode)
+# print(f.name)
+# print(f.encoding)
+
+
+# f = open('test.txt', 'r')
+# print(f.read(3))
+# print(f.read())
+# f.close()
+
+
+# f = open('test1.txt', 'r')
+# # print(f.read())
+# print(f.readline())  # Считалаи оодну строку из файла
+# print(f.readline(8))
+# print(f.readline())
+# print(f.readline())
+# f.close()
+
+#
+# f = open('test1.txt', 'r')
+# print(f.readlines(16))
+# print(f.readlines())  # считали все данные из файла и вернули список строк
+# f.close()
+
+
+# f = open('test1.txt', 'r')
+# for line in f:
+#     print(line)
+# f.close()
+
+
+## Задача - посчитать количество строк в файле
+
+# f = open('test1.txt', 'r')
+# count = 0
+# for line in f:
+#     print(line)
+#     count += 1
+# f.close()
+# print(count)
+
+
+## Создадим файл
+# f = open('xyz.txt', 'w')
+# f.write('Hello\nWorld!\n')
+# f.close()
+
+
+# Добавляет текст в конец файла
+# f = open('xyz.txt', 'a')
+# f.write('Hello\n')
+# f.close()
+
+
+# Перезаписывает файл в одну строку
+f = open('xyz.txt', 'w')
+line = ['This is line 1\n', 'This is line 2']
+f.writelines(line)
+f.close()

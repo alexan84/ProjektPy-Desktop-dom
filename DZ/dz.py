@@ -1,20 +1,56 @@
+# DZ 22 - Обмен местами двух строк в файле
+
+# # Создадим файли закоментируем его
+# f = open('text2.txt','w')
+# f.write('Замена строки в текстовом файле;\nизменить строку в списке;\nзаписать список в файл;\n')
+# f.close()
+
+# Считываем данные файла и записываем в переменную
+f = open("text2.txt", "r")
+rl = f.readlines()
+f.close()
+
+# Заменили по индексу вторую строку
+print(rl)
+rl[1] = rl[0] # 'Hello World\n'
+print(rl)
+
+pos = int(input('Введите индекс для замены: '))
+if 0 <= pos < len(rl):
+    rl.pop(pos)
+else:
+    print('Индекс введен не верно')
+
+
+# Только тут перезапишем в самом файле нужный элемент
+f = open("text2.txt","w")
+f.writelines(rl)
+f.close()
+
+
+
+
+
+
+
+
 # DZ 21 - Вычислить количество отрицательных чисел в массиве(списке)
 
 
-def count(lst):
-    if len(lst) == 1:
-        if lst[0] < 1:
-            return 1
-        else:
-            return 0
-    else:
-        if lst[0] < 1:
-            return 1 + count(lst[1:])
-        else:
-            return count(lst[1:])
-
-
-print("count ", count([-2, 3, 8, -11, -4, 6,]))
+# def count(lst):
+#     if len(lst) == 1:
+#         if lst[0] < 1:
+#             return 1
+#         else:
+#             return 0
+#     else:
+#         if lst[0] < 1:
+#             return 1 + count(lst[1:])
+#         else:
+#             return count(lst[1:])
+#
+#
+# print("count ", count([-2, 3, 8, -11, -4, 6,]))
 
 
 

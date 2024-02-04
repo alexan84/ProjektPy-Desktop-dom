@@ -3897,7 +3897,189 @@ import re
 
 
 # Перезаписывает файл в одну строку
-f = open('xyz.txt', 'w')
-line = ['This is line 1\n', 'This is line 2']
-f.writelines(line)
-f.close()
+# f = open('xyz.txt', 'w')
+# line = ['This is line 1\n', 'This is line 2']
+# f.writelines(line)
+# f.close()
+
+
+########-------------------------------- Уроку 22
+
+# f = open('xyz.txt', 'w')
+# lst = [str(i) for i in range(1,20)]
+# print(lst)
+# for index in lst:
+#     f.write(index + '\t')
+# f.close()
+
+
+### Задача - заменить 2 строку на другие значения
+# Создадим файли закоментируем его
+# f = open('text2.txt','w')
+# f.write('Замена строки в текстовом файле;\nизменить строку в списке;\nзаписать список в файл;\n')
+# f.close()
+#
+# # Считываем данные файла и записываем в переменную
+# f = open("text2.txt", "r")
+# rl = f.readlines()
+# f.close()
+#
+# # Заменили по индексу вторую строку
+# print(rl)
+# rl[1] = 'Hello World\n'
+# print(rl)
+#
+# # Только тут перезапишем в самом файле нужный элемент
+# f = open("text2.txt","w")
+# f.writelines(rl)
+# f.close()
+
+
+# Задача удалить выбранную строчку юзером
+
+# f = open('text2.txt','w')
+# f.write('Замена строки в текстовом файле;\nизменить строку в списке;\nзаписать список в файл;\n')
+# f.close()
+
+# filename = "text2.txt"
+# f = open(filename, "r")
+# rl = f.readlines()
+# f.close()
+#
+# print(rl)
+#
+# pos = int(input('Введите индекс для удаления: '))
+# if 0 <= pos < len(rl):
+#     rl.pop(pos)
+# else:
+#     print('Индекс введен не верно')
+#
+# print(rl)
+#
+# f = open(filename, "w")
+# f.writelines(rl)
+# f.close()
+
+
+# Дополнительные методы
+
+# f = open('test.txt','r')
+# print(f.read(3))
+# print(f.tell())  # возвращает текущую позицию условного курсора
+# print(f.seek(1))  # переместил условный курсор в заданную позицию
+# print(f.read())
+# print(f.tell())
+# f.close()
+
+
+# Перезапишем файл и поставим курсор в начало строки
+# f = open('test.txt','r+')
+# print(f.write('I am learning Python'))
+# print(f.tell())
+# print(f.seek(3))
+# print(f.write('-туц ые-'))
+# print(f.tell())
+# f.close()
+
+
+# Перезапишем файл и в цикле пройдемся по символам и выведем нужный диапазон
+# with open('test.txt','w+') as f:
+#     print(f.write('01234\n56789'))
+#
+# with open('test.txt','r') as f:
+#     for line in f:
+#         print(line[:3])
+
+
+# Список преобразуем в строку и запишем в файл - тут ошибка
+# file_name = 'res_1.txt'
+# lst = [4.5, 2.8, 3.9, 1.0, 0.3, 4.33, 7.777]
+#
+#
+# def get_line(lt):
+#     lt = list(map(str, lt))
+#     print(lt)
+#     return ''.join(lt)
+#
+#
+# with open(file_name, 'w') as f:
+#     f.write(get_line(lst))  # [4.5,2.8,3.9,1.0,0.3,4.33,7.777]
+#
+# # Прочтем файл
+# with open(file_name, 'r') as f:
+#     nums = f.read()
+#
+# print(nums)
+#
+# nums_list = list(map(float, nums.split()))  # не удалось преобразовать строку в число с плавающей запятой
+# print(nums_list)
+# print(sum(nums_list))
+# print(len(nums_list))
+# print('Done!')
+
+
+## Задача вывести из файла слово максимальной длины или несколько таких слов
+
+
+# def longest_worlds(file):
+#     with open(file,'r',encoding='utf-8') as text:
+#         w = text.read().split()
+#         max_length = len(max(w,key=len))  # Длина самого длинного слова
+#         print(max_length)
+#         res = [word for word in w if len(word) == max_length]
+#         if len(res) == 1:
+#             return res[0]
+#         return res
+#
+#
+# print(longest_worlds('worlds.txt'))
+
+
+
+## Работа контекстного менеджера с несколькими файлами параллельно
+#
+# one = 'one.txt'
+# two = 'two.txt'
+#
+# # text = "Строка №1\nСтрока №2\nСтрока №3\nСтрока №4\nСтрока №5\nСтрока №6\nСтрока №7\nСтрока №8\nСтрока №9\nСтрока №10\n"
+# #
+# # with open(one,'w') as f:
+# #     f.write(text)
+#
+# with open(one,'r') as fr, open(two,'w') as fw:
+#     for line in fr:
+#         line = line.replace('Строка','Линия -')
+#         fw.write(line)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

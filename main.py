@@ -4052,6 +4052,170 @@ import re
 #         fw.write(line)
 
 
+#####--------------------- Урок 23
+
+# Модуль OS и OS.PATH
+
+import os
+# import os.path
+
+
+
+# print(os.getcwd())  # Путь к текущей директории
+# print(os.listdir())  # Список директорий и файлов
+# print(os.listdir('..'))
+
+# os.mkdir('folder1')  # Создание одной папки
+# os.makedirs('nested1/nested2/nested3')  # создание папки в паках с промежуточными директорими
+# os.rmdir('folder1')  # удаление папки
+# os.remove('folder1/test.txt')  # удаление папки
+# os.remove('xyz.txt')  # Удаление файла
+
+# os.rename('nested1','test')  # Переименовать папку
+# os.rename('worlds.txt','test/words_new.txt')  # переименовали файл и переместили в заданную директорию
+# os.rename('test1.txt','folder1/file.txt')  # переименовали файл и переместили в заданную директорию и приэтом может создать промежуточные директории
+
+
+## Проходим по выбранной папке и просмотримвсе её вложенные папки и файлы
+# for root,dirs,files in os.walk('test',topdown=True):
+#     print('Root',root)
+#     print('Subdirs',dirs)
+#     print('Files',files)
+
+
+### Задача - удалить пустые директории в ветки
+# def remove_empty_dirs(root_tree):
+#     print(f'Удаление пустых директорий в ветви {root_tree}')
+#     print('-' * 50)
+#
+#     for root, dirs, files in os.walk(root_tree):
+#         if not os.listdir(root):
+#             os.rmdir(root)
+#             print(f'Директория {root} удалена')
+#
+#
+#     print('-' * 50)
+#
+# remove_empty_dirs('test')
+
+# по индексу
+# print(os.path.split(r'C:\ProjektPy-Desktop-dom\test\folder1\file.txt'))
+# print(os.path.dirname(r'C:\ProjektPy-Desktop-dom\test\folder1\file.txt'))
+# print(os.path.basename(r'C:\ProjektPy-Desktop-dom\test\folder1\file.txt'))
+# # создадим новый путь из строк выше
+# print(os.path.join(r'C:\ProjektPy-Desktop-dom','folder1'))
+
+
+
+## Задача - создать прогу которая создаст дерево директорий и файлов,
+# заполнить текстом и снизу вверх и сверху вниз выполнить обход и вывести данные на экран
+
+# создадим список из начальной и конечной директории и в цикле пройдемся по ним и создадим ветку
+# dirs = [r'Work\F1', r'Work\F2\F21']
+# for d in dirs:
+#     os.makedirs(d)
+
+# создадим переменную с ключем и значением
+# files = {
+#     'Work' : ['w.txt'],
+#     r'Work\F1' : ['f11.txt', 'f12.txt', 'f13.txt'],
+#     r'Work\F2\F21' : ['f211.txt', 'f212.txt',],
+# }
+# #
+# # # С помощью метода создадим из разных частей один общий путь(d это ключ  f это значение)
+#
+# for d, f in files.items():
+#     for file in f:
+#         file_path = os.path.join(d, file)
+#         open(file_path,'w').close()
+
+# заполним файлы текстом
+
+# files_with_text = [r'Work\w.txt',r'Work\F1\f12.txt', r'Work\F2\F21\f211.txt', r'Work\F2\F21\f212.txt']
+# for file in files_with_text:
+#     with open(file, 'w') as f:
+#         f.write(f'Какой то текст для файла по пути: {file}')
+
+
+
+# Work\w.txt
+# Work\F1\f11.txt
+# Work\F1\f12.txt
+# Work\F1\f13.txt
+# Work\F2\F21\f211.txt
+# Work\F2\F21\f212.txt
+
+# Выполняем обход дерева
+
+# def print_tree(root,topdown):
+#     print(f"Обход {root} {'сверху вниз' if topdown else 'снизу вверх'}")
+#     for root,dirs,files in os.walk(root,topdown):
+#         print(root)
+#         print(dirs)
+#         print(files)
+#     print("-" * 50)
+#
+#
+# print_tree('Work',False)
+# print_tree('Work',True)
+
+
+
+
+##################
+
+# print(os.path.exists(r'C:\Users\blend\Desktop\PYTHON\test\words_new.txt'))  # проверяет существование пути
+#
+# print(os.path.isfile(r'C:\Users\blend\Desktop\PYTHON\words_new.txt'))  # проверяет что указанный путь является правильным путем к файлу
+#
+# print(os.path.isdir(r'C:\Users\blend\Desktop\PYTHON\test'))  # проверяет что указанный путь является правильным путем к папке
+
+
+
+###########
+
+import time
+
+# path = 'main.py'
+# # print(os.path.getsize(path))  # возвращает размер в байтах
+# # print(os.path.getsize(path) / 1024)  # в килобайтах
+#
+# print(time.strftime('%d.%m.%Y, %H:%M:%S', time.localtime(os.path.getatime(path))))  # время последнего доступа к файлу(без модуля time пишется в секундах)
+# print(time.strftime('%d.%m.%Y, %H:%M:%S', time.localtime(os.path.getctime(path))))  # время создания файла
+# print(time.strftime('%d.%m.%Y, %H:%M:%S', time.localtime(os.path.getmtime(path))))  #  время последнего изменения файла
+
+
+##### Задача - написать прогу которая проверяет существует ли файл и если да то вывести его данные
+
+file_path = r'test\folder1\file.txt'
+if os.path.exists(file_path):
+    dirs, name = os.path.split(file_path)
+    print(f'{name} ({dirs}) - последний доступ к файлу: {os.path.getatime(file_path)}')
+else:
+    print(f'Файл {file_path} не существует')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

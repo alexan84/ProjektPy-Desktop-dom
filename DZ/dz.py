@@ -1,3 +1,18 @@
+# DZ 23 - просканировать директорию и вывести размер и название файлов и папок
+import os
+import time
+
+file_path = r'test\folder1\file.txt'
+if os.path.exists(file_path):
+    dirs, name = os.path.split(file_path)
+    print(f'{name} - {os.path.getsize(file_path)} bytes ')
+    print(f'{dirs} - dir ')
+else:
+    print(f'Файл {file_path} не существует')
+
+
+
+
 # DZ 22 - Обмен местами двух строк в файле
 
 # # Создадим файли закоментируем его
@@ -6,26 +21,26 @@
 # f.close()
 
 # Считываем данные файла и записываем в переменную
-f = open("text2.txt", "r")
-rl = f.readlines()
-f.close()
-
-# Заменили по индексу вторую строку
-print(rl)
-rl[1] = rl[0] # 'Hello World\n'
-print(rl)
-
-pos = int(input('Введите индекс для замены: '))
-if 0 <= pos < len(rl):
-    rl.pop(pos)
-else:
-    print('Индекс введен не верно')
-
-
-# Только тут перезапишем в самом файле нужный элемент
-f = open("text2.txt","w")
-f.writelines(rl)
-f.close()
+# f = open("text2.txt", "r")
+# rl = f.readlines()
+# f.close()
+#
+# # Заменили по индексу вторую строку
+# print(rl)
+# rl[1] = rl[0] # 'Hello World\n'
+# print(rl)
+#
+# pos = int(input('Введите индекс для замены: '))
+# if 0 <= pos < len(rl):
+#     rl.pop(pos)
+# else:
+#     print('Индекс введен не верно')
+#
+#
+# # Только тут перезапишем в самом файле нужный элемент
+# f = open("text2.txt","w")
+# f.writelines(rl)
+# f.close()
 
 
 

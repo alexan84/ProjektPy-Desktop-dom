@@ -4035,7 +4035,6 @@ import re
 # print(longest_worlds('worlds.txt'))
 
 
-
 ## Работа контекстного менеджера с несколькими файлами параллельно
 #
 # one = 'one.txt'
@@ -4058,7 +4057,6 @@ import re
 
 import os
 # import os.path
-
 
 
 # print(os.getcwd())  # Путь к текущей директории
@@ -4106,7 +4104,6 @@ import os
 # print(os.path.join(r'C:\ProjektPy-Desktop-dom','folder1'))
 
 
-
 ## Задача - создать прогу которая создаст дерево директорий и файлов,
 # заполнить текстом и снизу вверх и сверху вниз выполнить обход и вывести данные на экран
 
@@ -4137,7 +4134,6 @@ import os
 #         f.write(f'Какой то текст для файла по пути: {file}')
 
 
-
 # Work\w.txt
 # Work\F1\f11.txt
 # Work\F1\f12.txt
@@ -4160,8 +4156,6 @@ import os
 # print_tree('Work',True)
 
 
-
-
 ##################
 
 # print(os.path.exists(r'C:\Users\blend\Desktop\PYTHON\test\words_new.txt'))  # проверяет существование пути
@@ -4171,10 +4165,10 @@ import os
 # print(os.path.isdir(r'C:\Users\blend\Desktop\PYTHON\test'))  # проверяет что указанный путь является правильным путем к папке
 
 
-
 ###########
 
 import time
+
 
 # path = 'main.py'
 # # print(os.path.getsize(path))  # возвращает размер в байтах
@@ -4187,46 +4181,188 @@ import time
 
 ##### Задача - написать прогу которая проверяет существует ли файл и если да то вывести его данные
 
-file_path = r'test\folder1\file.txt'
-if os.path.exists(file_path):
-    dirs, name = os.path.split(file_path)
-    print(f'{name} ({dirs}) - последний доступ к файлу: {os.path.getatime(file_path)}')
-else:
-    print(f'Файл {file_path} не существует')
+# file_path = r'test\folder1\file.txt'
+# if os.path.exists(file_path):
+#     dirs, name = os.path.split(file_path)
+#     print(f'{name} ({dirs}) - последний доступ к файлу: {os.path.getatime(file_path)}')
+# else:
+#     print(f'Файл {file_path} не существует')
 
 
+############---------------- Урок    24   ООП
+# Классы и объекты
 
 
+# class Point:
+#     x = 1
+#     y = 2
+#
+#
+# p1 = Point()
+# p1.x = 5
+# p1.y = 25
+# print(p1.x)
+# print(p1.y)
+# print(p1.__dict__)
+# print(id(p1))
+#
+# p2 = Point()
+# p2.x = 10
+# print(p2.x)
+# print(p2.y)
+# print(p2.__dict__)
+# print(id(p2))
+# print(id(Point))
+#
+# print(isinstance(p1, Point))
+# print(isinstance(p2, Point))
 
 
+## Создание методов
+# class Point:
+#     x = 1
+#     y = 2
+#
+#     def set_coord(self,x,y ):
+#         self.x = x
+#         self.y = y
+#         print(self.__dict__)
+#
+#
+# p1 = Point()
+# # p1.x = 5
+# # p1.y = 25
+# p1.set_coord(5,24)
+# # Point.set_coord(p1)
+#
+# p2 = Point()
+# # p2.x = 10
+# # p2.y = 30
+# p2.set_coord(10,30)
 
 
+#### Задача создать класс человек с его параметрами
+# class Human:
+# # создадим свойства
+#     name = 'name'
+#     birthday = '00.00.0000'
+#     phone = '00-00-00'
+#     country = 'country'
+#     city = 'city'
+#     address = 'address'
+# # создаем 1 метод для вывода наших свойств
+#     def print_info(self):
+#         print(' Персональные данные '.center(40,'*'))
+#         print(f'Имя: {self.name}\nДата рождения: {self.birthday}\nНомер телефона: {self.phone}\n'
+#               f'Страна: {self.country}\nГород: {self.city}\nДомашний адрес: {self.address}')
+#         print('=' * 40)
+# # Второй метод для ввода данных
+#     def input_info(self,first_name,birthday,phone,country,city,address):
+#         self.name = first_name
+#         self.birthday = birthday
+#         self.phone = phone
+#         self.country = country
+#         self.city = city
+#         self.address = address
+#
+# # Реализуем доступ к отдельным полям через методы значений класса
+# # Заменим только адрес и имя
+# # 1
+#     def set_address(self,address):  # Устанавливает адрес
+#         self.address = address
+#     def get_address(self):  # Получаем адрес
+#         return self.address
+# # 2
+#     def set_name(self,name):  # Устанавливает name
+#         self.name = name
+#     def get_name(self):  # Получаем name
+#         return self.name
+#
+#
+# h1 = Human()
+# h1.print_info()
+# h1.input_info('Юля','23.05.1986','45-46-98','Россия','Москва','Чистопрудный бульвар,1А')
+# h1.print_info()
+# h1.set_address('ул.Ленина,56')
+# print(h1.get_address())
+# h1.set_name('Юлия')
+# print(h1.get_name())
 
 
+#### Задача создать класс сотрудника с его данными двумя методами (то есть функциями)
+
+# class Person:
+#     skill = 10  # статическое свойство
+#     # name = ''
+#     # surname = ''
+#
+#     def __init__(self,name,surname):
+#         self.name = name  # динамическое свойство
+#         self.surname = surname
+#         print('Инициализатор класса:',self)
+#
+#     def __del__(self):
+#         print('Удаление класса', self)
+#
+#     def print_info(self):
+#         print('Данные сотрудника', self)
+#
+#     def add_skill(self,k):
+#         self.skill += k
+#         print('Квалификация сотрудника', self.skill,end='\n\n')
+#
+#
+# p1 = Person("Виктор","Резник")
+# p1.print_info()
+# p1.add_skill(3)
+# # del p1
+#
+# p2 = Person("Анна","Долгих")
+# p2.print_info()
+# p2.add_skill(2)
 
 
+########## Задача создать роботакоторый должен поздороваться и выключить его
+
+class Robot:
+    k = 0
+
+    def __init__(self, name):
+        self.name = name
+        print('Инициализация робота:', self.name)
+        Robot.k += 1
+
+    def __del__(self):
+        print(self.name, 'Выключается!')
+
+        Robot.k -= 1
+
+        if Robot.k == 0:
+            print(self.name,'был последним')
+        else:
+            print('Работающих роботов осталось:', Robot.k)
+
+    def say_hi(self):
+        print('Приветствую! Меня зовут:', self.name)
 
 
+droid1 = Robot('R2-D2')
+droid1.say_hi()
+print('Численность роботов:', Robot.k)
+
+droid2 = Robot('C-3PO')
+droid2.say_hi()
+print('Численность роботов:', Robot.k)
+
+print('\nЗдесь роботы могут проделывать какую-то работу\n')
+
+print('Роботы закончили свою работу. Давайте их выключим')
 
 
+del droid1
+del droid2
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print('Численность роботов:', Robot.k)
 
 
 

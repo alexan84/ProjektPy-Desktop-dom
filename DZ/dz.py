@@ -1,76 +1,130 @@
-# Dz 24 Создать класс автомобиль
+# Dz 25 Создать сласс прямоугольник
+
+from math import sqrt
 
 
-class Car:
+class Rectangle:
+    def __init__(self, length, height):
+        self.length = length
+        self.height = height
+        self.area = self.length * self.height
+        self.perimeter = 2 * (self.length + self.height)
+        self.diagonal = round(sqrt(self.length ** 2 + self.height ** 2), 2)
 
-    def __init__(
-            self, model, year_of_issue, manufacturer, engine_power, color, price, ):
-        self.model = model
-        self.year_of_issue = year_of_issue
-        self.manufacturer = manufacturer
-        self.engine_power = engine_power
-        self.color = color
-        self.price = price
+    def get_length(self):
+        return f'Длина прямоугольника: {self.length}'
+
+    def get_height(self):
+        return f'Ширина прямоугольника: {self.height}'
+
+    def get_area(self):
+        return f'Площадь прямоугольника: {self.area}'
+
+    def get_perimeter(self):
+        return f'Периметр прямоугольника: {self.perimeter}'
+
+    def get_diagonal(self):
+        return f'Гипотенуза прямоугольника: {self.diagonal}'
 
     def __str__(self):
-        a = 'данные атомобиля '
-        b = f'\nНазвание модели: {self.model}\n' \
-            f'Год выпуска: {self.year_of_issue}\n' \
-            f'Производитель: {self.manufacturer}\n' \
-            f'Мощность двигателя: {self.engine_power} л.с.\n' \
-            f'Цвет машины: {self.color}\n' \
-            f'Цена: {self.price}\n'
-
-        return a + b
-
-    def set_model(self, model):
-        self.model = model
-
-    def get_model(self):
-        return self.model
-
-    def set_year_of_issue(self, year_of_issue):
-        self.year_of_issue = year_of_issue
-
-    def get_year_of_issue(self):
-        return self.year_of_issue
-
-    def set_manufacturer(self, manufacturer):
-        self.manufacturer = manufacturer
-
-    def get_manufacturer(self):
-        return self.manufacturer
-
-    def set_engine_power(self, engine_power):
-        self.engine_power = engine_power
-
-    def get_engine_power(self):
-        return self.engine_power
-
-    def set_color(self, color):
-        self.color = color
-
-    def get_color(self):
-        return self.color
-
-    def set_price(self, price):
-        self.price = price
-
-    def get_price(self):
-        return self.price
+        graphic = ''
+        for i in range(self.length):
+            if i == 0 or i == self.length - 1:
+                graphic += '* ' * self.height + '\n'
+            else:
+                graphic += '* ' + '  ' * (self.height - 10) + '*' + '\n'
+        return graphic
 
 
-if __name__ == '__main__':
-    car = Car(
-        model='X7 M50i',
-        year_of_issue='2021',
-        manufacturer='BMW',
-        engine_power=530,
-        color='white',
-        price=10790000
-    )
+rectangle = Rectangle(3, 9)
+print(rectangle.get_length())
+print(rectangle.get_height())
+print(rectangle.get_area())
+print(rectangle.get_perimeter())
+print(rectangle.get_diagonal())
+print(rectangle)
 
-    print(car)
+
+
+
+
+
+
+
+
+# Dz 24 Создать класс автомобиль
+
+#
+# class Car:
+#
+#     def __init__(
+#             self, model, year_of_issue, manufacturer, engine_power, color, price, ):
+#         self.model = model
+#         self.year_of_issue = year_of_issue
+#         self.manufacturer = manufacturer
+#         self.engine_power = engine_power
+#         self.color = color
+#         self.price = price
+#
+#     def __str__(self):
+#         a = 'данные атомобиля '
+#         b = f'\nНазвание модели: {self.model}\n' \
+#             f'Год выпуска: {self.year_of_issue}\n' \
+#             f'Производитель: {self.manufacturer}\n' \
+#             f'Мощность двигателя: {self.engine_power} л.с.\n' \
+#             f'Цвет машины: {self.color}\n' \
+#             f'Цена: {self.price}\n'
+#
+#         return a + b
+#
+#     def set_model(self, model):
+#         self.model = model
+#
+#     def get_model(self):
+#         return self.model
+#
+#     def set_year_of_issue(self, year_of_issue):
+#         self.year_of_issue = year_of_issue
+#
+#     def get_year_of_issue(self):
+#         return self.year_of_issue
+#
+#     def set_manufacturer(self, manufacturer):
+#         self.manufacturer = manufacturer
+#
+#     def get_manufacturer(self):
+#         return self.manufacturer
+#
+#     def set_engine_power(self, engine_power):
+#         self.engine_power = engine_power
+#
+#     def get_engine_power(self):
+#         return self.engine_power
+#
+#     def set_color(self, color):
+#         self.color = color
+#
+#     def get_color(self):
+#         return self.color
+#
+#     def set_price(self, price):
+#         self.price = price
+#
+#     def get_price(self):
+#         return self.price
+#
+#
+# if __name__ == '__main__':
+#     car = Car(
+#         model='X7 M50i',
+#         year_of_issue='2021',
+#         manufacturer='BMW',
+#         engine_power=530,
+#         color='white',
+#         price=10790000
+#     )
+#
+#     print(car)
 
 # DZ 23 - просканировать директорию и вывести размер и название файлов и папок
 # import os

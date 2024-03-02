@@ -4169,7 +4169,6 @@ import os
 
 import time
 
-
 # path = 'main.py'
 # # print(os.path.getsize(path))  # возвращает размер в байтах
 # # print(os.path.getsize(path) / 1024)  # в килобайтах
@@ -4365,7 +4364,6 @@ import time
 # print('Численность роботов:', Robot.k)
 
 
-
 ### -------------  Урок 25
 
 # Primer 1
@@ -4492,8 +4490,6 @@ import time
 # print(p1.__dict__)
 
 
-
-
 ##### Задача создать класс для преобразования киллограмов в фунты
 
 # class KgToPounds:
@@ -4526,7 +4522,6 @@ import time
 # # print(weight.kg, 'кг => ', end='')
 # # print(weight.to_pounds(), 'фунтов')
 # weight.print_data()
-
 
 
 # Сколько раз вызываласся класс
@@ -4562,7 +4557,6 @@ import time
 #         return number - 1
 #
 # print(Change.increment(10), Change.decrement(10))
-
 
 
 #### Задача подсчет максимума и минимуму и т.п разных аргументов
@@ -4651,7 +4645,6 @@ import time
 # print('Количество подсчетов площади:', Square.get_count())
 
 
-
 # from math import sqrt
 #
 #
@@ -4697,8 +4690,303 @@ import time
 # print(rectangle)
 
 
+#########---------------- Урок 26 --------------------
 
 
+####### Задача преобразуем введеные данные даты в нужный формат
+
+#
+# class Date:
+#     def __init__(self, day, month, year):
+#         self.day = day
+#         self.month = month
+#         self.year = year
+#
+#     @classmethod
+#     def from_string(cls, date_as_string):
+#         day, month, year = map(int, date_as_string.split('.'))
+#         date1 = cls(day, month, year)
+#         return date1
+#
+#     @staticmethod
+#     def is_date_valid(date_as_string):
+#         if date_as_string.count('.') == 2:
+#             day, month, year = map(int, date_as_string.split('.'))
+#             return day <= 31 and month <= 12 and year <= 3999
+#
+#     def string_to_db(self):
+#         return f'{self.year}-{self.month}-{self.day}'
+#
+#
+# dates = [
+#     '30.12.2023',
+#     '30-12-2020',
+#     '01.01.2024',
+#     '12.31.2020'
+# ]
+#
+#
+# for string_date in dates:
+#     if Date.is_date_valid(string_date):
+#         date = Date.from_string(string_date)
+#         print(date.string_to_db())
+#     else:
+#         print('Неправильная дата или формат строки с датой')
+#
+#
+# # date2 = Date.from_string('23.10.2024')
+# # print(date2.string_to_db())
+# # string_date = '23.10.2024'
+# # date = Date(day, month, year)
+# # print(date.string_to_db())
+
+
+### Задача создать класс - аккаун банковског счета со всеми данными
+
+
+# class Account:
+#     # Сначало пишем статические свойства
+#     rate_usd = 0.013
+#     rate_eur = 0.011
+#     suffix = 'RUB'
+#     suffix_usd = 'USD'
+#     suffix_eur = 'EUR'
+#
+#     # Метод оповещающий что счет открыт
+#     # И тут пишем динамические свойства
+#     def __init__(self, surname, num, percent, value=0):
+#         self.surname = surname
+#         self.num = num
+#         self.percent = percent
+#         self.value = value
+#         print(f'Счет{self.num} принадлежащий {self.surname} был открыт.')
+#         print('*' * 50)
+#
+#     # Деструктор - закрытие счета
+#     def __del__(self):
+#         print('*' * 50)
+#         print(f'Счет #{self.num} принадлежащий {self.surname} был закрыт.')
+#
+#     # Метод изменения статических переменных(установка новых значений доллара)
+#     # В разных методах мы по разному обращаемся к переменным класса!!!!!!
+#     @classmethod
+#     def set_usd_rate(cls, rate):
+#         cls.rate_usd = rate
+#     # Меняе значение курса евро
+#     @classmethod
+#     def set_eur_rate(cls, rate):
+#         cls.rate_eur = rate
+#
+#     # Метод конвертации валюты на счете
+#     # Первым создаем статический метод где указывается принцип конвертации валют
+#     # А далее создаем методы под каждую валюту отдельно и там указываем метод принципа конвертации
+#     @staticmethod
+#     def convert(value, rate):
+#         return value * rate
+#
+#     # Метод добавления денег на баланс и вывод остатка
+#     def add_money(self,val):
+#         self.value += val
+#         print(f'{val} {Account.suffix} было успешно добавлено!')
+#         self.print_balance()
+#
+#     # Тут вылью берется из init а рэйтюсд из статических переменных
+#     def convert_to_usd(self):
+#         usd_val = Account.convert(self.value, Account.rate_usd)
+#         print(f'Состояние счета: {usd_val} {Account.suffix_usd}')
+#
+#     def convert_to_eur(self):
+#         eur_val = Account.convert(self.value, Account.rate_eur)
+#         print(f'Состояние счета: {eur_val} {Account.suffix_eur}')
+#
+#     # Создадим метод показывающий баланс
+#     def print_balance(self):
+#         print(f'Текущий баланс {self.value} {Account.suffix}')
+#
+#     # Метод изменения владельца счета
+#     def edit_onwer(self, surname):
+#         self.surname = surname
+#
+#     # Метод начисления процентов , тут происходит расчет начисления и вызов баланса
+#     def add_percent(self):
+#         self.value += self.value * self.percent
+#         print('Проценты были успешно начислены')
+#         self.print_balance()
+#
+#     # Метод снятия денег и показывание остатка на балансе
+#     # С условием того что на балансе достаточно денег,что бы не допустить минусового баланса
+#     def withdraw_money(self,val):
+#         if val > self.value:
+#             print(f'К сожалению у вас нет {val} {Account.suffix}')
+#         else:
+#             self.value -= val
+#             print(f'{val} {Account.suffix} было успешно снято')
+#         self.print_balance()
+#
+#     # Метод - информация о счете
+#     def print_info(self):
+#         print('Информация о счете:')
+#         print('-' * 20)
+#         print(f'#{self.num}')
+#         print(f'Владелец: {self.surname}')
+#         self.print_balance()
+#         print(f'Проценты: {self.percent:.0%}')
+#         print('-' * 20)
+#
+#
+# # Создаем экземпляр класса где приходят параметры человека на его аккаунт
+# # Присвоим переменной класс и будем вызывать класс обращаясь к переменной
+# acc = Account('Долгих', '12345', 0.03, 1000)
+# acc.print_info()
+# acc.convert_to_usd()
+# acc.convert_to_eur()
+# # С начала перезапишем курс(изменим),потом сразу вызовем показывающий курс метод
+# Account.set_usd_rate(2)
+# print()
+# # Вызовем метод изменяющий евро как выше вызывали изменение доллара
+# Account.set_eur_rate(3)
+# acc.convert_to_usd()
+# acc.convert_to_eur()
+# # Меняем фамилию владельца счета и выводим инфу о счете
+# acc.edit_onwer('Дюма')
+# acc.print_info()
+# print()
+# acc.add_percent()
+# print()
+# acc.withdraw_money(100)
+# print()
+# acc.withdraw_money(3000)
+# print()
+# acc.add_money(5000)
+# print()
+# acc.withdraw_money(3000)
+
+
+### Задача пользователь при устройстве на работу оставляет свои данные
+
+# Свойства в классе сделаем закрытыми
+
+import re
+
+
+class UserData:
+    # иницилизируем методы что бы при запуске программы иметь возможность смотреть что у нас получается
+    def __init__(self, fio, old, ps, weight):
+        self.fio = fio
+        self.old = old
+        self.password = ps
+        self.weight = weight
+
+    # Сделаем возможность что бы за пределами класса менять какие то свойства
+    # создаем декоратор проперти и для каждого из наших свойств делаем геттер и сеттер
+    # геттер только возвращает значение
+    # .
+    @property  # это геттер
+    def fio(self):
+        return self.__fio
+
+    @fio.setter  # это сеттер
+    def fio(self, fio):
+        self.verify_fio(fio)  # Проведем проверку и если этот метод не выкинет исключение то тогда
+        self.__fio = fio  # иницилизируемв нашу переменную новое значение
+
+    @property
+    def old(self):
+        return self.__old
+
+    @old.setter
+    def old(self, old):
+        self.verify_old(old)
+        self.__old = old
+
+    @property
+    def password(self):
+        return self.__password
+
+    @password.setter
+    def password(self, ps):
+        self.verify_ps(ps)
+        self.__password = ps
+
+    @property
+    def weight(self):
+        return self.__weight
+
+    @weight.setter
+    def weight(self, w):
+        self.verify_weight(w)
+        self.__weight = w
+
+    # Задача смотреть что будет неправильно и будем сами включать исключения
+    # и каждое из этих свойств будем проверять отдельно
+    # и создадим статический метод котроый будет проверять ввод некоректных данных
+
+    @staticmethod
+    # Водном методе сделаем несколько проверок
+    def verify_fio(fio):
+        # ПРоверим тип данных если не соответствует
+        # то выведется ошибка то есть исключение(вводим в парметры класса)
+        if not isinstance(fio, str):
+            raise TypeError('ФИО должно быть строкой')
+        # Проверим формат вводимых фио(3 слова)
+        f = fio.split()
+        if len(f) != 3:
+            raise TypeError('Неверный формат ФИО')
+        # Проверим корректность введеных фио(только буквы и тире) и игноркэйс для отвязки от регистра
+        # при помощи регулярных выражений(В квадратных скобкам это один любой символ)
+        # и метон джойн соеденим строки фио в одну и пройдемся в цикле
+        # проверив введены ли допустимы символы в тех данных которые ввел пользователь
+        letters = "".join(re.findall('[a-zа-яё-]', fio, re.IGNORECASE))
+        for s in f:
+            if len(s.strip(letters)) != 0:
+                raise TypeError('В ФИО можно использовать только буквы и дефис')
+
+    # создадим декоратор и метод проверки года рождения
+    # проверим методом isinstance на соответсвие целого числа в графе возраст.
+    @staticmethod
+    def verify_old(old):
+        if not isinstance(old,
+                          int) or old < 14 or old > 120:  # если в олд не целое число то будет  или диапазон возраста не подходит
+            raise TypeError('Возраст должен быть целым числом в диапазоне от 14 до 120 лет')
+
+    # Проверим вес
+    @staticmethod
+    def verify_weight(w):
+        if not isinstance(w, float) or w < 20:
+            raise TypeError('Вес должен быть вещественным числом и от 20 кг и выше')
+
+    # Проверим паспортные данные
+    @staticmethod
+    def verify_ps(ps):
+        if not isinstance(ps, str):
+            raise TypeError('Паспорт должен быть строкой')
+        # Проверим что в 1 элементе только 4 символа а во 2 элем только 6 символов (по индексу укажем)
+        # - разобьем его на список с элементами и проверим длину списка(должно быть 2 элемента серия и номер)
+        s = ps.split()
+        if len(s) != 2 or len(s[0]) != 4 or len(s[1]) != 6:
+            raise TypeError('Не верный формат паспорта')
+        # Проверим на наличие букв с помощью метода в цикле
+        for p in s:
+            if not p.isdigit():  # Все что не цифра
+                raise TypeError('Серия и номер паспорта должны быть числами')
+
+
+#  Сразу Создадим экземпляр класса что бы мы могли видоизменть что то
+#  что будет неправильно и передадим в него данные человека
+p1 = UserData('Волков Игорь Николаевич', 26, '1234 567890', 80.8)
+# Заменим отчество
+p1.fio = 'Волков Игорь Викторович'
+print(p1.fio)
+# Заменим возраст
+# p1.old = '26'
+# print(p1.old)
+# выше проверили что отрабатывают ошибки(исключени)
+p1.old = 26
+print(p1.old)
+p1.weight = 78.8
+print(p1.weight)
+p1.password = '4321 098765'
+print(p1.password)
 
 
 

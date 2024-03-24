@@ -4989,45 +4989,972 @@ import time
 # print(p1.password)
 
 
+######--------------------- Урок 28 --------------------------- ООП Наследование
+
+#
+# # Создадим класс наследник который будет иметь доступ ко всем свойствам и методам родительского класса
+# # 1 Это просто пример
+# # class Point:
+# #     def __init__(self, x=0, y=0):
+# #         self.__x = x
+# #         self.__y = y
+# # # Является ли клас который передается первым наследником который передается вторым
+# # print(issubclass(Point, object))
+# # print(issubclass(Point, int))
+#
+# # 2 Создадим класс линия с двумя точками на плоскости и цветом и толщиной линии
+# class Point:
+#     def __init__(self, x=0, y=0):
+#         self.__x = x
+#         self.__y = y
+#
+#     def __str__(self):  # при обращении к какому то экземпляру класса,
+#         # показывает что нарисовали (магический метод)
+#         return f'({self.__x}, {self.__y})'
+#
+#
+# # Создадим общий класс для классов линий и прямоугольников и будем указывать его в скобках этих классов
+# class Prop:
+#     def __init__(self, sp: Point, ep: Point, color: str = 'red',
+#                  width: int = 1):  # укажем какой тип данных должен поступать через дветочие - это используется как рекомендация для использование этого класса
+#         self._sp = sp
+#         self._ep = ep
+#         self._color = color
+#         self.__width = width  # если свойство делаем закрытым то прописываем геттеры и сетеры ниже
+#         print('Инициализатор базового класса Prop ')
+#     def get_width(self):  # обращение по названию - self.get_width()
+#         return self.__width
+#
+#
+# class Line(Prop):
+#     def __init__(self,*args):  # Попробуем создать свой инициализатор
+#         print('Переопределенный инициализатор Line')
+#         # Prop.__init__(self, *args)
+#         super().__init__(*args)  # получает доступ к еэементу над ним к родительскому элементу
+#     def draw_line(self):  # Это класс создающий линию
+#         print(f'Рисование линии: {self._sp}, {self._ep}, {self._color}, {self.get_width()}')
+#
+#
+# # создадим еще класс рисование прямоугольника
+# # class Rect(Prop):
+# #     def draw_rect(self):  # Это класс создающий линию
+# #         print(f'Рисование линии: {self._sp}, {self._ep}, {self._color}, {self.get_width()}')
+#
+#
+# line = Line(Point(1, 2), Point(10, 20), 'yellow',5)  # Координаты точки поинт так как там два параметра(На пересечении икса и игрика)
+# line.draw_line()
+# # print()
+# # print(line.get_width())  # доступ к закрытому свойству с двумя подчеркиваниями(__)
+# # print()
+# # print(line._color)  # проверка что получаем доступ (_) к цвету за пределами класса к одному подчеркиванию
+# # print()
+# # rect = Rect(Point(30, 40), Point(70, 80))
+# # rect.draw_rect()
 
 
+# Создадим класс для рисования фигур,и укажем общее св-во. цвет
+# но какие именно фигуры будут рисовать мы укажем в классе наследнике
 
 
+# class Figure:  # родительский класс
+#     def __init__(self, color):
+#         self.__color = color
+#     @property  # создадим геттеры и сеттеры для цвета что бы получать к цвету доступ
+#     def color(self):
+#         return self.__color
+#     @color.setter
+#     def color(self, c):
+#         self.__color = c
+# class Rectangle(Figure):  # это класс треугольник,с высотой и шириной,
+#     # а так же цветом доступ к которому мы получили от родительского класса.
+#     # мы своим дочерним классом расширили то что есть в родительском классе
+#     def __init__(self,width, height, color):
+#         self.width = width
+#         self.height = height
+#         super().__init__(color)
+#         # раз свойства закрытые то сделаем проверки,но потом откроем их что бы отрабатывали проверки в сеттэрах
+#     @property
+#     def width(self):  # вернем ширину
+#         return self.__width
+#     @width.setter
+#     def width(self, w):  # сделаем проверку для вводимых значений
+#         if w > 0:
+#             self.__width = w
+#         else:
+#             raise ValueError('Некорректное значение высоты')
+#     @property
+#     def height(self):  # вернем ширину
+#         return self.__height
+#     @height.setter
+#     def height(self, h):  # сделаем проверку для вводимых значений
+#         if h > 0:
+#             self.__height = h
+#         else:
+#             raise ValueError('Некорректное значение ширины')
+#     def area(self):  # вернем полощадь прямоугольника
+#         print(f'Площадь {self.color} прямоугольника = ', end="")  # вернем полное описание фигуры
+#         return self.__width * self.__height
+
+# rect = Rectangle(10, 20, 'green')
+# print(rect.area())
+###################################
+
+# class Point:
+#     def __init__(self, x, y):
+#         self.__x = x
+#         self.__y = y
+#
+#     def __str__(self):  # при обращении к какому то экземпляру класса,
+#         # показывает что нарисовали (магический метод)
+#         return f'({self.__x}, {self.__y})'
+#     def is_digit(self):  # создадим во вспомогательном классе вспомогательный метод для замены значений x и y
+#         if isinstance(self.__x, (int, float)) and isinstance(self.__y, (int, float)):
+#             return True
+#         return False
+#     def is_int(self):  # создадим во вспомогательном классе вспомогательный метод для замены значений x и y
+#         if isinstance(self.__x, int) and isinstance(self.__y, int):
+#             return True
+#         return False
+# class Prop:
+#     def __init__(self, sp: Point, ep: Point, color: str = 'red', width: int = 1):  # укажем какой тип данных должен поступать через дветочие - это используется как рекомендация для использование этого класса
+#         self._sp = sp
+#         self._ep = ep
+#         self._color = color
+#         self._width = width  # если свойство делаем закрытым то прописываем геттеры и сетеры ниже
+#     def set_coord(self, sp, ep):
+#         if sp.is_digit() and ep.is_digit():
+#             self._sp = sp
+#             self._ep = ep
+#         else:
+#             print('Координаты должны быть числами')
+# class Line(Prop):
+#     def set_coord(self, sp, ep):
+#         if sp.is_int() and ep.is_int():
+#             self._sp = sp
+#             self._ep = ep
+#         else:
+#             print('Координаты должны быть целочисленными значениями ')
+#     def draw_line(self):  # Это класс создающий линию
+#         print(f'Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}')
+#
+# # создадим еще класс рисование прямоугольника
+# class Rect(Prop):
+#     def draw_rect(self):  # Это класс создающий линию
+#         print(f'Рисование прямоугольника: {self._sp}, {self._ep}, {self._color}, {self._width}')
+#
+#
+# line = Line(Point(1, 2), Point(10, 20), 'yellow',5)  # Координаты точки поинт так как там два параметра(На пересечении икса и игрика)
+# line.set_coord(Point(15, 45), Point(100, 200))  # изменим рисование линии
+# line.draw_line()
+# print()
+# rect = Rect(Point(30, 40), Point(70, 80))
+# rect.set_coord(Point(55.5, 45.6), Point(100, 200))  # переопределим параметры прям-ка, рект ищет сеткурд в классе рекс и не находит ,значит он видит что рект наследуется от проп и идет тогда в проп и унего находит метод которые проверяет исдиджест(возможность ввода целых чисел)
+# rect.draw_rect()
 
 
+## Пример как работает наследование с доступом к методам
+
+# class Rect:
+#     def __init__(self, width, height):
+#         self.width = width
+#         self.height = height
+#
+#     def show_rect(self):  # выведем параметры прям - ка
+#         print(f'Прямоугольник:\nШирина: {self.width}\nВысота: {self.height}')
+#
+#
+# class RectFon(Rect):  # этот класс наследуется от рект
+#     def __init__(self, width, height, background):
+#         self.fon = background
+#         super().__init__(width, height)  # получаем доступ к ширине и высоте
+#
+#     def show_rect(self):
+#         super().show_rect()
+#         print('Фон:', self.fon)
+# class RectBorder(Rect):
+#     def __init__(self, width, height, a, b, c):
+#         super().__init__(width, height)
+#         self.a = a
+#         self.b = b
+#         self.c = c
+#
+#     def show_rect(self):
+#         super().show_rect()
+#         print(f'Толщина линий: {self.a}\nРамка: {self.b}\nЦвет: {self.c}')
+#
+#
+# shape1 = RectFon(400, 200,'yellow')
+# shape1.show_rect()
+# print()
+# shape2 = RectBorder(600, 300, '1px', 'solid', 'red')
+# shape2.show_rect()
 
 
+# Наследование не только от своих типах данных а от любых,которые уже существуют
+
+# class Vektor(list):
+#     # def __init__(self, lst):
+#     #     super().__init__()
+#     #     self.lst = lst
+#
+#     def __str__(self):
+#         return " ".join(map(str, self))
+#
+#
+# v = Vektor([1, 2, 3])
+# print(sum(v))
+# print(v)
+# print(type(v))
 
 
+###############- Перегрузка методов-№№№№№№№№№№№№№№№№№№
 
 
+# class Point:
+#     def __init__(self, x, y):
+#         self.__x = x
+#         self.__y = y
+#
+#     def __str__(self):  # при обращении к какому то экземпляру класса,
+#         # показывает что нарисовали (магический метод)
+#         return f'({self.__x}, {self.__y})'
+#     def is_digit(self):  # создадим во вспомогательном классе вспомогательный метод для замены значений x и y
+#         if isinstance(self.__x, (int, float)) and isinstance(self.__y, (int, float)):
+#             return True
+#         return False
+#     def is_int(self):  # создадим во вспомогательном классе вспомогательный метод для замены значений x и y
+#         if isinstance(self.__x, int) and isinstance(self.__y, int):
+#             return True
+#         return False
+# class Prop:
+#     def __init__(self, sp: Point, ep: Point, color: str = 'red', width: int = 1):  # укажем какой тип данных должен поступать через дветочие - это используется как рекомендация для использование этого класса
+#         self._sp = sp
+#         self._ep = ep
+#         self._color = color
+#         self._width = width  # если свойство делаем закрытым то прописываем геттеры и сетеры ниже
+#     def set_coord(self, sp, ep):
+#         if sp.is_digit() and ep.is_digit():
+#             self._sp = sp
+#             self._ep = ep
+#         else:
+#             print('Координаты должны быть числами')
+# class Line(Prop):
+#     def draw_line(self):  # Это класс создающий линию
+#         print(f'Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}')
+#     def set_coord(self, sp=None, ep=None):  # если приходит только одна координата и другая имеет значение ноне то мы будем менять только первую координату
+#         if ep is None:
+#             if sp.is_int():
+#                 self._sp = sp
+#             else:
+#                 print('Координата sp должна быть целочисленным значением ')
+#         elif sp is None:
+#             if ep.is_int():
+#                 self._ep = ep
+#             else:
+#                 print('Координата ep должна быть целочисленным значением ')
+#         else:
+#             if sp.is_int() and ep.is_int():
+#                 self._sp = sp
+#                 self._ep = ep
+#             else:
+#                 print('Координаты должны быть целочисленными значениями ')
+#
+#
+# # с помощью перегрузки методов мы можем вызывать либо одну либо две координаты
+#
+# line = Line(Point(1, 2), Point(10, 20), 'yellow',5)  # Координаты точки поинт так как там два параметра(На пересечении икса и игрика)
+# line.draw_line()
+# print()
+# line.set_coord(Point(15, 45), Point(100, 200))  # изменим рисование линии
+# line.draw_line()
+# print()
+# line.set_coord(Point(550, 55))
+# line.draw_line()
+# print()
+# line.set_coord(ep=Point(90, 20))
+# line.draw_line()
 
 
+###-Абстрактные методы
 
 
+# class Point:
+#     def __init__(self, x, y):
+#         self.__x = x
+#         self.__y = y
+#
+#     def __str__(self):  # при обращении к какому то экземпляру класса,
+#         # показывает что нарисовали (магический метод)
+#         return f'({self.__x}, {self.__y})'
+#     def is_digit(self):  # создадим во вспомогательном классе вспомогательный метод для замены значений x и y
+#         if isinstance(self.__x, (int, float)) and isinstance(self.__y, (int, float)):
+#             return True
+#         return False
+#     def is_int(self):  # создадим во вспомогательном классе вспомогательный метод для замены значений x и y
+#         if isinstance(self.__x, int) and isinstance(self.__y, int):
+#             return True
+#         return False
+# class Prop:
+#     def __init__(self, sp: Point, ep: Point, color: str = 'red', width: int = 1):  # укажем какой тип данных должен поступать через дветочие - это используется как рекомендация для использование этого класса
+#         self._sp = sp
+#         self._ep = ep
+#         self._color = color
+#         self._width = width  # если свойство делаем закрытым то прописываем геттеры и сетеры ниже
+#     def draw(self):  # это создаем при условии что где то будет удален метод дров и поставленно 3 точки за место него
+#         raise NotImplementedError('В дочернем кслассе должен быть определен метод draw()')
+# class Line(Prop):
+#     def draw(self):  # Это класс создающий линию
+#         print(f'Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}')
+# class Rect(Prop):
+#     def draw(self):  # Это класс создающий линию
+#         print(f'Рисование прямоугольника: {self._sp}, {self._ep}, {self._color}, {self._width}')
+# class Ellipcs(Prop):
+#     # def draw(self):  # Это класс создающий линию
+#     #     print(f'Рисование эллипса: {self._sp}, {self._ep}, {self._color}, {self._width}')
+#     ...
+# # Создадим список и с помощью метода будем добавлять в конец его координаты из классов
+# figs = list()
+# figs.append(Line(Point(0, 0), Point(10, 10)))
+# figs.append(Line(Point(10, 10), Point(20, 10)))
+# figs.append(Rect(Point(50, 50), Point(100, 100)))
+# figs.append(Ellipcs(Point(-10, -10), Point(10, 10)))
+#
+# # Теперь в цикле пройдемся по списку из координати методом дров нарисуем линии
+# for f in figs:
+#     f.draw()
+
+####-------------------Урок28-----------------------------
+#
+from math import pi
+from abc import ABCMeta, abstractmethod, ABC
 
 
+class Table(metaclass=ABCMeta):
+    def __init__(self, width=None, height=None, radius=None):
+        if radius is None:
+            self.table_type = 'прямоугольный'
+            self.width = width
+            self.height = height
+        else:
+            self.table_type = 'круглый'
+            self.radius = radius
+
+    def __str__(self):
+        description = f'Форма стола: {self.table_type}\n'
+        if self.table_type == 'прямоугольный':
+            return (
+                description +
+                f'Ширина стола: {self.width}\n'
+                f'Высота стола: {self.height}'
+            )
+        else:
+            return (
+                description +
+                f'Радиус стола: {self.radius}'
+            )
+
+    @abstractmethod
+    def square(self):
+        pass
 
 
+class RectangleTable(Table):
+    def __init__(self, width, height):
+        super().__init__(
+            width=width,
+            height=height
+        )
+
+    def square(self):
+        return self.width * self.height
 
 
+class CircleTable(Table):
+    def __init__(self, radius):
+        super().__init__(radius=radius)
+
+    def square(self):
+        return round(pi * self.radius ** 2, 2)
 
 
+tables = [
+    RectangleTable(20, 10),
+    RectangleTable(20, 20),
+    CircleTable(radius=20),
+]
+
+for table in tables:
+    print(table)
+    print(f'Площадь стола: {table.square()}\n')
 
 
+########################### урок 28 по видео
+# import math
+#
+#
+# class Stol:
+#     pass
+#
+#
+# class PStol:
+#     forma = "prymougolnui"
+#     width = 'widthh'
+#     height = 'heightt'
+#     year = 2020
+#     # x: float = 17.8  # 1 z
+#     x: float = 5.  # 2,3 z
+#     y: float = 7.  # 2,3 z
+#
+#
+# class KStol:
+#     forma = 'kruglui'
+#     radius = 'radiuss'
+#     c: float = 5.
+#
+#     def hello(x):
+#         print('HELLO')
+#         return 'hello'
+#
+#     def world():
+#         print(2 + 3)
+#         return 'world!!!'
+#
+#     def calc_sum(c, num_1, num_2):
+#         print(num_1 + num_2)
+#
+#     def setnum(self):
+#         self.x = 20
+#
+#     # 23 создадим два атрибута
+#     def set_value(self, x, y):
+#         self.x = x
+#         self.y = y
+#
+#     # 23 создадим сложение атрибутов
+#     def send_sum(self):
+#         return self.x + self.y
+#
+#     # 24 инициализируем рост и имя и при вызове класса будем их вводить
+#     def __init__(self, height: int, name: str):
+#         self.height: int = height
+#         self.name: str = name
+#
+#     # 25 создадим шаблон с параметрами год и имя
+#     def __init__(self, age: int, name: str):
+#         self.age: int = age
+#         self.name: str = name
+#
+#     # 26 инициализируем нужные параметры для вычисления треугольника
+#     def __init__(self, a: float, b: float, c: float):
+#         self.a = a
+#         self.b = b
+#         self.c = c
+#
+#     # 26 создаем метод вычисления треугольника
+#     def check_equals(self):
+#         return self.a == self.b or self.b == self.c or self.a == self.c
+
+#############################################################################
+# 26 проверка что треугольник равнобедренный
+# t = KStol(1, 10, 1.1)  # создаем экземпляр и вводим парамерты треугольника
+# print('равнобедренный' if t.check_equals() else 'неравнобедренный')  # если параметры проходят проверку то выводится нужно значение
 
 
+# 25 покажем двух различных людей
+# p1 = KStol(15, 'ted')
+# p2 = KStol(22, 'kop')
+# print(p1.name, p2.name)
+# print(p1.age, p2.age)
 
 
+# 24 создадим экземпляр и вызовем инициализируемые объекты
+# a = KStol(179, 'bob')
+# print(a.__dict__)
+# print(a)
 
 
+# 23 вычисляем сумму
+# a = KStol()
+# a.set_value(5, y=2)  # сначало введем данные
+# result = a.send_sum()  # теперь сложим и выведем на экран
+# print(result)
 
 
+# ps = PStol()
+# ks = KStol()
 
 
+# 23
+# a = KStol()
+# a.setnum()  # добавляем в область видимости функцию(ссылка на экземпляр )
+# b = KStol()
+# print(a.__dict__)
+# print(b.__dict__)  # а тут не будет видно так как не добавили функцию
 
 
+# 22
+# self формальный параметр функции, его параметр передается экземпляру
+
+# 21 выведем функцию сложения
+# m = KStol()
+# m.calc_sum(9,8)
+
+# 20 вызов функции через экземпляр класса, обязательно ставить скобочки после названия класса - двумя способами
+# KStol().hello()
+# # или так в качестве аргумента ставим экземпляр
+# KStol.hello(KStol())
+# # гораздо проще создавать екземпляр и через него вызывать атрибуты
+# p = KStol()
+# p.hello()
+
+# 19 вызов функции через класс без аргумента
+# KStol.world()
+
+# 18 если вызов функции через экземпляр то нужен обязатено указывать аргумент в самой функции
+# p = KStol()
+# p.hello()
+# # если вызывать функцию через название класса то будет ошибка и тогда в качестве аргумента функции указывается экземпляр (при указанном аргументе в функции в классе)
+# KStol.hello(p)
+
+# 17 функция в классе является его атрибутом,вызовем две функции (разными способами) и составим предложение
+# print(KStol.hello() + ' ' + getattr(KStol, 'world')())
+
+# 16
+# при удалении не существующего атрибута выведем надпись об этом
+# try:
+#     del KStol.name
+# except AttributeError:
+#     print('такого атрибута не существует')
+# del KStol.name
+
+# 15
+# если изменим год то количество столов уменьшается на 2 (это будет х)
+# PStol.year += 1
+# PStol.x -= 2
+# print(PStol.__dict__)
+
+# 14
+# найдем площадь круга и прямоугольника использууя модуль для пи
+# print(math.pi * KStol.c**2)
+# print()
+# print(PStol.x * PStol.y)
+
+# 13 создадим класс, потом экземпляр в котором создадим атрибут,который не виден в классе
+# a = PStol()
+# a.c = 'hello'
+# print(PStol.__dict__, a.__dict__, sep='\n')
+# # так же заменим значение атрибута в классе
+# setattr(PStol, 'x', 15987)
+# print(PStol.x)
+
+# 12
+######## создадим экземпляр и заменим в нем знаечение атрибута  и выведем посмотреть
+# ps = PStol()
+# setattr(ps, 'forma', 21)
+# print(getattr(PStol,'forma'))
+# print(ps.__dict__, ps.forma)
 
 
+# 11
+###### выведем значение атрибутов двумя способами а так же удалим один атрибут из класса(в анотациях он бы сохранился)
+# # 1
+# print(getattr(PStol,'forma'), getattr(KStol,'forma'), sep='\n')
+# # 2
+# print(PStol.forma, KStol.forma, sep='\n')
+# #
+# del PStol.width
+# print(PStol.__dict__)  # удостоверимся что атрибут удалился
+
+# 10
+################## создадим 2 экземпляра класса и потом в одном экземпляре изменим значение арибута а в другом добавим атрибут
+# и выведем посмотреть что в них находится что бы удостоверится что где
+# stol_1 = PStol()
+# stol_2 = PStol()
+#
+# stol_1.width = 'gyd'
+# print(stol_1.__dict__)
+# stol_2.color = 'grey'
+# print(stol_2.__dict__)
+# stol_1.x = 150
+# print(stol_1.__dict__)
+#
+# print(PStol.__dict__)
+
+# 9 область видимости, создаем два экземпляра класса для одного класса
+# a = KStol()
+# b = KStol()
+# создадим динамически два атрибута
+# a.colory = 'black'
+# b.colory = 'green'
+# поменяем значение имеющегося статического атрибута
+# a.forma = 165
+# print(a.__dict__, b.__dict__, KStol.__dict__, sep='\n')  # в глобальном классе не чего не добавилосьбтолько локально создались атрибуты которые не видны в классе
 
 
+# 8 обращение к атрибутам класса через экземпляры_______________ 8  урок
+# ps = PStol()
+# ks = KStol()
+# print(ps.height, ks.radius)
+
+############ 1 zadanie
+# PStol.y = 'yes'  # создаем динамический  новый атрибут
+# print(PStol.y)
+# print()
+# del PStol.x  # удаляем статический атрибут из класса и его значение пропадает а название остается
+# print(PStol.__dict__)
+###############
+
+############### 2 zadanie
+# print(getattr(PStol, 'x') + getattr(PStol, 'y'))  # сложим два атрибута
+# print(getattr(PStol, 'z', 'Такого числа не существует'))  # выведем сообщение если вводим не существующий атрибут
+##############
+
+############## 3 zadanie создаем динамически 2 атрибута двумя способами
+# setattr(Stol, 'f', 'kvadrat')
+# Stol.g = 'htlo world'
+# print(getattr(Stol, 'g').upper())  # выведем атрибут в верхнем регистре
+# print(Stol.__dict__)
+##############
+
+
+############# 4 zadanie удалим 2 атрибутф и выведем сообщение что его не существует, двумя способами
+# del PStol.x
+# print(getattr(PStol, 'x', 'не существует такого атрибута'))
+# delattr(PStol, 'y')
+# print(getattr(PStol, 'y', 'нет атрибута'))
+#############
+
+
+# print(PStol.forma)
+# print()
+
+# 7
+# print(PStol.__dict__)
+
+# 6
+# при несуществующем атрибуте выводим нужную надпись
+# print(getattr(PStol, 'x', 'не существует такого атрибута'))
+# print()
+
+# 5
+# меняем значение атрибута
+# setattr(PStol, 'forma', 'kvadrat')
+# print(PStol.forma)
+
+# 4
+# динамическое создание атрибута
+# так
+# setattr(PStol, 'f', 'kvadrat')
+# print(PStol.f)
+# # или так
+# PStol.f = 15
+# print(PStol.f)
+# print()
+
+# 3
+# удаление атрибутов
+# так
+# del PStol.forma
+# print(PStol.forma)
+# или так
+# delattr(PStol, 'forma')
+# print(PStol.forma)
+# print()
+
+# 2
+# проверяем тип объекта
+# print(type(ps), type(ks), sep='\n')
+# print()
+# проверяем принадлежность к классу
+# print(isinstance(ps, PStol))
+# print(isinstance(ps, KStol))
+# print()
+
+# 1
+# print(isinstance(5, str))
+# print(isinstance('cat', str))
+# print(isinstance([1, 2, 3], str))
+# print()
+
+
+#####################################################################################################################
+# Строение класса
+# class Cat:
+#     age: int = 2  # статические атрибуты / атрибуты класса / состояние класса / свойства класса
+#     breed: str = 'Bengal'
+#
+#     def __init__(self, color: str):  # конструктор класса / метод инициализации экземпляра / атрибут класса
+#         self.color: str = color  # динамический атрибут / локальные свойства / атрибут экземпляра /состояние объекта
+#
+#     def meow(self) -> None:  # метод
+#         print('Мяу')
+#
+# # вызываем мяу 2 способа
+# # 1
+# tom = Cat('blask')
+# Cat.meow(tom)
+# # 2
+# getattr(Cat, 'meow')(tom)
+# # смотрим что том динамически создан и имеет только цвет
+# print(tom.__dict__)
+# print(Cat.__dict__)
+
+
+# задача 2 создать класс персон ,добавить динамически атрибут и удалить его
+# import pprint
+#
+# class Person:
+#     name: str = 'MAx'
+#     age: int = 37
+#
+#
+# setattr(Person, 'color', 'green')
+# pprint.pprint(Person.__dict__)  # видим что добавили
+#
+# print(getattr(Person, 'color', 'нет такого атрибута'))
+#
+# delattr(Person,"color")
+#
+# pprint.pprint(Person.__dict__)
+
+
+# задача 3 класс компьютер с атрибутами,выводим число пи,смотрим прокси,удалить атрибут двумя способами
+import pprint
+import math
+
+# class Comp:
+#     age: int = 5
+#     price: int = 200
+#     size: str = 'big'
+#
+#
+# print(getattr(Comp, 'sdf', str(math.pi)))  # выводим пи
+# pprint.pprint(Comp.__dict__)
+# #  удаляем и проверяем
+# del Comp.price
+# delattr(Comp, 'size')
+# pprint.pprint(Comp.__dict__)
+
+
+# 4 задача класс с атрибутами,создание динамическиго атрибута,проверить этот атрибут метотом гетаттриб -является ли он статическим(есть ли в классе)
+# class Person:
+#     name: str = 'liza'
+#     age: int = 12
+#
+#
+# l = Person()  # создадим экземпляр
+# l.color = 'blue'
+# print(getattr(Person, 'color', 'не является статическим'))
+# print(isinstance(Person, type), isinstance(l, int), sep='\n')  # проверяем тип класса и экземпляра -не принадлежит к классу тип и int
+
+
+# 5 задача
+"""Создайте класс, объявите внутри него пустую функцию.
+Динамически подключите к классу новый атрибут со значением 5.
+Проверьте, является ли данный атрибут - свойством конкретного экземпляра данного класса.
+Обратитесь к данной функции и выведите результат обращения.
+"""
+
+# class A:
+#     def send():
+#         pass
+#
+#
+# A.attr = 5
+# a = A()
+# # a.color = 6
+# # print(a.color in a.__dict__)
+# print(A.attr in a.__dict__)  #  является ли данный атрибут - свойством конкретного экземпляра данного класса.
+# print(A.send)  # Обратитесь к данной функции
+
+
+# 6 задача тут функция является методом
+"""Создайте класс, реализуйте внутри него метод, выводящий сумму двух чисел по входным данным.
+Вызовите данную функцию относительно некоторых значений её параметров и отобразите результат на экране.
+"""
+# class B:
+#     def add(self, x: float, y: float) -> float:
+#         return x + y
+#
+# a = B()
+# print(a.add(15., 15.))
+
+
+# 7 задача
+"""Объявите класс, внутри создайте метод экземпляра класса, который будет динамически
+подключать к экземпляру два новых атрибута.
+Реализуйте внутри класса новый метод экземпляра, который будет выводить сумму двух чисел
+по входящим значениям.
+Вызовите и обратитесь к данной функции через посредство класса и созданного экземпляра. Что вы заметили в данных случаях?
+"""
+
+# class A:
+#     def add(self, a: float, b: float) -> float:  # последнее флойд означает что функция возвращает число с точкой
+#         return a + b
+#
+# A.x = 5
+# A.y ='hello'
+#
+# print(A.add(A(), 25., 25.))
+
+# 8  задача
+"""Реализуйте следующий класс -
+Внутри класса имеются два произвольных атрибута, принимающих некоторые значения,
+ пусть это будут статические атрибуты класса.
+Создайте функцию-метод экземпляра класса, которая будет дублировать данные атрибуты
+класса для экземпляра.
+Обратитесь к атрибуту __dict__, созданного экземпляра, чтобы отобразить их значения.
+"""
+
+
+# class A:
+#     x = 4
+#     y = 2
+#
+#     def dublicate(self):  # через селф присваиваем значениям метода статические значения класса!!!
+#         self.x = self.x
+#         self.y = self.y
+#
+#
+# a = A()  # создаем екземпляр и смотрим что внем не чего нет
+# print(a.__dict__)
+# a.dublicate()  # теперь в эеземпляре вызовом метода создаем дублирующие атрибуты
+# print(a.__dict__)  # теперь тут есть атрибуты которые дублируются с класса в экземпляр
+
+
+# 9 задача не понятное решение с ошибкой
+
+# class A:
+#     def __int__(self, x):  # функция не чего не возвращает
+#         self.x = x
+#         self.y = 'default'
+#
+#
+# a = A()
+# print(a.__dict__)
+
+
+# 10 задача метод вычисления окружностей - не работает пишет не принимает аргументов
+# class Circumference:
+#     def __init__(self, radius: float) -> None:
+#         self.radius = radius
+#
+#     def calc_square(self) -> float:
+#         return math.pi * self.radius**2
+#
+#
+# c = Circumference(1.)
+# print(c.calc_square())
+
+
+# classmethod
+# class A:
+#     x = 5
+#     y = 2
+#
+#     def __init__(self, a):
+#         self.a = a
+#     # @classmethod
+#     # def sud(cls):
+#     #     return cls.x - cls.y
+#     @classmethod
+#     def cud(cls):
+#         return cls(13)
+#
+#
+# # print(A.sud())
+# print(A.cud().__dict__)
+
+
+###################################################### уроки  selfedu
+# class Point:
+#     color = 'red'
+#     circle = 2
+#
+#
+#     def __init__(self, x=0, y=0):
+#         self.x = x
+#         self.y = y
+#
+#
+#     def set_coords(self, x, y):
+#         self.x = x
+#         self.y = y
+#
+#     def get_coords(self):
+#         return self.x, self.y
+#
+#
+# pt = Point(1,2)
+#
+# print(pt.__dict__)
+
+
+### Пример класса Person
+# from string import ascii_letters
+#
+#
+# class Person:
+#     S_RUS = 'абвгдеёжзклмнопрстуфхцчшщьыъэюя-'
+#     S_RUS_UPPER = S_RUS.upper()  # переводим все буквы выше в верхний регистр
+#
+#     def __init__(self, fio, old, ps, weight):
+#         self.verify_fio(fio)
+#
+#         self.__fio = fio.split()
+#         self.__old = old
+#         self.__ps = ps
+#         self.__weight = weight
+#
+#     # пропишем несколько вспомогательных методов класса для проверки коректности каждого переданного значения
+#     # если тип фио не строка выведем ошибку
+#     @classmethod
+#     def verify_fio(cls, fio):
+#         if type(fio) != str:
+#             raise TypeError('ФИО должно быть строкой')
+# # далее разобьем стоку фио что бы было все через пробел написанно,на выходе получим список из фио
+# #  проверим что длина этого списка равна 3,если не равна то выведем исключение.
+#         f = fio.split()
+#         if len(f) !=3:
+#             raise TypeError('Неверный формат ФИО')
+# # что в фио используются только буквы и дефис.для этого создадим строку
+# # где указывается какие символы должны использоваться,применяя иморт модулу и заранее подготовив свойства класса
+#         letters = ascii_letters + cls.S_RUS + cls.S_RUS_UPPER
+# # затем в цикле проверим имеются ли хотя бы один символ
+#         for s in f:
+#             if len(s) < 1:
+#                 raise TypeError('В ФИО должен быть хотя бы один символ')
+#             if len(s.strip(letters)) != 0:
+#                 raise TypeError('В ФИО можно использовать только буквы и дефис')
+# p = Person('Семенов Александр Викторович', 39, '1234 567890', 89.0)
+
+####################################################################
+# class Geom:
+#     name = 'Geom'
+#
+#     def __init__(self, x1, y1, x2, y2):
+#         print(f'инициализатор Geom для {self.__class__}')
+#         self.x1 = x1
+#         self.y1 = y1
+#         self.x2 = x2
+#         self.y2 = y2
+#
+#
+# class Line(Geom):
+#
+#     def draw(self):
+#         print('Рисование линии')
+#
+#
+# class Rect(Geom):
+#     def __init__(self, x1, y1, x2, y2, fill=None):
+#         super().__init__(x1, y1, x2, y2)
+#         print('инициализатор Rect')
+#         self.fill = fill
+#
+#     def draw(self):
+#         print('Рисование прямоугольника')
+#
+#
+# l = Line(0, 0, 10, 20)
+# r = Rect(1,2,3,4)

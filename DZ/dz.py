@@ -1,30 +1,98 @@
+
+
+# Dz 29 -
+
+class Clock:
+    DAY = 86400
+
+    def __init__(self, sec):
+        if not isinstance(sec, int):
+            raise ValueError("Секунды должны быть целым числом")
+        self.sec = sec % self.DAY
+
+    def get_format_time(self):
+        s = self.sec % 60
+        m = (self.sec // 60) % 60
+        h = (self.sec // 3600) % 24
+        return f'{Clock.get_form(h)}:{Clock.get_form(m)}:{Clock.get_form(s)}'
+
+    @staticmethod
+    def get_form(x):
+        return str(x) if x > 9 else '0' + str(x)
+
+    @staticmethod
+    def check(other):
+        """Исключение для Перегрузки операторов. \n
+           Служит для проверки правого операнда, что он является типом класса Clock."""
+        if not isinstance(other, Clock):
+            raise ArithmeticError("Правый операнд должен быть типом класса Clock")
+
+    def __add__(self, other):
+        self.check(other)
+        return Clock(self.sec + other.sec)
+
+    def __sub__(self, other):
+        self.check(other)
+        return Clock(self.sec - other.sec)
+
+    def __mul__(self, other):
+        self.check(other)
+        return Clock(self.sec * other.sec)
+
+    def __floordiv__(self, other):
+        self.check(other)
+        return Clock(self.sec // other.sec)
+
+    def __mod__(self, other):
+        self.check(other)
+        return Clock(self.sec % other.sec)
+
+
+c1 = Clock(100)
+c2 = Clock(200)
+print(c1.get_format_time())
+print(c2.get_format_time())
+
+c3 = c1 + c2
+c4 = c1 - c2
+c5 = c1 * c2
+c6 = c1 // c2
+c7 = c1 % c2
+
+print()
+print(f'{c3.get_format_time()} (x + y)')
+print(f'{c4.get_format_time()} (x - y)')
+print(f'{c5.get_format_time()} (x * y)')
+print(f'{c6.get_format_time()} (x // y)')
+print(f'{c7.get_format_time()} (x % y)')
+
 # Dz 28 - класс студент
 
-class Studen:
-    def __init__(self,name):
-        self.name = name
-        self.comp = self.comp()  # доступ к классу комп
-
-    def infa(self):  # метод распечатывающий инфу
-        print(f'{self.name}', '=>',end=' ')
-        print(f'{self.comp.model}', end=' ')
-        print(f'{self.comp.cpu}',end=' ')
-        print(f'{self.comp.gpu}')
-
-
-
-    class comp():  # класс с инфой о компе
-        def __init__(self):
-            self.model = 'hp'
-            self.cpu = 'i7'
-            self.gpu = '16'
-
-
-
-roman = Studen('roman')
-roman.infa()
-vladimir =Studen('vladimir')
-vladimir.infa()
+# class Studen:
+#     def __init__(self,name):
+#         self.name = name
+#         self.comp = self.comp()  # доступ к классу комп
+#
+#     def infa(self):  # метод распечатывающий инфу
+#         print(f'{self.name}', '=>',end=' ')
+#         print(f'{self.comp.model}', end=' ')
+#         print(f'{self.comp.cpu}',end=' ')
+#         print(f'{self.comp.gpu}')
+#
+#
+#
+#     class comp():  # класс с инфой о компе
+#         def __init__(self):
+#             self.model = 'hp'
+#             self.cpu = 'i7'
+#             self.gpu = '16'
+#
+#
+#
+# roman = Studen('roman')
+# roman.infa()
+# vladimir =Studen('vladimir')
+# vladimir.infa()
 
 
 

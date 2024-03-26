@@ -1,54 +1,85 @@
+# Dz 28 - класс студент
+
+class Studen:
+    def __init__(self,name):
+        self.name = name
+        self.comp = self.comp()  # доступ к классу комп
+
+    def infa(self):  # метод распечатывающий инфу
+        print(f'{self.name}', '=>',end=' ')
+        print(f'{self.comp.model}', end=' ')
+        print(f'{self.comp.cpu}',end=' ')
+        print(f'{self.comp.gpu}')
+
+
+
+    class comp():  # класс с инфой о компе
+        def __init__(self):
+            self.model = 'hp'
+            self.cpu = 'i7'
+            self.gpu = '16'
+
+
+
+roman = Studen('roman')
+roman.infa()
+vladimir =Studen('vladimir')
+vladimir.infa()
+
+
+
+
 # Dz 28 - создать класс стол и дочерние классы
-import math
-
-
-class Table:
-
-    def __init__(self, width, length, radius):
-        self._width = width
-        self._length = length
-        self._radius = radius
-
-    def info_square_table(self):
-        raise NotImplementedError("В классе должен метод square_table()")
-
-
-class TableRectangular(Table):
-    def square_table(self):
-        return self._width * self._length
-
-    def set_square_table(self, width=None, length=None):
-        if width is None:
-            if length:
-                self._length = length
-
-        elif length is None:
-            if width:
-                self._width = width
-
-        else:
-            if width and length:
-                self._width = width
-                self._length = length
-
-    def info_square_table(self):
-        print(f"Площадь прямоугольного стола: {self.square_table()}")
-
-
-class TableRound(Table):
-    def square_table(self):
-        return round(math.pi * (self._radius ** 2), 2)
-
-    def info_square_table(self):
-        print(f"Площадь круглого стола: {self.square_table()}")
-
-
-rec = TableRectangular(20, 10, 0)
-rec.info_square_table()
-rec.set_square_table(length=20)
-rec.info_square_table()
-ro = TableRound(0, 0, 20)
-ro.info_square_table()
+# import math
+#
+#
+# class Table:
+#
+#     def __init__(self, width, length, radius):
+#         self._width = width
+#         self._length = length
+#         self._radius = radius
+#
+#     def info_square_table(self):
+#         raise NotImplementedError("В классе должен метод square_table()")
+#
+#
+# class TableRectangular(Table):
+#     def square_table(self):
+#         return self._width * self._length
+#
+#     def set_square_table(self, width=None, length=None):
+#         if width is None:
+#             if length:
+#                 self._length = length
+#
+#         elif length is None:
+#             if width:
+#                 self._width = width
+#
+#         else:
+#             if width and length:
+#                 self._width = width
+#                 self._length = length
+#
+#     def info_square_table(self):
+#         print(f"Площадь прямоугольного стола: {self.square_table()}")
+#
+#
+# class TableRound(Table):
+#     def square_table(self):
+#         return round(math.pi * (self._radius ** 2), 2)
+#
+#     def info_square_table(self):
+#         print(f"Площадь круглого стола: {self.square_table()}")
+#
+#
+# rec = TableRectangular(20, 10, 0)
+# rec.info_square_table()
+# rec.set_square_table(length=20)
+# rec.info_square_table()
+# ro = TableRound(0, 0, 20)
+# ro.info_square_table()
 
 
 

@@ -6691,7 +6691,6 @@ import math
 
 """Перегрузка операторов"""
 
-
 # это встроенные методы для математических операций между экземплярами классов
 
 # 24 * 60 * 60 = 86_400 - число секунд в одном дне
@@ -7039,8 +7038,6 @@ import math
 # print(c1.get_format_time())
 
 
-
-
 # Задача надо сложить два класса
 # написать прогу разведения котов и кошек с количеством котят
 # from random import choice, randint
@@ -7084,106 +7081,481 @@ import math
 # # print(cat1 + cat3)
 
 
-
 # Полиморфизм
 
-class Rectangle:
-    def __init__(self, w, h):
-        self.w = w
-        self.h = h
-
-    def get_perimetr(self):
-        return 2 * (self.w + self.h)
-
-
-class Square:
-    def __init__(self, a):
-        self.a = a
-
-    def get_perimetr(self):
-        return 4 * self.a
-
-
-class Triangle:
-    def __init__(self, a, b, c):
-        self.a = a
-        self.b = b
-        self.c = c
-
-    def get_perimetr(self):
-        return self.a + self.b + self.c
-
-
-r1 = Rectangle(1, 2)
-r2 = Rectangle(3, 4)
-
-s1 = Square(10)
-s2 = Square(20)
-
-t1 = Triangle(1, 2, 3)
-t2 = Triangle(4, 5, 6)
-
-shape = [r1, r2, s1, s2, t1, t2]
-
-for g in shape:
-    print(g.get_perimetr())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# напишем несколько независимых классов нахождения периметра геометрических фигур и положим экземпляры классов в списки
+# название метода нахождения перимертра у всех классов одинаковое
+# class Rectangle:  # прямоугольник
+#     def __init__(self, w, h):
+#         self.w = w
+#         self.h = h
+#
+#     def get_perimetr(self):
+#         return f're {2 * (self.w + self.h)}'
+#
+#
+# class Square:  # квадрат
+#     def __init__(self, a):
+#         self.a = a
+#
+#     def get_perimetr(self):
+#         return f'sq {4 * self.a}'
+#
+#
+# class Triangle:  # треугольник
+#     def __init__(self, a, b, c):
+#         self.a = a
+#         self.b = b
+#         self.c = c
+#
+#     def get_perimetr(self):
+#         return f'tri {self.a + self.b + self.c}'
+#
+#
+# r1 = Rectangle(1, 2)
+# r2 = Rectangle(3, 4)
+#
+# s1 = Square(10)
+# s2 = Square(20)
+#
+# t1 = Triangle(1, 2, 3)
+# t2 = Triangle(4, 5, 6)
+# # создадим список
+# shape = [r1, r2, s1, s2, t1, t2]
+# # у каждого экземпляра вызовется свой метод периметра
+# # В g попадает экземпляр класса у которого вызывается свой метод вычисления get_perimetr
+# for g in shape:
+#     print(g.get_perimetr())
+
+
+# /////////////////////////////////////////////// Урок 31 //////////////////////////////////
+
+# Функторы
+
+"""Метод __call__(self, *args, **kwargs) делает перегрузку круглых скобок
+   Метод __call__ рассчитан для создание декораторов класса"""
+
+# # метод __call__ увеличивает счетчик
+# class Counter:
+#     def __init__(self):
+#         self.__count = 0
+#
+#     def __call__(self, *args, **kwargs):  # при каждом вызове c1() цифры растут
+#         self.__count += 1  # будем просто увеличивать счетчик
+#         print(self.__count)  # что лежит в переменной
+#
+#
+# c1 = Counter()
+# c1()  # происходит перегрузка иза метода __call__, и начинает идти подсчет
+# c1()
+# c1()
+# c1()
+# c1()
+# print()
+# c2 = Counter()  # подсчет заново
+# c2()
+# c2()
+# c2()
+# print()
+# c1()  # идет подсчет дальше
+
+
+"""Подходим потихоньку к классу декоратору"""
+# # 2 2 примера (1 класс) (2 функция, с замыканием)
+# # удаляем вводимые символы из строки
+# class StripChars:
+#     def __init__(self, chars):
+#         self.__chars = chars
+#
+#     def __call__(self, *args, **kwargs):  # в args приходит ?Hello World!!!!!
+#         if not isinstance(args[0], str):  # если в кортеже args первый индекс не строка
+#             raise ValueError("Аргумент должен быть строкой")
+#         return args[0].strip(self.__chars)  # strip удаляет все лишние символы из вводимой строки (слева и справа)
+#
+#
+# s1 = StripChars("?:!; ")
+# print(s1(" ?Hello / World!!!!!  "))
+#
+# # вспомним функцию которая то же убирает символы
+# def strip_chars(chars):
+#     def wrap(string):
+#         if not isinstance(string, str):
+#             raise ValueError("Аргумент должен быть строкой")
+#         return string.strip(chars)
+#
+#     return wrap
+#
+# print("получаем одинаковые результаты")
+# s2 = strip_chars("?:!; ")  # что удаляем
+# print(s2(" ?Hello/ World!!!!!  "))
+
+
+# 2 вариант
+
+
+# class StripChars:
+#     def __init__(self, chars):
+#         self.__chars = chars
+#
+#     def __call__(self, strings):  # Заменили параметры
+#         if not isinstance(strings, str):
+#             raise ValueError("Аргумент должен быть строкой")
+#         return strings.strip(self.__chars)
+#
+#
+# s1 = StripChars("?:!; ")
+# print(s1(" ?Hello World!!!!!  "))
+#
+#
+# def strip_chars(chars):
+#     def wrap(string):
+#         if not isinstance(string, str):
+#             raise ValueError("Аргумент должен быть строкой")
+#         return string.strip(chars)
+#
+#     return wrap
+#
+#
+# s2 = strip_chars("?:!; ")
+# print(s2(" ?Hello World!!!!!  "))
+
+
+# из класса сделаем декаратор
+
+# Тут явный пример как класс выступает в роли декоратора
+
+# 1 разные варианты
+
+# class MyDecorator:
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self):
+#         print("Перед вызовом функций")
+#         self.func()
+#         print("После вызова функций")
+#
+#
+# @MyDecorator  # попадает в func
+# def function():
+#     print("Текст функций")
+#
+#
+# function()
+
+# 2
+
+# class MyDecorator:
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self, x, y):  # добавляем, чтобы работал декоратор в функций
+#         print("Перед вызовом функций")
+#         res = self.func(x, y)  # тут мы в переменную присваиваем вызов функции и вызываем после принта
+#         print("После вызова функций")
+#         return res
+#
+#
+# @MyDecorator  # попадает в func
+# def function(a, b):
+#     return a * b
+#
+#
+# print(function(2, 5))
+
+# 3
+
+# class MyDecorator:
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self, x, y):
+#         # print("Перед вызовом функций")
+#         # res = self.func(x, y)
+#         # print("После вызова функций")
+#         return f"Перед вызовом функций\n{self.func(x, y)}\nПосле вызова функций"  # тут все в одной строке
+#
+#
+# @MyDecorator
+# def function(a, b):
+#     return a * b  # Если тут return, то в, функций должен быть return (также с print)
+#
+#
+# print(function(2, 5))
+
+
+# задача создать класс повер который будет декарировать функцию
+# функция возвращает результат умножения, а класс возводит их в квадрат,
+# class Power:
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self, x, y):
+#         return self.func(x, y) ** 2  # тут вызываем переменную self.func в которую попадает функция function(a, b):
+#
+#
+# @Power  # декоратор переносит функцию в  __init__(self, func)
+# def function(a, b):
+#     return a * b
+#
+#
+# print(function(2, 5))
+# print(function(20, 5))
+
+
+# Вернулись к рассмотрению.
+# Добавили 3 параметр. тут ошибка где то
+
+# class MyDecorator:
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self, *args, **kwargs):  # если не хотим привязываться к количеству аргументов.args применяем для разного количества аргументов в функции
+#         return f"Перед вызовом функций\n{self.func(*args, **kwargs)}\nПосле вызова функций"
+#
+#
+# @MyDecorator(" два параметра")
+# def function(a, b):
+#     return a * b
+#
+#
+# @MyDecorator("три параметра")
+# def function1(a, b, c):
+#     return a * b * c
+#
+#
+# print(function(2, 5))
+# print(function1(2, 5, 2))
+
+
+# (добавляем параметры декоратора) функции одинаково называются
+
+
+# class MyDecorator:
+#     def __init__(self, arg):
+#         self.name = arg
+#
+#     def __call__(self, func):
+#         def wrap(*args, **kwargs):
+#             return f"Перед вызовом функций ({self.name})\n{func(*args, **kwargs)}\nПосле вызова функций"
+#
+#         return wrap
+#
+#
+# @MyDecorator("два параметра")
+# def function(a, b):
+#     return a * b
+#
+#
+# @MyDecorator("три параметра")
+# def function(a, b, c):
+#     return a * b * c
+#
+#
+# print(function(2, 5))
+# print(function(2, 5, 2))
+
+
+#################
+# class MyDecorator:
+#     def __init__(self, arg):
+#         self.name = arg
+#
+#     def __call__(self, func):
+#         def wrap(*args, **kwargs):
+#             return (f'Перед вызовом функции {self.name}\n'
+#                     f'{func(*args, **kwargs)}\n'
+#                     f'После вызова функции')
+#
+#         return wrap
+#
+#
+# @MyDecorator(' два параметра')
+# def function(a, b):
+#     return a * b
+#
+#
+# @MyDecorator(' три параметра')
+# def function1(a, b, c):
+#     return a * b * c
+#
+#
+# print(function(2, 5))
+# print(function1(2, 5, 2))
+
+
+# Задача
+# с параметрами декоратора
+# декоратор перемножает два числа и результат перемножения передает в self.num
+# class Power:
+#     def __init__(self, num):
+#         self.num = num
+#
+#     def __call__(self, func):
+#         def wrap(*args, **kwargs):
+#             return f"Результат: {func(*args, **kwargs) ** self.num}\n"
+#
+#         return wrap
+#
+#
+# @Power(3)
+# def function(a, b):
+#     return a * b
+#
+#
+# print(function(2, 5))
+
+
+# """Декорирование метода"""
+# wrapдобавляем если есть скобки
+# как работают декораторы - методы
+# сделаем декоратор что бы при выводе имени и фамилии сверху и снизу выводились звездочки
+
+# def dec(fn):
+#     def wrap(*args, **kwargs):
+#         print('-' * 20)
+#         fn(*args, **kwargs)
+#         print('-' * 20)
+#
+#     return wrap
+#
+#
+# class Person:
+#     def __init__(self, name, surname):
+#         self.name = name
+#         self.surname = surname
+#
+#     @dec
+#     def info(self):  # печатает им и фамилию
+#         print(f"{self.name} {self.surname}")
+#
+#
+# p1 = Person("Виталий", "Карасев")
+# p1.info()
+
+
+# """Декорация класса"""
+#
+#
+# def decorator(cls):
+#     class Wrapper(cls):
+#         def doubler(self, value):
+#             return value * 2
+#
+#     return Wrapper
+#
+#
+# @decorator
+# class ActualClass:
+#     def __init__(self):
+#         print("Инициализатор ActualClass")
+#
+#     def quad(self, value):
+#         return value * 4
+#
+#
+# obj = ActualClass()
+# print(obj.quad(4))
+# print(obj.doubler(4))
+
+
+"""Дескрипторы"""
+
+# Подходим к Дескриптору
+
+
+# Используем Дескриптор.
+# Убирает применения @property
+# разберемся как работает этот класс String
+
+# class String:  # создадим класс со своими геттерами и сеттерами и создадим экземпляр этого класса в ините класса персон
+#     def __init__(self, value=None):
+#         print(f"Инициализатор String {value}")
+#         if value:  # если value значение TRU то вводим значение
+#             self.set(value)
+#
+#     def set(self, value):
+#         if not isinstance(value, str):
+#             raise ValueError(f"{value} должно быть строкой")
+#         self.__value = value
+#
+#     def get(self):
+#         return self.__value
+#
+#
+# class Person:
+#     def __init__(self, name, surname):
+#         # self.__name = String(name)
+#         # self.__surname = String(surname)
+#         self.name = String(name)
+#         self.surname = String(surname)
+# # вводим имя
+# #     @property
+# #     def name(self):
+# #         return self.__name
+# # # делаем проверку имени на строку и если все нормально появляется возможность поменять имя
+# #     @name.setter
+# #     def name(self, value):
+# #         if not isinstance(value, str):
+# #             raise ValueError(f"{value} должно быть строкой")
+# #         else:
+# #             self.__name = value
+# #
+# #     @property
+# #     def surname(self):
+# #         return self.__surname
+# #
+# #     @surname.setter
+# #     def surname(self, value):
+# #         if not isinstance(value, str):
+# #             raise ValueError(f"{value} должно быть строкой")
+# #         else:
+# #             self.__surname = value
+#
+#
+# p = Person('Ivan', 'Petrov')
+# p.surname.set('54')
+# # p.name = '54'
+# # print(p.name, p.surname)
+
+
+# дескриптор это класс который имеет возможность работать с этими методами (__get__, __set__, __delete__, __set_name__)
+"""Дескриптор методы: (__get__, __set__, __delete__, __set_name__)"""
+"""Стандартный синтаксис записи"""
+
+
+# переделаем задачу выше под дискрипторы с методами __get__, __set__, __set_name__
+
+# class ValidString:  # Дескриптор
+#     def __set_name__(self, owner, name):  # 2 аргумента обязательно, но не обязательно его выводить
+#         print(owner)  # Не обязательный
+#         self.__name = name
+#
+#     def __get__(self, instance, owner):
+#         return instance.__dict__[self.__name]
+#
+#     def __set__(self, instance, value):
+#         if not isinstance(value, str):
+#             raise ValueError(f"{self.__name} должно быть строкой")
+#         instance.__dict__[self.__name] = value
+#
+#
+# class Person:
+#     name = ValidString()
+#     surname = ValidString()
+#
+#     def __init__(self, name, surname):
+#         self.name = name
+#         self.surname = surname
+#
+#
+# p = Person('Ivan', 'Petrov')
+# # p.name = 5
+# print(p.name)
+# print(p.surname)
+# print(p.__dict__)
+
+
+# /////////////////////////////////////////////// Урок 32 //////////////////////////////////
 
 

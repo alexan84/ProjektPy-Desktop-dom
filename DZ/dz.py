@@ -1,105 +1,141 @@
-# Dz 29
+# Dz 31
 
+class DescriptorOrder:
+    def __set_name__(self, owner, name):
+        self.__name = name
 
-class Point3D:
-    def __init__(self, x, y, z):
-        self.x = x
-        self.y = y
-        self.z = z
+    def __get__(self, instance, owner):
+        return instance.__dict__[self.__name]
 
-    def __repr__(self):
-        return f"{self.x}, {self.y}, {self.z}"
-
-    @staticmethod
-    def check(other):
-        if not isinstance(other, Point3D):
-            raise ValueError("Правый операнд должен быть типом класса Clock")
-
-    def __add__(self, other):
-        self.check(other)
-        x = self.x + other.x
-        y = self.y + other.y
-        z = self.z + other.z
-        return Point3D(x, y, z)
-
-    def __sub__(self, other):
-        self.check(other)
-        x = self.x - other.x
-        y = self.y - other.y
-        z = self.z - other.z
-        return Point3D(x, y, z)
-
-    def __mul__(self, other):
-        self.check(other)
-        x = self.x * other.x
-        y = self.y * other.y
-        z = self.z * other.z
-        return Point3D(x, y, z)
-
-    def __truediv__(self, other):
-        self.check(other)
-        x = self.x / other.x
-        y = self.y / other.y
-        z = self.z / other.z
-        return Point3D(x, y, z)
-
-    def __eq__(self, other):
-        self.check(other)
-        return self.x == other.x and self.y == other.y and self.z == other.z
-
-    def __getitem__(self, item):
-        key = {'x': self.x,
-               'y': self.y,
-               'z': self.z}
-        try:
-            return key[item]
-        except KeyError:
-            raise ValueError("Ключ должен быть строкой")
-
-    def __setitem__(self, key, value):
-        if not isinstance(key, str):
-            raise ValueError(f"Ключ должен быть строкой")
-
+    def __set__(self, instance, value):
         if not isinstance(value, int):
-            raise TypeError(f"Значение должно быть числом")
-
-        if key == 'x':
-            self.x = value
-        if key == 'y':
-            self.y = value
-        if key == 'z':
-            self.z = value
+            raise TypeError("Сумма и количество должно быть числом!")
+        if value < 0:
+            raise ValueError("Цена и количество товара не может быть отрицательным")
+        instance.__dict__[self.__name] = value
 
 
-p1 = Point3D(12, 15, 18)
-p2 = Point3D(6, 3, 9)
+class Order:
+    price = DescriptorOrder()
+    quantity = DescriptorOrder()
 
-print(f"Координаты 1-й точки:", p1)
-print(f"Координаты 2-й точки:", p2)
-print()
+    def __init__(self, product, price, quantity):
+        self.product = product
+        self.price = price
+        self.quantity = quantity
 
-p3 = p1 + p2
-p4 = p1 - p2
-p5 = p3 * p4
-p6 = p3 / p4
 
-print(f"Сложение координат:", p3)
-print(f"Вычитание координат:", p4)
-print(f"Умножение координат:", p5)
-print(f"Деление координат:", p6)
-print()
+order = Order('iPhone 14 Pro Max', 104_000, 10)
 
-print(f"Равенство координат:", p1 == p2)
-print()
+order.price = 102_000
+order.quantity = 8
+print(f"Цена: {order.price} \nКоличество: {order.quantity}")
+print(order.__dict__)
 
-print(f"x1 = {p1['x']}, x2 = {p2['x']}")
-print(f"y1 = {p1['y']}, y2 = {p2['y']}")
-print(f"z1 = {p1['z']}, z2 = {p2['z']}")
 
-p2['x'] = 20
-print(f"Запись значение в координату x2: {p2['x']}")
+# Dz 30
 
-print(f"x1 = {p1['x']}, x2 = {p2['x']}")
+# сделаем 2 эеземпляра и сложим их
+# class Point3D:
+#     def __init__(self, x, y, z):  # инициализируем 3 точки
+#         self.x = x
+#         self.y = y
+#         self.z = z
+#
+#     def __repr__(self):  # метод визуального контроля
+#         return f"{self.x}, {self.y}, {self.z}"
+#
+#     @staticmethod
+#     def check(other):  # статический метод проверяющий правый операнд
+#         if not isinstance(other, Point3D):
+#             raise ValueError("Правый операнд должен быть типом класса Point3D")
+#
+#     def __add__(self, other):  # метод складывающий два экземпляра класса
+#         self.check(other)
+#         x = self.x + other.x
+#         y = self.y + other.y
+#         z = self.z + other.z
+#         return Point3D(x, y, z)
+#
+#     def __sub__(self, other):
+#         self.check(other)
+#         x = self.x - other.x
+#         y = self.y - other.y
+#         z = self.z - other.z
+#         return Point3D(x, y, z)
+#
+#     def __mul__(self, other):
+#         self.check(other)
+#         x = self.x * other.x
+#         y = self.y * other.y
+#         z = self.z * other.z
+#         return Point3D(x, y, z)
+#
+#     def __truediv__(self, other):
+#         self.check(other)
+#         x = self.x / other.x
+#         y = self.y / other.y
+#         z = self.z / other.z
+#         return Point3D(x, y, z)
+#
+#     def __eq__(self, other):  # метод равенства
+#         self.check(other)
+#         return self.x == other.x and self.y == other.y and self.z == other.z
+#
+#     def __getitem__(self, item):  # вывод цифровых значений координат по ключу
+#         key = {'x': self.x,
+#                'y': self.y,
+#                'z': self.z}
+#         try:
+#             return key[item]
+#         except KeyError:
+#             raise ValueError("Ключ должен быть строкой")
+#
+#     def __setitem__(self, key, value):  # установим новое значение координат по ключу
+#         if not isinstance(key, str):
+#             raise ValueError(f"Ключ должен быть строкой")
+#
+#         if not isinstance(value, int):
+#             raise TypeError(f"Значение должно быть числом")
+#
+#         if key == 'x':
+#             self.x = value
+#         if key == 'y':
+#             self.y = value
+#         if key == 'z':
+#             self.z = value
+#
+#
+# # это сложить между собой
+# p1 = Point3D(12, 15, 18)
+# p2 = Point3D(6, 3, 9)
+#
+# print(f"Координаты 1-й точки:", p1)
+# print(f"Координаты 2-й точки:", p2)
+# print()
+# # перегрузка вычислений происходит с помощью методов __add__,
+# p3 = p1 + p2
+# p4 = p1 - p2
+# p5 = p3 * p4
+# p6 = p3 / p4
+#
+# print(f"Сложение координат:", p3)
+# print(f"Вычитание координат:", p4)
+# print(f"Умножение координат:", p5)
+# print(f"Деление координат:", p6)
+# print()
+#
+# print(f"Равенство координат:", p1 == p2)
+# print()
+# # вывод цифровых значений координат по ключу
+# print(f"x1 = {p1['x']}, x2 = {p2['x']}")
+# print(f"y1 = {p1['y']}, y2 = {p2['y']}")
+# print(f"z1 = {p1['z']}, z2 = {p2['z']}")
+# # установим новое значение координат по ключу
+# p2['x'] = 20
+# print(f"Запись значение в координату x2: {p2['x']}")
+# # вывод значения которое изменили p2['x']
+# print(f"x1 = {p1['x']}, x2 = {p2['x']}")
 
 
 # Dz 29 -

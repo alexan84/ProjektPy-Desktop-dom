@@ -7694,63 +7694,6 @@ import math
 
 # # Задача
 # #
-class PayrollSystem:
-    def calculate(self, employees):
-        print("Расчет заработной платы:")
-        print('=' * 50)
-        for employee in employees:
-            print(f"Заработная плата: {employee.id_name} - {employee.name}")
-            print(f"- Проверить сумму: {employee.calculate_payroll()}")
-            print()
-
-
-class Employee:
-    def __init__(self, id_name, name):
-        self.id_name = id_name
-        self.name = name
-
-
-class SalaryEmployee(Employee):
-    """Административные работники, с фиксированной зарплатой"""
-    def __init__(self, id_name, name, weekly_salary):
-        super().__init__(id_name, name)
-        self.weekly_salary = weekly_salary
-
-    def calculate_payroll(self):
-        return self.weekly_salary
-
-
-class HourlyEmployee(Employee):
-    """Сотрудники с почасовой зарплатой"""
-    def __init__(self, id_name, name, hours_worked, hour_rate):
-        super().__init__(id_name, name)
-        self.hours_worked = hours_worked
-        self.hour_rate = hour_rate
-
-    def calculate_payroll(self):
-        return self.hours_worked * self.hour_rate
-
-
-class SalesRepresentative(SalaryEmployee):
-    def __init__(self, id_name, name, weekly_salary, commission_salary):
-        super().__init__(id_name, name, weekly_salary)
-        self.commission_salary = commission_salary
-
-    def calculate_payroll(self):
-        return self.weekly_salary + self.commission_salary
-
-
-salary_employee = SalaryEmployee(1, "Валерий Задорожный", 1500)
-hourly_employee = HourlyEmployee(2, "Илья Кромин", 40, 15)
-sales_representative = SalesRepresentative(3, "Николай Хорольский", 1000,
-                                           250)
-
-payroll_system = PayrollSystem()
-payroll_system.calculate([
-    salary_employee,
-    hourly_employee,
-    sales_representative
-])
 
 
 

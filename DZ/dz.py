@@ -1,36 +1,54 @@
+# Dz 32
+from ep.salary_employee import SalaryEmployee
+from ep.hourly_employee import HourlyEmployee
+from ep.sales_representative import SalesRepresentative
+from ep.payroll_system import PayrollSystem
+
+salary_employee = SalaryEmployee(1, "Валерий Задорожный", 1500)
+hourly_employee = HourlyEmployee(2, "Илья Кромин", 40, 15)
+sales_representative = SalesRepresentative(3, "Николай Хорольский", 1000,
+                                           250)
+
+payroll_system = PayrollSystem()
+payroll_system.calculate([
+    salary_employee,
+    hourly_employee,
+    sales_representative
+])
+
 # Dz 31
 
-class DescriptorOrder:
-    def __set_name__(self, owner, name):
-        self.__name = name
-
-    def __get__(self, instance, owner):
-        return instance.__dict__[self.__name]
-
-    def __set__(self, instance, value):
-        if not isinstance(value, int):
-            raise TypeError("Сумма и количество должно быть числом!")
-        if value < 0:
-            raise ValueError("Цена и количество товара не может быть отрицательным")
-        instance.__dict__[self.__name] = value
-
-
-class Order:
-    price = DescriptorOrder()
-    quantity = DescriptorOrder()
-
-    def __init__(self, product, price, quantity):
-        self.product = product
-        self.price = price
-        self.quantity = quantity
-
-
-order = Order('iPhone 14 Pro Max', 104_000, 10)
-
-order.price = 102_000
-order.quantity = 8
-print(f"Цена: {order.price} \nКоличество: {order.quantity}")
-print(order.__dict__)
+# class DescriptorOrder:
+#     def __set_name__(self, owner, name):
+#         self.__name = name
+#
+#     def __get__(self, instance, owner):
+#         return instance.__dict__[self.__name]
+#
+#     def __set__(self, instance, value):
+#         if not isinstance(value, int):
+#             raise TypeError("Сумма и количество должно быть числом!")
+#         if value < 0:
+#             raise ValueError("Цена и количество товара не может быть отрицательным")
+#         instance.__dict__[self.__name] = value
+#
+#
+# class Order:
+#     price = DescriptorOrder()
+#     quantity = DescriptorOrder()
+#
+#     def __init__(self, product, price, quantity):
+#         self.product = product
+#         self.price = price
+#         self.quantity = quantity
+#
+#
+# order = Order('iPhone 14 Pro Max', 104_000, 10)
+#
+# order.price = 102_000
+# order.quantity = 8
+# print(f"Цена: {order.price} \nКоличество: {order.quantity}")
+# print(order.__dict__)
 
 
 # Dz 30
@@ -233,8 +251,6 @@ print(order.__dict__)
 # vladimir.infa()
 
 
-
-
 # Dz 28 - создать класс стол и дочерние классы
 # import math
 #
@@ -286,9 +302,6 @@ print(order.__dict__)
 # rec.info_square_table()
 # ro = TableRound(0, 0, 20)
 # ro.info_square_table()
-
-
-
 
 
 # Dz 27 - доработать  класс аккаунт
@@ -413,9 +426,7 @@ print(order.__dict__)
 #     print()
 
 
-
 # Dz 26 - Создать класс персон
-
 
 
 # class Person:
@@ -466,12 +477,6 @@ print(order.__dict__)
 # print(person.__dict__)
 
 
-
-
-
-
-
-
 #
 # # Dz 25 Создать класс прямоугольник
 #
@@ -518,13 +523,6 @@ print(order.__dict__)
 # print(rectangle.get_perimeter())
 # print(rectangle.get_diagonal())
 # print(rectangle)
-
-
-
-
-
-
-
 
 
 # Dz 24 Создать класс автомобиль

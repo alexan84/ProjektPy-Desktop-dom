@@ -7689,7 +7689,6 @@ import math
 # e_car.description_battery()
 
 
-
 # /////////////////////////////////////////////// Урок 33 //////////////////////////////////
 
 
@@ -7891,12 +7890,7 @@ import json
 #     write_json(gen_person())
 
 
-
-
 # /////////////////////////////////////////////// Урок 34 //////////////////////////////////
-
-
-
 
 
 # Задача
@@ -7904,152 +7898,573 @@ import json
 # запись данных о студенте и группе студентов в файл, плюс считывание файла
 
 
+# class Student:
+#     def __init__(self, name, marks):  # имя и оценки
+#         self.name = name
+#         self.marks = marks
+#
+#     def __str__(self):  # вывод читабельного вида фамилии и перечня оценок
+#         a = ', '.join(map(str, self.marks))  # преобразуем список оценок без квадратны скобок,
+#         # map берет эелемент из списка и преобразует его в строковое значение а join разделяет эти элементы запятой, Записать (распаковка без скобок, в один ряд)
+#         return f"Студент: {self.name}: {a}"  # выводим фамилию
+#
+#     def add_mark(self, mark):  # этот метод будет вызываться и ему передается аргумент mark (mark это принимаемая оценка)
+#         #  добавление к существующему списку еще какую то оценку,для этого вызываем экземпляр и вызываем этот метод
+#         self.marks.append(mark) # вызываем метод append у списка оценок
+#
+#     def delete_mark(self, index): # удаление оценки по индексу
+#         self.marks.pop(index)  # метод pop удаляет по индексу
+#
+#     def edit_mark(self, index, new_mark):  # изменить выбранную оценку на другую,передаем index оценки и цифру новой оценки (new_mark)
+#         self.marks[index] = new_mark  # просто выбранному индексу присваиваем новую оценку
+#
+#     def average_mark(self):  # нахождение среднего балла оценок
+#         return round(sum(self.marks) / len(self.marks), 2)  # берем сумму оценок и делим на количество оценок
+#         # ,которое находим с помощью len
+#         # round округляет до указанного значения после запятой у нас это 2,
+#
+#     def dump_to_json(self):  # (2) записываем в файл имя и оценки
+#         data = {'name': self.name, 'marks': self.marks}  # записываем в переменную имя и оценки
+#         with open(self.get_file_name(), 'w', encoding='UTF-8') as f:  # открываем и записываем имя нового студента
+#             json.dump(data, f)
+#
+#     def load_from_file(self):  # (2)
+#         with open(self.get_file_name(), 'r', encoding='UTF-8') as f:
+#             print(json.load(f))
+#
+#     def get_file_name(self):
+#         return self.name + '.json'  # (2) записать (добавление любого студента)
+#
+#
+# class Group:  # класс группа со списком студентов и название группы
+#     def __init__(self, students, group):
+#         self.students = students  # список студентов
+#         self.group = group  #  название группы
+#
+#     def __str__(self):  # метод читабельного вида группы студентов
+#         a = '\n'.join(map(str, self.students))  # (1) преобразуем экземпляры студентов в строковые представления и выведем их
+#         # и каждого нового студента выведем с новой строки '\n'.join ,
+#         return f"\nГруппа: {self.group} \n{a}"  # после того как вышесписок студентов переделали с троки и разделили новой строкой
+#         # вернем список группы и название группы ,
+#
+#     def add_student(self, student):  # добавление студента в группу
+#         self.students.append(student)  # у списка студентов self.students вызываем метод append и передаем имя нового студента
+#
+#     def remove_student(self, index):  # удаление студента из группы(списка студентов)
+#         return self.students.pop(index)  # метод pop удаляет по индексу
+#
+#     @staticmethod  # не привяжется к экземпляру класса
+#     def change_group(group_1, group_2, index):  # изменяем состав групп,из одной группы забираем в другую добавляем
+#         group_2.add_student(group_1.remove_student(index))  # в группу 2 добавить студента которого удалили из списка студентов группы 1
+#         # переводим из группы в группу студента
+#
+#
+#
+#
+# st1 = Student('Bodnya', [5, 4, 3, 4, 5, 3])  # фамилия и список оценок
+# #  создадим дополнительных студентов для демеонстрации удаления их из групп
+# st2 = Student('Nikolaenko', [2, 3, 5, 4, 2])
+# st3 = Student('Birukov', [3, 5, 3, 2, 5, 4])
+#
+#
+# st1.add_mark(4)  # добавляем оценку в конец списка
+# print(st1)
+# st1.delete_mark(2)  # удаляем по индексу
+# print(st1)
+# st1.edit_mark(4, 5)  # заменяем по индексу
+# print(st1)
+# print(st1.average_mark())  # средний бал оценок
+#
+# sts1 = [st1, st2]  # создадим список из двух студентов
+# group1 = Group(sts1, "ГК Python 1")  # список студентов и название группы (1)
+# print(group1)
+# print('создадим список из двух студентов')
+# group1.add_student(st3)  # добавляем студента
+# print(group1)
+# print('добавление студента в группу')
+# group1.remove_student(1)  # удаление студента из группы(списка студентов)
+# print(group1)
+# print("удаление студента из группы(списка студентов)")
+#
+# sts2 = [st2]  # создаем список из одного студента
+# group2 = Group(sts2, "ГК Web 2")  # создадим новую группу,дадим ей название и положим одного студента
+# print(group2)
+# print("создадим новую группу,дадим ей название и положим одного студента которого ранее удадили из группы Nikolaenko")
+# #
+# Group.change_group(group1, group2, 0)  # тут 1 из какой, 2 в какой, по индексу 0 студента это Bodnya
+# print(group1)
+# print(group2)
+# print("тут 1 из какой, 2 в какой, по индексу 0 студента это Bodnya")
+# #
+# # st1.dump_to_json()
+# # st1.load_from_file()
+
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Задача реализовать "Выбор действия:\n1 - Добавления данных\n2 - Удаление данных\n3 - Поиск данных"
+#                   "\n4 - Редактирование данных\n5 - Просмотр данных\n6 - Завершение работы\nВвод:
+# используя упаковку и распаковку данных                  "
+
+# /////////////////////////////////////////////// Урок 35 //////////////////////////////////
+
+
+# Продолжаем Задание урока 34
+#
+#
+# class CountryCapital:
+#     @staticmethod
+#     def load(file_name):
+#         try:
+#             data = json.load(open(file_name))
+#         except FileNotFoundError:
+#             data = {}
+#         finally:
+#             return data
+#
+#     @staticmethod
+#     def add_country(file_name):
+#         new_country = input("Введите название страны: ").lower()
+#         new_capital = input("Введите название столицы: ").lower()
+#
+#         # try:
+#         #     data = json.load(open(file_name))
+#         # except FileNotFoundError:
+#         #     data = {}
+#         data = CountryCapital.load(file_name)
+#
+#         data[new_country] = new_capital
+#
+#         with open(file_name, 'w', encoding="utf-8") as f:
+#             json.dump(data, f, indent=2)
+#
+#     @staticmethod
+#     def load_from_file(file_name):
+#         with open(file_name) as f:
+#             print({k.capitalize(): v.capitalize() for k, v in json.load(f).items()})
+#
+#     @staticmethod
+#     def delete_country(file_name):  # удаление страны
+#         del_country = input("Введите название страны: ").lower()
+#
+#         # try:
+#         #     data = json.load(open(file_name))
+#         # except FileNotFoundError:
+#         #     data = {}
+#         data = CountryCapital.load(file_name)
+#
+#         if del_country in data:  # проверка ключа в словаре,если есть то удалим из словаря этот ключ
+#             del data[del_country]
+#
+#             with open(file_name, 'w') as f:  # далее мы перезапишем файл с данными
+#                 json.dump(data, f, indent=2)
+#         else:
+#             print("Такой страны в базе нет")  # если ввели не верную страну
+#
+#     @staticmethod
+#     def search_data(file_name):  # поиск страны в словаре
+#         country = input("Введите название страны: ").lower()
+#
+#         # try:
+#         #     data = json.load(open(file_name))
+#         # except FileNotFoundError:
+#         #     data = {}
+#         data = CountryCapital.load(file_name)
+#
+#         if country in data:  # если есть страна в словаре
+#             print(f"Страна {country.capitalize()} столица {data[country].capitalize()} есть в словаре")  # capitalize перевод в верхней регистр первой буквы
+#         else:  # если нет страны в словаре
+#             print(f"Страны {country.capitalize()} нет в словаре")
+#
+#     @staticmethod
+#     def edit_data(file_name):  # меняем название столицы,если она введена неправильно к примеру
+#         country = input('Введите страну для корректировки: ').lower()
+#         new_capital = input('Введите новое название столицы: ').lower()
+#
+#         # try:
+#         #     data = json.load(open(file_name))
+#         # except FileNotFoundError:
+#         #     data = {}
+#         data = CountryCapital.load(file_name)
+#
+#         if country in data:  # если страна есть в словаре то поменяем название ее столицы
+#             data[country] = new_capital
+#             with open(file_name, 'w') as f:  # открываем файл,его имя приходит в скобках file_name и открываем в режиме чтения
+#                 json.dump(data, f, indent=2)  # меняем название,вызываем метод json.dump и передаем в него данные для замены столицы
+#         else:
+#             print("Такой страны в базе нет")
+#
+#
+# file = "list_capital.json"
+# while True:
+#     index = input("Выбор действия:\n1 - добавление данных\n2 - удаление данных\n3 - поиск даннах\n"
+#                   "4 - редактирование даннах\n5 - просмотр данных\n6 - завершение работы\nВвод: ")
+#     if index == "1":
+#         CountryCapital.add_country(file)
+#     elif index == "2":
+#         CountryCapital.delete_country(file)
+#     elif index == "3":
+#         CountryCapital.search_data(file)
+#     elif index == "4":
+#         CountryCapital.edit_data(file)
+#     elif index == "5":
+#         CountryCapital.load_from_file(file)
+#     elif index == "6":
+#         break
+#     else:
+#         print("Введен некорректный номер")
+
+
+"""Берем данные json из сторонних ресурсов"""
+
+# pip install requests (установить)
+
+# import requests
+# import json
+#
+# response = requests.get("https://jsonplaceholder.typicode.com/todos")
+# # print(type(response.text))  # Получаем строку
+# # print(response.text)
+# #
+# todos = json.loads(response.text)
+# # print(type(todos))  # Получаем список
+# # print(type(todos[0]))  # Теперь можем, обратится по индексу (содержит тип класса dict)
+# # print(todos)
+# #
+# #
+# # # Переходим к практике.
+# #
+# #
+# todos_by_user = {}
+# #
+# for todo in todos:  # Ищем сколько и какой пользователь выполнил задач.
+#     if todo['completed']:
+#         try:
+#             todos_by_user[todo['userId']] += 1
+#         except KeyError:
+#             todos_by_user[todo['userId']] = 1
+#
+# print(todos_by_user)
+# #
+# top_users = sorted(todos_by_user.items(), key=lambda x: x[1], reverse=True)
+# # Сортируем пользователей по количеству выполненных задач
+# print(top_users)
+# #
+# max_completed = top_users[0][1]  # Тут находим максимальное количество выполненных задач
+# print(max_completed)
+# #
+# # """Этот код надо внедрить (Заменяет первых 2 решения)"""
+# # # top_complete = max(todos_by_user.values())
+# # # top_users = [user for user in todos_by_user.items() if user[1] == top_complete]
+# # # print(top_users)
+# #
+# users = []
+# for user, num_complete in top_users:  # Распаковка dict (Записать пример)
+#     if num_complete < max_completed:
+#         break
+#     users.append(str(user))  # Переводим список в строку, чтобы работала строка (max_users = ' and '.join(users))
+# print(users)  # выводим список пользователей с максимально выполнеными количеством задач
+# #
+# max_users = ' and '.join(users)
+# #
+# m = 's' if len(users) > 1 else ''  # Здесь создаем условие если пользователей больше чем 1, то добавляем (s)
+# print(f"user{m} {max_users} completed {max_completed} TODOs")  # Добавляем или убираем в user(s)
+# #
+# #
+# def keep(todo):  # Тут создается функция для, сохранение пользователей с максимальным выполненным решением
+#     is_complete = todo['completed']
+#     has_num_count = str(todo['userId']) in users
+#     return is_complete and has_num_count
+# #
+# #
+# with open('filter.json', 'w', encoding='UTF-8') as f:  # открываем файл и назовем его filter.json на запись
+#     filter_todos = list(filter(keep, todos))  # отфильтруем данные перед записью
+#     json.dump(filter_todos, f, indent=2)  # создаем файл json и записываем в него отфильтрованные данные
+
+
+# import csv  # переменные разделенные запятыми(не обязательно запятыми)
+#
+# with open('data.csv', encoding='UTF-8') as f:  # открываем файл для просмотра
+#     file_reader = csv.reader(f, delimiter=';')  # передаем имя файла и разделитель
+#     # если в тексте загружаемого файла используется запятая, то указывать не надо (delimiter=';')
+#     count = 0
+#     for row in file_reader:  # обязательно нужно распаковывать чтобы
+#         if count == 0:
+#             print(f"Файл содержит столбцы: {', '.join(row)}")  # берем из списка названия столбцов
+#         else:
+#             print(f"{row[0]} - {row[1]}. Родился в {row[2]}")
+#     count += 1
+
+
+# /////////////////////////////////////////////// Урок 36 //////////////////////////////////
+
+
+# import csv
+# получаем данные в виде списка
+# with open('data2.csv', encoding='UTF-8') as f:
+#     file_datas = csv.reader(f, delimiter=';')
+#     count = 0
+#     for file_data in file_datas:
+#         if count == 0:
+#             print(f"Файл содержит столбцы: {', '.join(file_data)}")
+#         else:
+#             print(f" Имя доменна: {file_data[0]}, Поставщик: {file_data[1]}, "
+#                   f"Номер: {file_data[2]}, Локация: {file_data[3]}")
+#         count += 1
+
+
+import csv
+
+"""Формат  CSV = Переменные разделенные запятыми"""
+# Продолжаем получаем данные в виде словаря
+
+# with open('data.csv', encoding='UTF-8') as f:
+#     field_names = ['Имя', 'Профессия',
+#                    'Год рождения']  # создаем заголовочную строку(список с ключами) и передаем в DictReader
+#     file_reader = csv.DictReader(f, delimiter=";", fieldnames=field_names)
+#     count = 0  # в заголовочной строке ключ в ниже значение
+#     for row in file_reader:
+#         # print(row)
+#         if count == 0:
+#             print(f"Файл содержит столбцы: {', '.join(row)}")
+#         print(
+#             f"{row['Имя']} - {row['Профессия']}. Родился в {row['Год рождения']}")  # обращаемся не по индексам а по названию ключей- учитывая на каких индексах они расположенны
+#         count += 1
+
+
+# Убираем пустоту между новыми строками
+#
+# with open('student.csv', 'w', encoding='UTF-8') as f:  # откроем файл которого у нас не существует и будем записывать в него данные
+#     writer = csv.writer(f, delimiter=';', lineterminator='\r')  # переменная для записи данных сметодом записи writer
+#     # Убирает промежуток между новыми строками (lineterminator='\r') которые появились в экселе
+#     writer.writerow(['Имя', 'Класс', 'Возраст'])  # первая строка идет в виде заголовка(ключа)
+#     writer.writerow(['Женя', 9, 15])
+#     writer.writerow(['Саша', 5, 12])
+#     writer.writerow(['Маша', 11, 18])
+
+
+# Список в списке
+# создадим список который нужно поместить в csv файл
+# data = [['hostname', 'vendor', 'model', 'location'],
+#         ['sw1', 'Cisco', '3750', 'London, Best str'],
+#         ['sw2', 'Cisco', '3850', 'Liverpool, Better str'],
+#         ['sw3', 'Cisco', '3650', 'Liverpool, Better str'],
+#         ['sw4', 'Cisco', '3650', 'London, Best str']]
+#
+# with open('data_new.csv', 'w', encoding='UTF-8') as f:  # откроем новый файл
+#     writer = csv.writer(f, delimiter=';', lineterminator='\r')
+#     # for row in data:  # в цикле пройдемся по элементам и запишем эти данные в файл
+#     #     writer.writerow(row)
+#     writer.writerows(data)  # готовая функция (что бы не создавать цикл выше)
+#
+# with open('data_new.csv') as f:
+#     # print(type(f.read()))
+#     print(f.read())  # Если просто надо считать файл в консоль
+
+
+# writeheader() - записывает список словарей
+#
+# with open('stud.csv', 'w', encoding='UTF-8') as f:
+#     names = ['Имя', 'Возраст']  # названия столбцов(ключей)
+#     writer = csv.DictWriter(f, delimiter=';', lineterminator='\r', fieldnames=names)  # fieldnames=names список с ключами
+#     writer.writeheader()
+#     writer.writerow({'Имя': 'Саша', 'Возраст': 6})
+#     writer.writerow({'Имя': 'Маша', 'Возраст': 15})
+#     writer.writerow({'Имя': 'Вова', 'Возраст': 14})
+
+
+# список словарей запишем
+
+# data = [{
+#     'hostname': 'sw1',
+#     'location': 'London',
+#     'model': '3750',
+#     'vendor': 'Cisco'
+# }, {
+#     'hostname': 'sw2',
+#     'location': 'Liverpool',
+#     'model': '3850',
+#     'vendor': 'Cisco'
+# }, {
+#     'hostname': 'sw3',
+#     'location': 'Liverpool',
+#     'model': '3650',
+#     'vendor': 'Cisco'
+# }, {
+#     'hostname': 'sw4',
+#     'location': 'London',
+#     'model': '3650',
+#     'vendor': 'Cisco'
+# }]
+#
+#
+# with open('dict_writer.csv', 'w', encoding='UTF-8') as f:
+#     # data[0] берт из списка первый индекс,keys возвращает ключи и (преобразуем в list - не обязательно)
+#     writer = csv.DictWriter(f, delimiter=';', lineterminator='\r', fieldnames=list(data[0].keys()))
+#     # list(data[0].keys() = list иногда необходим но не всегда
+#     writer.writeheader()  # список заголовков_ключей
+#     for d in data:
+#         writer.writerow(d)
+#
+# # print(data[0].keys())  # 1 вариант получения, что содержится без list
+# # print(list(data[0].keys()))  # 2 вариант получения, что содержится с list
+
+
+import requests
+
+# Получаем данные из json и записываем в csv
+#
+# response = requests.get("https://jsonplaceholder.typicode.com/todos")
+# todos = json.loads(response.text)  # получаем список словарей
+#
+# with open('todos.csv', 'w', encoding='UTF-8') as f:
+#     writer = csv.DictWriter(f, delimiter=';', lineterminator='\r', fieldnames=list(todos[0].keys()))
+#     writer.writeheader()
+#     for d in todos:
+#         writer.writerow(d)
+
+
+"""Парсинг"""
+# pip install beautifulsoup4 или bs4
+# это библиотека питона для извлечения данных из HTML
+from bs4 import BeautifulSoup
+
+
+# # Обязательно записать рассказ о парсинг
+#
+# f = open('index.html').read()  # открываем документ и считываем из него данные
+# # print(type(f))
+# # print(f)  #  смотрим в консоли что в документе
+# soup = BeautifulSoup(f, 'html.parser')  # создадим экземпляр класса BeautifulSoup который импортировали
+# # find по тегу ищет значение атрибута,найдет первый подходящий вариант и остановит поиск
+# # row = soup.find('div', class_='name').text  # .text (покажет что в теге записано) выводится только имя без тегови слассов
+# # row = soup.find('div', class_='name')
+# # print(row)  # <div class="name">Petr</div>
+# # Ищет по тегу значение атрибута (ищет 1 встретившийся Элемент)
+#
+# # row = soup.find_all('div', class_='name')  # ищет все элементы тега
+# # print(row)
+#
+# # row = soup.find_all('div', class_='row')[1].find('div', class_='links')
+# # print(row)
+# # # получаем из div row именно в нем div links  в 1 индексе
+#
+# # row = soup.find_all('div', {'data-set': 'salary'})
+# # print(row)
+# # # Получаем по пользовательскому классу (надо создать условия как dict)
+#
+# # row = soup.find_all('div', {'class': 'name'})
+# # print(row)
+# # другой синтаксис записи (row = soup.find_all('div', class_='name'))
+#
+# # row = soup.find('div', string="Alena")
+# # row1 = soup.find('div', string="Alena").parent
+# # row2 = soup.find('div', string="Alena").parent.parent  # 1
+# # row3 = soup.find('div', string="Alena").find_parent(class_='row')  # 2
+# # # Получаем доступы на уровень выше
+# # print(row)
+# # print()
+# # print(row1)
+# # print()
+# # print(row2)
+# # print()
+# # print(row3)
+#
+# row = soup.find('div', id='whois3')
+# # С id обычно используется метод (find), в другом случай мы получим список (find_all)
+# row1 = soup.find('div', id='whois3').find_next_sibling()  # Получаем следующий элемент на этом уровне
+# row2 = soup.find('div', id='whois3').find_previous_sibling()  # Получаем предыущий элемент на этом уровне
+# print(row)
+# print()
+# print(row1)
+# print()
+# print(row2)
+# -------------------------------------------------------------------------
+
+
+# Получить данные по определенному условию(ищем именно конкретную профессию (Copywriter))
+# Желательно записать видео
+
+
+# def get_copywriter(tag):  # функция получающая только копирайтеров
+#     whois = tag.find('div', class_='whois').text
+#     # print(whois)
+#     if 'Copywriter' in whois:
+#         return tag
+#     return None
+#
+#
+# f = open('index.html', encoding='UTF-8').read()
+# soup = BeautifulSoup(f, 'html.parser')
+#
+# copywriter = []
+# row = soup.find_all('div', class_='row')  # получаем доступ ко всем классам row ,это получится список
+# for i in row:  # и по списку который получился выше пройдемся в цикле
+#     cw = get_copywriter(i)
+#     if cw:
+#         copywriter.append(cw)
+#
+# print(copywriter)
+
+
+# # Ищем все зарплаты.
+# # Записать видео
+#
+# import re
+#
+#
+# def get_salary(s):  # функция ищущая только цифры или зарплату
+#     pattern = r'\d+'
+#     # res = re.findall(pattern, s)[0]  # 1
+#     res = re.search(pattern, s).group()  # 2
+#     print(res)
+#
+#
+# f = open('index.html', encoding='UTF-8').read()
+# soup = BeautifulSoup(f, 'html.parser')
+# salary = soup.find_all('div', {'data-set': 'salary'})
+#
+# for i in salary:
+#     get_salary(i.text)
+
+
+# Тоже записать видео
+
+# r = requests.get('https://ru.wordpress.org/')
+# print(r)
+# print(r.status_code)
+
+# print(r.headers)
+# print(r.headers['Content-Type'])
+
+# print(r.content)  # Получили и за Русского языка данные в бинарном формате
+# print(r.text)  # Получили текстовую содержимое у модуля requests (читабельное)
+
+
+# #
+# # И это под запись (а то в будущем сложно будет востановить событие исполняемости)
+# import requests
+# from bs4 import BeautifulSoup
+#
+#
+def get_html(url):
+    r = requests.get(url)
+    return r.text
+
+
+def get_data(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    # ниже главный код где указываем как именно добраться до нужного тега
+    p1 = soup.find('header', id='masthead').find('p', class_='site-title').text
+    return p1
+
+# проверяем доступ к сайту,200 означает успешно
+# r = requests.get('https://ru.wordpress.org/')
+# print(r.text)
+
+
+def main():
+    url = 'https://ru.wordpress.org/'
+    print(get_data(get_html(url)))
+
+
+if __name__ == '__main__':
+    main()

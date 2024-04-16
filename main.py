@@ -8445,25 +8445,175 @@ from bs4 import BeautifulSoup
 # from bs4 import BeautifulSoup
 #
 #
+
+
+# Пример парсинга
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
+#
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, 'lxml')  # lxml установили через пип и не импортировали в файл
+#     # ниже главный код где указываем как именно добраться до нужного тега
+#     p1 = soup.find('header', id='masthead').find('p', class_='site-title').text
+#     return p1
+#
+# # проверяем доступ к сайту,200 означает успешно
+# # r = requests.get('https://ru.wordpress.org/')
+# # print(r.text)
+#
+#
+# def main():
+#     url = 'https://ru.wordpress.org/'
+#     print(get_data(get_html(url)))
+#
+#
+# if __name__ == '__main__':
+#     main()
+
+
+# /////////////////////////////////////////////// Урок 37 //////////////////////////////////
+
+# на сайте wordpress во вкладке плагины - Рекомендуемые плагины будем искать разную информацию
+# важно что путь мы то же изменим не главнная страница wordpress , а https://ru.wordpress.org/plugins/
+# будем получать множество данных
+# идет 4 блока по 4 плагина,разберемся со структурой сайта
+# находим нужный блок элементов и открываем его и видим там 4 элемента,
+
+
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
+#
+#
+# # создадим метод убирающий лишние слова,он что то ищет и убирает буквы оттуда
+# def refined(s):
+#     res = re.sub(r'\D+', '', s)  # тут вызываем модуль и его метод re.sub, что то ищем (все что не цифра) и заменяем пустую строку
+#     return res
+#
+#
+# # функция запись в файл
+# def write_csv(data):
+#     with open('plugins.csv', 'a') as f:  # создадим и откроем файл в режиме дозаписи
+#         writer = csv.writer(f, delimiter=';', lineterminator='\r')  # с помощью модуля и его метода разделим слова
+#         writer.writerow((data['name'], data['url'], data['rating']))  # в полученном writer файле вызвали метод writerow
+#         # и передали в него название словаря и ключи
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, 'lxml')  # lxml установили через пип и не импортировали в файл
+#     s = soup.find_all('section', class_='plugin-section')[1]  # получаем доступ к множественным элементам,из блока с 4 плагинами
+#     # выбираем 1 плагин, название класов плагинов одинаковое и получаем доступ только к первому плагину
+#     # далее после того как получили доступк сектору содержащему рекомендуемы теги и поместили его в перменную s
+#     # получим доступ непосредственно к плагинам их 4
+#     # 'section', class_='plugin-section')[1] - ('article') ,
+#     plagins = s.find_all('article')  # это список из 4 элементов плагинов(4 вида плагинов)
+#
+#     # используем цикл что бы пройтись по всем элементам plagins и получить их заголовки
+#     for plagin in plagins:
+#         name = plagin.find('h3').text  # получаем доступ к заголовкам плагинов и выводим в консоль их названия
+#         # print(name)  # вывели название плагинов для проверки что получили доступ к ним
+#         # теперь получим доступ к ссылкам на страницы куда ведут эти заоловки.
+#         url = plagin.find('h3').find('a').get('href')  # внутри тега н3 ищем тег а
+#         # print(url)  # видим 4 ссылки без .get('href'),но нам надо что лежит в атрибуте href
+#         # далее получим число - рейтинг плагина
+#         rating = plagin.find('span', class_='rating-count').find('a').text  # find('a') избавляет нас от круглых скобок
+#         # print(rating)
+#         r = refined(rating)  # тут в функцию передаем текс из переменной rating
+#         # print(r)
+#         # теперь имя 3 переменные запишем все в текстовый документ,для этого сформируем словарь из переменных
+#         data = {'name': name, 'url': url, 'rating': r}  # в словаре ключ называем любым словом, а значение это переменные
+#         # print(data)
+#         # далее эти данные сохраним в csv файл
+#         write_csv(data)  # пишем название метода и передаем в негословарь из переменных
+#
+#     # return f'{len(plagins)} - количество тегов article'
+#
+#
+# # 1 устанавливаем путь к странице для парсинга
+# def main():
+#     url = 'https://ru.wordpress.org/plugins/'
+#     get_data(get_html(url))
+#
+#
+# if __name__ == '__main__':
+#     main()
+
+
+# ----------------------------------------------------------------------------------------------
+
+# на том же сайте wordpress получим доступ ко всем плагинам в первом блоке плагинов
+
 def get_html(url):
     r = requests.get(url)
     return r.text
 
 
-def get_data(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    # ниже главный код где указываем как именно добраться до нужного тега
-    p1 = soup.find('header', id='masthead').find('p', class_='site-title').text
-    return p1
+def refine_version(s):  # сюда приходит список и нам еще надо получать его последний элемент
+    return s.split()[-1]  # ['Протестирован', 'с', '6.5.2'] тут 3 элемента нам нужен последний
 
-# проверяем доступ к сайту,200 означает успешно
-# r = requests.get('https://ru.wordpress.org/')
-# print(r.text)
+
+def write_csv(data):  # функция для записи в файл получившегося словаря с данными парсинга
+    # вызовем этот метод внузу и передадим в него словарь с данными ,
+    with open('plagins1.csv', 'a', encoding='utf-8') as f:
+        writer = csv.writer(f, delimiter='*', lineterminator='\r')
+        writer.writerow((data['name'], data['url'], data['snippet'],data['active'], data['cversion']))
+
+
+def get_data(html):
+    soup = BeautifulSoup(html, 'lxml')  # lxml установили через пип и не импортировали в файл
+    # ниже главный код где указываем как именно добраться до нужного тега
+    elements = soup.find_all('article')
+    # print(len(elements))
+    # найдем название плагинов в блоке article
+    for el in elements:
+        try:
+            name = el.find('h3').text
+        except AttributeError:  # если вдруг в названии плагина не будет не чего написаннотогда пудет выводится пустая строка но и не будет выводится ошибка
+            name = ''
+        # print(name)
+
+        try:  # ссылка куда ведет название плагина
+            url = el.find('h3').find('a')['href']
+        except AttributeError:
+            url = ''  # если ссылки не написанно
+        # print(url)
+
+        try:  # краткое описание текущего плагина
+            snippet = el.find('div', class_='entry-excerpt').text.strip()  # strip убирает пустые строки
+        except AttributeError:
+            snippet = ''
+        # print(snippet)
+
+        try:  # количество активных скачиваний,это уже другой блок
+            active = el.find('span',
+                             class_='active-installs').text.strip()  # если не приписать .text то выведется только содержимое тега спан,а в нем есть картинка и текст БЕЗ ТЕГА
+        except AttributeError:
+            active = ''
+        # print(active)
+
+        try:  # плагин протестированн с какой версии
+            version = el.find('span',
+                              class_='tested-with').text.strip()  # если не приписать .text то выведется только содержимое тега спан,а в нем есть картинка и текст БЕЗ ТЕГА
+            cversion = refine_version(version)
+        except AttributeError:
+            cversion = ''
+        # print(cversion)
+
+        # что бы не выводить после каждого блока принт создает такую конструкцию
+        data = {  # это словарь с данными парсинга который мы запишем в текстовый файл
+            'name': name,
+            'url': url,
+            'snippet': snippet,
+            'active': active,
+            'cversion': cversion
+        }
+        write_csv(data)
 
 
 def main():
-    url = 'https://ru.wordpress.org/'
-    print(get_data(get_html(url)))
+    url = 'https://ru.wordpress.org/plugins/browse/blocks/'
+    get_data(get_html(url))
 
 
 if __name__ == '__main__':

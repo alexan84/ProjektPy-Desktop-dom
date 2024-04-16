@@ -1,19 +1,47 @@
+# Dz 36 - с любого интернер ресурса получить данные в несколько переменных и вывести их
+
+
+import requests
+from bs4 import BeautifulSoup
+
+
+def practice_html_1(url_1):
+    r = requests.get(url_1)
+    return r.text
+
+
+def get_data_1(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    datas = soup.find('div', class_="flex--item py32 md:pt16 md:pb16").text
+    return datas
+
+
+
+
+def main():
+    # url_1 = 'https://ru.stackoverflow.com/questions/822357/%D0%BD%D0%B5-%D0%BC%D0%BE%D0%B3%D1%83-%D0%B8%D0%BC%D0%BF%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D1%8C-%D0%B2-%D0%BF%D0%B8%D1%82%D0%BE%D0%BD%D0%B5'
+    url_1 = 'https://stackoverflow.com/'
+    print(get_data_1(practice_html_1(url_1)))
+
+
+
+if __name__ == '__main__':
+    main()
 
 # Dz 35
 
-import csv
-
-with open('data2.csv', encoding='UTF-8') as f:
-    file_datas = csv.reader(f, delimiter=';')
-    count = 0
-    for file_data in file_datas:
-        if count == 0:
-            print(f"Файл содержит столбцы: {', '.join(file_data)}")
-        else:
-            print(f" Имя доменна: {file_data[0]}, Поставщик: {file_data[1]}, "
-                  f"Номер: {file_data[2]}, Локация: {file_data[3]}")
-        count += 1
-
+# import csv
+#
+# with open('data2.csv', encoding='UTF-8') as f:
+#     file_datas = csv.reader(f, delimiter=';')
+#     count = 0
+#     for file_data in file_datas:
+#         if count == 0:
+#             print(f"Файл содержит столбцы: {', '.join(file_data)}")
+#         else:
+#             print(f" Имя доменна: {file_data[0]}, Поставщик: {file_data[1]}, "
+#                   f"Номер: {file_data[2]}, Локация: {file_data[3]}")
+#         count += 1
 
 
 # Dz 34

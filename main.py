@@ -8327,7 +8327,6 @@ import requests
 # это библиотека питона для извлечения данных из HTML
 from bs4 import BeautifulSoup
 
-
 # # Обязательно записать рассказ о парсинг
 #
 # f = open('index.html').read()  # открываем документ и считываем из него данные
@@ -8544,77 +8543,179 @@ from bs4 import BeautifulSoup
 
 # на том же сайте wordpress получим доступ ко всем плагинам в первом блоке плагинов
 
-def get_html(url):
-    r = requests.get(url)
-    return r.text
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
+#
+#
+# def refine_version(s):  # сюда приходит список и нам еще надо получать его последний элемент
+#     return s.split()[-1]  # ['Протестирован', 'с', '6.5.2'] тут 3 элемента нам нужен последний
+#
+#
+# def write_csv(data):  # функция для записи в файл получившегося словаря с данными парсинга
+#     # вызовем этот метод внузу и передадим в него словарь с данными ,
+#     with open('plagins1.csv', 'a', encoding='utf-8-sig') as f:
+#         writer = csv.writer(f, delimiter='*', lineterminator='\r')
+#         writer.writerow((data['name'], data['url'], data['snippet'],data['active'], data['cversion']))
+#
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, 'lxml')  # lxml установили через пип и не импортировали в файл
+#     # ниже главный код где указываем как именно добраться до нужного тега
+#     elements = soup.find_all('article')
+#     # print(len(elements))
+#     # найдем название плагинов в блоке article
+#     for el in elements:
+#         try:
+#             name = el.find('h3').text
+#         except AttributeError:  # если вдруг в названии плагина не будет не чего написаннотогда пудет выводится пустая строка но и не будет выводится ошибка
+#             name = ''
+#         # print(name)
+#
+#         try:  # ссылка куда ведет название плагина
+#             url = el.find('h3').find('a')['href']
+#         except AttributeError:
+#             url = ''  # если ссылки не написанно
+#         # print(url)
+#
+#         try:  # краткое описание текущего плагина
+#             snippet = el.find('div', class_='entry-excerpt').text.strip()  # strip убирает пустые строки
+#         except AttributeError:
+#             snippet = ''
+#         # print(snippet)
+#
+#         try:  # количество активных скачиваний,это уже другой блок
+#             active = el.find('span',
+#                              class_='active-installs').text.strip()  # если не приписать .text то выведется только содержимое тега спан,а в нем есть картинка и текст БЕЗ ТЕГА
+#         except AttributeError:
+#             active = ''
+#         # print(active)
+#
+#         try:  # плагин протестированн с какой версии
+#             version = el.find('span',
+#                               class_='tested-with').text.strip()  # если не приписать .text то выведется только содержимое тега спан,а в нем есть картинка и текст БЕЗ ТЕГА
+#             cversion = refine_version(version)
+#         except AttributeError:
+#             cversion = ''
+#         # print(cversion)
+#
+#         # что бы не выводить после каждого блока принт создает такую конструкцию
+#         data = {  # это словарь с данными парсинга который мы запишем в текстовый файл
+#             'name': name,
+#             'url': url,
+#             'snippet': snippet,
+#             'active': active,
+#             'cversion': cversion
+#         }
+#         write_csv(data)
+#
+#
+# # def main():  # 1 вариант с доступом к одно странице
+# #     url = 'https://ru.wordpress.org/plugins/browse/blocks/'
+# #     get_data(get_html(url))
+#
+#
+# def main():  # 2 вариант с циклом подставляем i (она является номером страницы)
+#     # но бывает так что где то появилась картинка которая не может сохранятся в файл
+#     # encoding='utf-8-sig така кодировка исключает(можно и без sig) , которую мы вставляем в функцию записи файла .
+#     for i in range(1, 25):
+#         url = f'https://ru.wordpress.org/plugins/browse/blocks/page/{i}'
+#         get_data(get_html(url))
+#
+#
+# if __name__ == '__main__':
+#     main()
+
+# далее мы закоментируем весь код_парсер и будем взаимодействовать с другим файлом parsers.py где мы переделываем все под ООП
+# тут мы создаем функцию main в которой вызовем модуль Parser и в него передадим сайт для парсинга и текстовый файл куда все запишется
+
+# from PZ import Parser  # тут для созданного файла parsers импортируем модуль
+#
+#
+# def main():  # при вызове этой функции получаем HTML разметку страницы
+#     pars = Parser('https://www.ixbt.com/live/index/news/', 'news.txt')  # создадим экземпляр класса
+#     pars.run()
+#
+#
+# if __name__ == '__main__':
+#     main()
 
 
-def refine_version(s):  # сюда приходит список и нам еще надо получать его последний элемент
-    return s.split()[-1]  # ['Протестирован', 'с', '6.5.2'] тут 3 элемента нам нужен последний
+# def main():
+#     pars = Parser(
+#         url='https://www.ixbt.com/live/index/news/',
+#         path='news.txt'
+#     )
+#     pars.run()
+#
+#
+# if __name__ == '__main__':
+#     main()
 
 
-def write_csv(data):  # функция для записи в файл получившегося словаря с данными парсинга
-    # вызовем этот метод внузу и передадим в него словарь с данными ,
-    with open('plagins1.csv', 'a', encoding='utf-8') as f:
-        writer = csv.writer(f, delimiter='*', lineterminator='\r')
-        writer.writerow((data['name'], data['url'], data['snippet'],data['active'], data['cversion']))
 
 
-def get_data(html):
-    soup = BeautifulSoup(html, 'lxml')  # lxml установили через пип и не импортировали в файл
-    # ниже главный код где указываем как именно добраться до нужного тега
-    elements = soup.find_all('article')
-    # print(len(elements))
-    # найдем название плагинов в блоке article
-    for el in elements:
-        try:
-            name = el.find('h3').text
-        except AttributeError:  # если вдруг в названии плагина не будет не чего написаннотогда пудет выводится пустая строка но и не будет выводится ошибка
-            name = ''
-        # print(name)
-
-        try:  # ссылка куда ведет название плагина
-            url = el.find('h3').find('a')['href']
-        except AttributeError:
-            url = ''  # если ссылки не написанно
-        # print(url)
-
-        try:  # краткое описание текущего плагина
-            snippet = el.find('div', class_='entry-excerpt').text.strip()  # strip убирает пустые строки
-        except AttributeError:
-            snippet = ''
-        # print(snippet)
-
-        try:  # количество активных скачиваний,это уже другой блок
-            active = el.find('span',
-                             class_='active-installs').text.strip()  # если не приписать .text то выведется только содержимое тега спан,а в нем есть картинка и текст БЕЗ ТЕГА
-        except AttributeError:
-            active = ''
-        # print(active)
-
-        try:  # плагин протестированн с какой версии
-            version = el.find('span',
-                              class_='tested-with').text.strip()  # если не приписать .text то выведется только содержимое тега спан,а в нем есть картинка и текст БЕЗ ТЕГА
-            cversion = refine_version(version)
-        except AttributeError:
-            cversion = ''
-        # print(cversion)
-
-        # что бы не выводить после каждого блока принт создает такую конструкцию
-        data = {  # это словарь с данными парсинга который мы запишем в текстовый файл
-            'name': name,
-            'url': url,
-            'snippet': snippet,
-            'active': active,
-            'cversion': cversion
-        }
-        write_csv(data)
 
 
-def main():
-    url = 'https://ru.wordpress.org/plugins/browse/blocks/'
-    get_data(get_html(url))
+
+# /////////////////////////////////////////////// Урок 38 //////////////////////////////////
 
 
-if __name__ == '__main__':
-    main()
+# MVC - модуль представление контроллер , взаимодействие с клиентом
+
+
+## Задача создать приложение которое манипулирует статьями(удаляет,просматривает,и т.д)
+
+# создадим папку articles где будет запускаться прога и в ней папки project_articles,controller,view,model
+
+# в controller все взаимодействие программы
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

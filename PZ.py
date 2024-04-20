@@ -1,32 +1,107 @@
-# Dz 36 - с любого интернер ресурса получить данные в несколько переменных и вывести их
+# Dz 36 - спарсить данные с нескольких страниц
 
 
 import requests
 from bs4 import BeautifulSoup
 
 
-def practice_html_1(url_1):
-    r = requests.get(url_1)
-    return r.text
+class Parser:
+    html = ''
+    res = []
 
+    def __init__(self, url, path):
+        self.url = url
+        self.path = path
 
-def get_data_1(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    datas = soup.find('div', class_="flex--item py32 md:pt16 md:pb16").text
-    return datas
+    def get_html(self):
+        response = requests.get(self.url).text
+        self.html = BeautifulSoup(response, 'lxml')
 
+    def parsing(self):
+        news = self.html.find_all('div', class_='caption')
+        for item in news:
+            title = item.find('h3').text
+            href = item.find('h3').find('a').get('href')
+            author = item.find('a', class_='topic-info-author-link').text.strip()
+            self.res.append({
+                'title': title,
+                'href': href,
+                'author': author
+            })
 
+    def save(self):
+        with open(self.path, 'w') as file:
+            i = 1
+            for item in self.res:
+                file.write(
+                    f'Новость № {i}\n\nНазвание: {item["title"]}\nСсылка: {item["href"]}\nАвтор: {item["author"]}'
+                    f'\n\n{"*" * 30}\n'
+                )
+                i += 1
+
+    def run(self):
+        for i in range(1, 5):
+            self.url + f'page{i}/'
+            self.get_html()
+            self.parsing()
+            self.save()
 
 
 def main():
-    # url_1 = 'https://ru.stackoverflow.com/questions/822357/%D0%BD%D0%B5-%D0%BC%D0%BE%D0%B3%D1%83-%D0%B8%D0%BC%D0%BF%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D1%8C-%D0%B2-%D0%BF%D0%B8%D1%82%D0%BE%D0%BD%D0%B5'
-    url_1 = 'https://stackoverflow.com/'
-    print(get_data_1(practice_html_1(url_1)))
-
+    pars = Parser(
+        url='https://www.ixbt.com/live/index/news/',
+        path='news.txt'
+    )
+    pars.run()
 
 
 if __name__ == '__main__':
     main()
+
+# def main():
+#     pars = Parser(
+#         url='https://www.ixbt.com/live/index/news/',
+#         path='news.txt'
+#     )
+#     pars.run()
+#
+#
+# if __name__ == '__main__':
+#     main()
+
+
+
+
+
+# Dz 36 - с любого интернер ресурса получить данные в несколько переменных и вывести их
+
+
+# import requests
+# from bs4 import BeautifulSoup
+#
+#
+# def practice_html_1(url_1):
+#     r = requests.get(url_1)
+#     return r.text
+#
+#
+# def get_data_1(html):
+#     soup = BeautifulSoup(html, 'html.parser')
+#     datas = soup.find('div', class_="flex--item py32 md:pt16 md:pb16").text
+#     return datas
+#
+#
+#
+#
+# def main():
+#     # url_1 = 'https://ru.stackoverflow.com/questions/822357/%D0%BD%D0%B5-%D0%BC%D0%BE%D0%B3%D1%83-%D0%B8%D0%BC%D0%BF%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D1%8C-%D0%B2-%D0%BF%D0%B8%D1%82%D0%BE%D0%BD%D0%B5'
+#     url_1 = 'https://stackoverflow.com/'
+#     print(get_data_1(practice_html_1(url_1)))
+#
+#
+#
+# if __name__ == '__main__':
+#     main()
 
 # Dz 35
 

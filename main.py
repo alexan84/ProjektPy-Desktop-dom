@@ -8672,21 +8672,50 @@ from bs4 import BeautifulSoup
 
 
 
+# /////////////////////////////////////////////// Урок 39 //////////////////////////////////
+
+# доделали прошлый урок - добавили сохранение в файл статей которые создает програ
+
+
+# Базы данных, установиили SQLiteStudio и модуль который напрямую работает с базами данных
+
+
+import sqlite3
+
+# 1 способ создания файла
+# con = sqlite3.connect('profile.db')  # устанавливаем соеденение с базой данных,если базы не существует то файл создастся автоматически
+# cur = con.cursor()
+# cur.execute("""""")  # запросы
+# con.close()
+
+
+# 2 способ
+with sqlite3.connect('profile.db') as con:
+    cur = con.cursor()  # курсор находятся в файле на последнем считанном символе
+    # cur.execute("""CREATE TABLE IF NOT EXISTS users(
+    # id INTEGER PRIMARY KEY AUTOINCREMENT,
+    # name TEXT NOT NULL,
+    # summa REAL,
+    # date TEXT
+    # )""")
+    cur.execute('DROP TABLE users')  # удаляем таблицу
 
 
 
+# /////////////////////////////////////////////// Урок 40 //////////////////////////////////
+
+# создадим свою таблицу
 
 
-
-
-
-
-
-
-
-
-
-
+with sqlite3.connect('users.db') as con:
+    cur = con.cursor()
+    cur.execute("""CREATE TABLE IF NOT EXISTS person(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    phone BLOB NOT NULL DEFAULT '+79090000000',
+    age INTEGER CHECK(age > 0 AND age < 100),
+    email TEXT UNIQUE
+    )""")
 
 
 

@@ -1,3 +1,7 @@
+import pickle
+import os.path
+
+
 class Article:  # хранит одну статью
     def __init__(self, title, author, pages, description):
         self.title = title
@@ -11,7 +15,8 @@ class Article:  # хранит одну статью
 
 class ArticleModel:  # хранятся все статьи
     def __init__(self):
-        self.articles = {}  # словарь со статьями
+        self.db_name = 'db.txt'
+        self.articles = self.load_data()  # словарь со статьями
 
     def add_article(self, dict_article):  # сохраняет статью в словарь
         article = Article(*dict_article.values())
@@ -30,6 +35,16 @@ class ArticleModel:  # хранятся все статьи
         }
         return dict_article
 
-    def remove_article(self,user_title):
+    def remove_article(self, user_title):
         return self.articles.pop(user_title)
 
+    def save_data(self):
+        with open(self.db_name, 'wb') as f:
+            pickle.dump(self.articles, f)
+
+    def load_data(self):
+        if os.path.exists(self.db_name):
+            with open(self.db_name, 'rb') as f:
+                return pickle.load(f)
+        else:
+            return dict()

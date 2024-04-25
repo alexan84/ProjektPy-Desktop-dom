@@ -38,7 +38,7 @@ class Controller:
             else:
                 self.user_interface.remove_single_artile(title)
         elif answer == 'q':
-            pass
+            self.article_model.save_data()
         else:
             self.user_interface.show_incorrect_answer_error(answer)
 

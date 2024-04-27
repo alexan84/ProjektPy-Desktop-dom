@@ -8653,11 +8653,6 @@ from bs4 import BeautifulSoup
 #     main()
 
 
-
-
-
-
-
 # /////////////////////////////////////////////// Урок 38 //////////////////////////////////
 
 
@@ -8671,7 +8666,6 @@ from bs4 import BeautifulSoup
 # в controller все взаимодействие программы
 
 
-
 # /////////////////////////////////////////////// Урок 39 //////////////////////////////////
 
 # доделали прошлый урок - добавили сохранение в файл статей которые создает програ
@@ -8680,7 +8674,7 @@ from bs4 import BeautifulSoup
 # Базы данных, установиили SQLiteStudio и модуль который напрямую работает с базами данных
 
 
-import sqlite3
+# import sqlite3
 
 # 1 способ создания файла
 # con = sqlite3.connect('profile.db')  # устанавливаем соеденение с базой данных,если базы не существует то файл создастся автоматически
@@ -8690,16 +8684,15 @@ import sqlite3
 
 
 # 2 способ
-with sqlite3.connect('profile.db') as con:
-    cur = con.cursor()  # курсор находятся в файле на последнем считанном символе
-    # cur.execute("""CREATE TABLE IF NOT EXISTS users(
-    # id INTEGER PRIMARY KEY AUTOINCREMENT,
-    # name TEXT NOT NULL,
-    # summa REAL,
-    # date TEXT
-    # )""")
-    cur.execute('DROP TABLE users')  # удаляем таблицу
-
+# with sqlite3.connect('profile.db') as con:
+#     cur = con.cursor()  # курсор находятся в файле на последнем считанном символе
+#     # cur.execute("""CREATE TABLE IF NOT EXISTS users(
+#     # id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     # name TEXT NOT NULL,
+#     # summa REAL,
+#     # date TEXT
+#     # )""")
+#     cur.execute('DROP TABLE users')  # удаляем таблицу
 
 
 # /////////////////////////////////////////////// Урок 40 //////////////////////////////////
@@ -8707,15 +8700,221 @@ with sqlite3.connect('profile.db') as con:
 # создадим свою таблицу
 
 
-with sqlite3.connect('users.db') as con:
-    cur = con.cursor()
-    cur.execute("""CREATE TABLE IF NOT EXISTS person(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+# with sqlite3.connect('users.db') as con:
+#     cur = con.cursor()
+# cur.execute("""CREATE TABLE IF NOT EXISTS person(
+# id INTEGER PRIMARY KEY AUTOINCREMENT,
+# name TEXT NOT NULL,
+# phone BLOB NOT NULL DEFAULT '+79090000000',
+# age INTEGER CHECK(age > 0 AND age < 100),
+# email TEXT UNIQUE
+# )""")
+
+# переименуем название таблицы
+#     cur.execute("""
+#     ALTER TABLE person
+#     RENAME TO person_table;
+#     """)
+
+
+# добавим еще одну строчку
+#     cur.execute("""
+#     ALTER TABLE person_table
+#     ADD COLUMN address TEXT NOT NULL DEFAULT 'г. Сочи'
+#     """)
+
+
+# переименуем строчку
+#     cur.execute("""
+#     ALTER TABLE person_table
+#     RENAME COLUMN address TO home_address;
+#     """)
+
+# удалить столбец
+#     cur.execute("""
+#     ALTER TABLE person_table
+#     DROP COLUMN home_address;
+#     """)
+
+# удалить таблицу
+#     cur.execute("""
+#     DROP TABLE person_table
+#     """)
+
+#
+# with sqlite3.connect('Test.db') as con:
+#     cur = con.cursor()
+#     cur.execute("""CREATE TABLE [Сотрудники](
+#   [Табельный номер] int,
+#   [ФИО] nvarchar(30),
+#   [Дата рождения] date,
+#   [E-mail] nvarchar(30),
+#   [Должность] nvarchar(30),
+#   [Отдел] nvarchar(30)
+# )""")
+
+
+# учение по  selfedu - Python SQLite
+
+import sqlite3 as sq  # установим модуль системы управления базами данных и зададим упрощенное название ему
+
+with sq.connect(
+        'saper.db') as con:  # создадим переменную в которой лежит вызов модуля и его метода который подключается к БД или сразу создает ее
+    cur = con.cursor()  # для работы с БД
+    # создадим таблицу с нужными нам элементами, ЭТО IF NOT EXISTS означает если не существует такая таблица,то есть досло создать таблицу если она не существует а если существует то просто добавятся данные
+    cur.execute('DROP TABLE IF EXISTS users')  # УДАЛИть таблицу только если она существует
+    cur.execute('''CREATE TABLE IF NOT EXISTS users(
     name TEXT NOT NULL,
-    phone BLOB NOT NULL DEFAULT '+79090000000',
-    age INTEGER CHECK(age > 0 AND age < 100),
-    email TEXT UNIQUE
-    )""")
+    sex INTEGER NOT NULL DEFAULT 1,
+    old INTEGER,
+    score INTEGER
+    )''')
+
+'''
+В SQL различаются следующие виды объектов:
+
+база данных (database);
+таблица (table);
+столбец (column);
+индекс (index);
+снимок (view);
+синоним (synonym).
+
+CREATE - создать
+WHERE - где
+ALTER - изменить
+DROP - удаляет таблицу
+DELETE - очистить,стереть,удалить
+INSERT - вставить
+SELECT - выбрать,показать
+FROM - из
+UPDATE - обновить
+IN - в
+SET - установить
+IS - является
+NULL - пустой
+LIKE - является,похож,равна,подобно
+GLOB -
+NOT - не
+AS - как
+RENAME - ПЕРЕИМЕНОВАТЬ
+TO - к
+INTO - в
+DISTINCT - индивидуальный
+
+
+
+
+NULL – значение NULL;
+INTEGER – целочисленный тип (занимает от 1 до 8 байт);
+REAL – вещественный тип (8 байт в формате IEEE);
+TEXT – строковый тип (в кодировке данных базы, обычно UTF-8);
+BLOB (двоичные данные, хранятся «как есть», например, для небольших изображений).
+
+NOT – условное НЕ: NOT exp. Преобразует ложное условие в истинное и, наоборот, истинное – в ложное.
+AND – условное И: exp1 AND exp2. Истинно, если одновременно истинны exp1 и exp2.
+OR – условное ИЛИ: exp1 OR exp2. Истинно, если истинно exp1 или exp2 или оба выражения.
+IN – вхождение во множество значений: col IN (val1, val2, …)
+NOT IN – не вхождение во множество значений: col NOT IN (val1, val2, …)
+
+
+
+SELECT * FROM users - показать все поля таблицы
+"CREATE TABLE IF NOT EXISTS users" - создать таблицу если ее нет
+"DROP TABLE users" - удалить таблицу
+если хотим что бы в ячейках были ограничения для вводимых данных то к примеру NOT NULL - обязательное поле для заполнения
+DEFAULT 1 -  если значение не вписанно в таблицу то это вписывает значение которое указывается после него то есть 1
+user_id INT PRIMARY KEY - создаем дополнительное поле с уникальным значением
+AUTOINCREMENT - увеличивает значение поля приватного ключа на 1
+
+INSERT - добавление записи в таблицу
+SELECT - выборка данных из таблиц(в том числе и при создании сводной выборки из нескольких таблиц)
+
+INSERT INTO users VALUES ('Михаил', 1, 19, 1000) - добавить данные во все столбцы таблицы
+INSERT INTO users(name, old, score) VALUES ('Миша', 132, 200) - добавляем в определенные столбцы данные
+
+SELECT name, old, score FROM users - выбрать и показать указанные стобцы или поля
+SELECT * FROM users - если нужно все поля выбрать
+SELECT * FROM users WHERE score < 1000 - выбрать все строки у которых одна колонка соответствует условию
+SELECT * FROM users WHERE score BETWEEN 500 AND 1000 - ВЫВОдим колонку с заданным интеревалом
+SELECT * FROM users WHERE old IN(19, 32) AND score < 1000 - возраст или 19 или 32 и очки меньше 1000
+SELECT * FROM users WHERE old IN(19, 32) AND score > 300 OR sex = 1 - AND имеет приоритет от OR, возраст 19 или 32 ,очки больше 300 или мужщина
+
+Сортировка ORDER BY - сортирует по возрастанию,указывается поле, по которому производится сортировка записей в выборке
+ORDER BY old DESC - по убыванию
+ORDER BY old ASC - явно показываем что сортируем по возрастанию
+
+пример переименований названий заголовков при выводе - показать айди как и различные варианты -если два слова то ас надо и кавычки или квадратные скобки
+SELECT ID AS 'Код по магазину', Produce AS "название продукта",
+Material AS материал, Color цвет, Country AS [страна производитель]
+
+'''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

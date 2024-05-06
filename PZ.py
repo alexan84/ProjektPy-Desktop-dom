@@ -1,62 +1,128 @@
+# Dz 42 -
+
+
+import sqlite3
+
+with sqlite3.connect('students.db') as con:
+    cur = con.cursor()
+
+
+cur.execute('''CREATE  TABLE IF NOT EXISTS student(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    surname TEXT NOT NULL,
+    name TEXT NOT NULL,
+    patronymic TEXT NOT NULL,
+    age INTEGER CHECK (age > 16),
+    group TEXT NOT NULL
+    )''');
+
+
+cur.execute('''CREATE  TABLE IF NOT EXISTS groups(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_name TEXT NOT NULL,
+    FOREIGN KEY (id) REFERENCES association (group_id),
+    FOREIGN KEY (id) REFERENCES student (group),
+    )''');
+
+cur.execute('''CREATE  TABLE IF NOT EXISTS association(
+    lesson_id INTEGER NOT NULL,
+    group_id INTEGER NOT NULL,
+    FOREIGN KEY (group_id) REFERENCES groups (id),
+    FOREIGN KEY (lesson_id) REFERENCES lessons (id)
+    )''');
+cur.execute('''CREATE  TABLE IF NOT EXISTS lessons(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    lesson_title TEXT NOT NULL,
+    )''')
+
+################################
+# CREATE  TABLE student(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     surname TEXT NOT NULL,
+#     name TEXT NOT NULL,
+#     patronymic TEXT NOT NULL,
+#     age INTEGER CHECK (age > 16),
+#     group TEXT NOT NULL
+# );
+#
+#
+# CREATE  TABLE groups(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     group_name TEXT NOT NULL,
+#     PRIMARY KEY (id) REFERENCES association (group_id)
+#     PRIMARY KEY (id) REFERENCES student (group)
+# );
+#
+# CREATE  TABLE association(
+#     lesson_id INTEGER NOT NULL,
+#     group_id INTEGER NOT NULL,
+#     FOREIGN KEY (group_id) REFERENCES groups (id)
+#     FOREIGN KEY (lesson_id) REFERENCES lessons (id)
+# );
+# CREATE  TABLE lessons(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     lesson_title TEXT NOT NULL,
+# )
+
 # Dz 37 - спарсить данные с нескольких страниц
 
 
-import requests
-from bs4 import BeautifulSoup
-
-
-class Parser:
-    html = ''
-    res = []
-
-    def __init__(self, url, path):
-        self.url = url
-        self.path = path
-
-    def get_html(self):
-        response = requests.get(self.url).text
-        self.html = BeautifulSoup(response, 'lxml')
-
-    def parsing(self):
-        news = self.html.find_all('div', class_='caption')
-        for item in news:
-            title = item.find('h3').text
-            href = item.find('h3').find('a').get('href')
-            author = item.find('a', class_='topic-info-author-link').text.strip()
-            self.res.append({
-                'title': title,
-                'href': href,
-                'author': author
-            })
-
-    def save(self):
-        with open(self.path, 'w') as file:
-            i = 1
-            for item in self.res:
-                file.write(
-                    f'Новость № {i}\n\nНазвание: {item["title"]}\nСсылка: {item["href"]}\nАвтор: {item["author"]}'
-                    f'\n\n{"*" * 30}\n'
-                )
-                i += 1
-
-    def run(self):
-        for i in range(1, 5):
-            self.url + f'page{i}/'
-            self.get_html()
-            self.parsing()
-            self.save()
-
-
-def main():
-    pars = Parser(
-        url='https://www.ixbt.com/live/index/news/',
-        path='news.txt'
-    )
-    pars.run()
-
-
-if __name__ == '__main__':
-    main()
+# import requests
+# from bs4 import BeautifulSoup
+#
+#
+# class Parser:
+#     html = ''
+#     res = []
+#
+#     def __init__(self, url, path):
+#         self.url = url
+#         self.path = path
+#
+#     def get_html(self):
+#         response = requests.get(self.url).text
+#         self.html = BeautifulSoup(response, 'lxml')
+#
+#     def parsing(self):
+#         news = self.html.find_all('div', class_='caption')
+#         for item in news:
+#             title = item.find('h3').text
+#             href = item.find('h3').find('a').get('href')
+#             author = item.find('a', class_='topic-info-author-link').text.strip()
+#             self.res.append({
+#                 'title': title,
+#                 'href': href,
+#                 'author': author
+#             })
+#
+#     def save(self):
+#         with open(self.path, 'w') as file:
+#             i = 1
+#             for item in self.res:
+#                 file.write(
+#                     f'Новость № {i}\n\nНазвание: {item["title"]}\nСсылка: {item["href"]}\nАвтор: {item["author"]}'
+#                     f'\n\n{"*" * 30}\n'
+#                 )
+#                 i += 1
+#
+#     def run(self):
+#         for i in range(1, 5):
+#             self.url + f'page{i}/'
+#             self.get_html()
+#             self.parsing()
+#             self.save()
+#
+#
+# def main():
+#     pars = Parser(
+#         url='https://www.ixbt.com/live/index/news/',
+#         path='news.txt'
+#     )
+#     pars.run()
+#
+#
+# if __name__ == '__main__':
+#     main()
 
 # def main():
 #     pars = Parser(

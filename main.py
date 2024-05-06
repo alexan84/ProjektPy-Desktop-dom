@@ -8929,7 +8929,7 @@ RESTRICT (NO ACTION) - отклоняет удаление или изменен
 
 '''
 
-# 1 создадим базу данных и откроем ее в субд
+# 1 создадим базу данных один ко многим и откроем ее в субд
 # import sqlite3
 #
 # with sqlite3.connect('company.db') as con:
@@ -8959,7 +8959,7 @@ RESTRICT (NO ACTION) - отклоняет удаление или изменен
 #
 # with sqlite3.connect('book.db') as con:
 #     cur = con.cursor()
-
+#
 #
 # CREATE  TABLE books(
 #     id INTEGER PRIMARY KEY AUTOINCREMENT,

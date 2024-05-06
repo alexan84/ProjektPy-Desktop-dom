@@ -1,0 +1,33 @@
+import sqlite3
+
+with sqlite3.connect('students.db') as con:
+    cur = con.cursor()
+
+
+cur.execute('''CREATE  TABLE IF NOT EXISTS student(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    surname TEXT NOT NULL,
+    name TEXT NOT NULL,
+    patronymic TEXT NOT NULL,
+    age INTEGER CHECK (age > 16),
+    group TEXT NOT NULL
+    )''');
+
+
+cur.execute('''CREATE  TABLE IF NOT EXISTS groups(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_name TEXT NOT NULL,
+    FOREIGN KEY (id) REFERENCES association (group_id),
+    FOREIGN KEY (id) REFERENCES student (group),
+    )''');
+
+cur.execute('''CREATE  TABLE IF NOT EXISTS association(
+    lesson_id INTEGER NOT NULL,
+    group_id INTEGER NOT NULL,
+    FOREIGN KEY (group_id) REFERENCES groups (id),
+    FOREIGN KEY (lesson_id) REFERENCES lessons (id)
+    )''');
+cur.execute('''CREATE  TABLE IF NOT EXISTS lessons(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    lesson_title TEXT NOT NULL,
+    )''')
